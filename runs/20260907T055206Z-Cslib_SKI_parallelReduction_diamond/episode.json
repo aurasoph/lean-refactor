@@ -1,0 +1,141 @@
+{
+  "timestamp": "20260907T055206Z",
+  "name": "Cslib.SKI.parallelReduction_diamond",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T055206Z-Cslib_SKI_parallelReduction_diamond",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 16,
+    "stop_reason": "no_tool_calls",
+    "exit_code": 0,
+    "wall_seconds": 379.6,
+    "usage": {
+      "prompt_tokens": 166402,
+      "completion_tokens": 12304,
+      "total_tokens": 178706,
+      "cost_usd": 0.9774995,
+      "num_turns": 16
+    }
+  },
+  "before": {
+    "length": 407,
+    "heartbeats": 1629,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.SKI.parallelReduction_diamond",
+    "compiled": true,
+    "length": 278,
+    "reference_length": 407,
+    "length_reduction_pct": 31.7,
+    "heartbeats": 501,
+    "reference_heartbeats": 1629,
+    "heartbeat_reduction_pct": 69.24,
+    "objective_sum_pct": 100.94,
+    "survival_pct": 100.0,
+    "combined_pct": 66.98,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true,
+      "v4.30.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 501,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 501,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 501,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 506,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 1383
+  },
+  "agent_final": {
+    "name": "Cslib.SKI.parallelReduction_diamond",
+    "compiled": true,
+    "length": 278,
+    "reference_length": 407,
+    "length_reduction_pct": 31.7,
+    "heartbeats": 501,
+    "reference_heartbeats": 1629,
+    "heartbeat_reduction_pct": 69.24,
+    "objective_sum_pct": 100.94,
+    "survival_pct": 100.0,
+    "combined_pct": 66.98,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true,
+      "v4.30.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 501,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 501,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 501,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 506,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 1383
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem parallelReduction_diamond : Diamond ParallelReduction := by\n  intro a a\u2081 a\u2082 h\u2081 h\u2082\n  induction h\u2081 generalizing a\u2082\n  case refl => exact \u27e8_, h\u2082, .refl _\u27e9\n  all_goals cases h\u2082\n  all_goals try solve | refine \u27e8_, .refl _, ?_\u27e9; constructor <;> assumption\n  case red_I.par c a' hc ha =>\n    cases I_irreducible c hc\n    exact \u27e8_, ha, .red_I _\u27e9\n  case red_K.par a' c' ha hc =>\n    obtain \u27e8d, hd, rfl\u27e9 := Ka_irreducible _ a' ha\n    exact \u27e8_, hd, .red_K _ _\u27e9\n  case red_S.par d c' hd hc =>\n    obtain \u27e8e, f, he, hf, rfl\u27e9 := Sab_irreducible _ _ d hd\n    exact \u27e8_, .par (.par he hc) (.par hf hc), .red_S ..\u27e9\n  case par.red_I hb ihb ha iha =>\n    cases I_irreducible _ ha\n    exact \u27e8_, .red_I _, hb\u27e9\n  case par.red_K hb ihb ha iha =>\n    obtain \u27e8c, hc, rfl\u27e9 := Ka_irreducible _ _ ha\n    exact \u27e8_, .red_K _ _, hc\u27e9\n  case par.red_S hb ihb a c ha iha =>\n    obtain \u27e8d, e, hd, he, rfl\u27e9 := Sab_irreducible _ _ _ ha\n    exact \u27e8_, .red_S .., .par (.par hd hb) (.par he hb)\u27e9\n  case par.par ha hb iha ihb a'' b'' ha' hb' =>\n    obtain \u27e8c, hc, hc'\u27e9 := iha ha'\n    obtain \u27e8d, hd, hd'\u27e9 := ihb hb'\n    exact \u27e8_, .par hc hd, .par hc' hd'\u27e9"
+}

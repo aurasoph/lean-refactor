@@ -1,0 +1,141 @@
+{
+  "timestamp": "20260907T055944Z",
+  "name": "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T055944Z-Binius_BinaryBasefold_fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 21,
+    "stop_reason": "max_turns",
+    "exit_code": 0,
+    "wall_seconds": 1053.0,
+    "usage": {
+      "prompt_tokens": 410321,
+      "completion_tokens": 13491,
+      "total_tokens": 423812,
+      "cost_usd": 1.5025850000000003,
+      "num_turns": 21
+    }
+  },
+  "before": {
+    "length": 1463,
+    "heartbeats": 17440,
+    "compiled": true
+  },
+  "after": {
+    "name": "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+    "compiled": true,
+    "length": 439,
+    "reference_length": 1463,
+    "length_reduction_pct": 69.99,
+    "heartbeats": 7052,
+    "reference_heartbeats": 17440,
+    "heartbeat_reduction_pct": 59.56,
+    "objective_sum_pct": 129.55,
+    "survival_pct": 100.0,
+    "combined_pct": 76.52,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": true,
+      "v4.29.0": true,
+      "v4.28.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 7052,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 7910,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.29.0",
+        "ok": true,
+        "heartbeats": 8973,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.28.0",
+        "ok": true,
+        "heartbeats": 11563,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 15645
+  },
+  "agent_final": {
+    "name": "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+    "compiled": true,
+    "length": 439,
+    "reference_length": 1463,
+    "length_reduction_pct": 69.99,
+    "heartbeats": 7052,
+    "reference_heartbeats": 17440,
+    "heartbeat_reduction_pct": 59.56,
+    "objective_sum_pct": 129.55,
+    "survival_pct": 100.0,
+    "combined_pct": 76.52,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": true,
+      "v4.29.0": true,
+      "v4.28.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 7052,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 7910,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.29.0",
+        "ok": true,
+        "heartbeats": 8973,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.28.0",
+        "ok": true,
+        "heartbeats": 11563,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 15645
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius (i : Fin \u2113) (steps : \u2115)\n    [NeZero steps] (h_i_add_steps : i.val + steps \u2264 \u2113)\n    (f : OracleFunction \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate) \u27e8i, by omega\u27e9)\n  (h_fw_dist_lt : fiberwiseClose \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate)\n    (i := i) (steps := steps) (h_i_add_steps := h_i_add_steps) (f := f)) :\n  hammingClose \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate) \u27e8i, by omega\u27e9 f := by\n  classical\n  let C := BBF_Code \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate) \u27e8i, by omega\u27e9\n  let size := fun g : C => (fiberwiseDisagreementSet \ud835\udd3dq \u03b2 i steps h_i_add_steps f g).ncard\n  obtain \u27e8g, _, hg\u27e9 := Nat.sInf_mem (Set.image_nonempty.mpr\n    (Set.univ_nonempty : (Set.univ : Set C).Nonempty) : (size '' Set.univ).Nonempty)\n  have hfw : 2 * size g < BBF_CodeDistance \u2113 \ud835\udce1 \u27e8i.val + steps, by omega\u27e9 := by\n    have h := h_fw_dist_lt\n    unfold fiberwiseClose fiberwiseDistance at h\n    rw [\u2190 hg] at h\n    exact WithTop.coe_lt_coe.mp h\n  have hd : hammingDist f g \u2264 size g * 2 ^ steps := by\n    let Y := fiberwiseDisagreementSet \ud835\udd3dq \u03b2 i steps h_i_add_steps f g\n    let F := qMap_total_fiber \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate)\n      (i := \u27e8i, by omega\u27e9) (steps := steps)\n      (h_i_add_steps := fin_\u2113_steps_lt_\u2113_add_R i steps h_i_add_steps)\n    have hs : Finset.univ.filter (fun x => f x \u2260 g.val x) \u2286\n        Y.toFinset.biUnion (fun y => Finset.univ.image (F y)) := by\n      intro x hx\n      have hx' := (Finset.mem_filter.mp hx).2\n      let y := iteratedQuotientMap \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i steps h_i_add_steps x\n      refine Finset.mem_biUnion.mpr \u27e8y, Set.mem_toFinset.mpr \u27e8x, rfl, hx'\u27e9, ?_\u27e9\n      exact Finset.mem_image.mpr \u27e8_, Finset.mem_univ _,\n        (is_fiber_iff_generates_quotient_point \ud835\udd3dq \u03b2 i steps h_i_add_steps x y).mp rfl\u27e9\n    refine (Finset.card_le_card hs).trans ?_\n    change _ \u2264 Y.ncard * 2 ^ steps\n    rw [Set.ncard_eq_toFinset_card']\n    exact Finset.card_biUnion_le_card_mul Y.toFinset\n      (fun y => Finset.univ.image (F y)) (2 ^ steps) (fun y _ =>\n        Finset.card_image_le.trans_eq (by simp))\n  have ha :\n      (BBF_CodeDistance \u2113 \ud835\udce1 \u27e8i.val + steps, by omega\u27e9 - 1) * 2 ^ steps =\n        BBF_CodeDistance \u2113 \ud835\udce1 \u27e8i, by omega\u27e9 - 1 := by\n    simp only [BBF_CodeDistance, Nat.add_sub_cancel, Nat.sub_mul, \u2190 Nat.pow_add]\n    congr 2 <;> omega\n  have hn : 2 * hammingDist f g < BBF_CodeDistance \u2113 \ud835\udce1 \u27e8i, by omega\u27e9 := by\n    have hb := Nat.mul_le_mul_right (2 ^ steps) (Nat.le_pred_of_lt hfw)\n    rw [Nat.pred_eq_sub_one, ha, mul_assoc] at hb\n    have hc := Nat.mul_le_mul_left 2 hd\n    have hp : 0 < BBF_CodeDistance \u2113 \ud835\udce1 \u27e8i, by omega\u27e9 := Nat.succ_pos _\n    omega\n  unfold hammingClose\n  apply lt_of_le_of_lt (mul_le_mul_left' (Code.distFromCode_le_dist_to_mem f g g.property) 2)\n  exact_mod_cast hn"
+}

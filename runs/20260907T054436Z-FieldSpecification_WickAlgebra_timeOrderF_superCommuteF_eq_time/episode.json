@@ -1,0 +1,87 @@
+{
+  "timestamp": "20260907T054436Z",
+  "name": "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T054436Z-FieldSpecification_WickAlgebra_timeOrderF_superCommuteF_eq_time",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 20,
+    "stop_reason": "no_tool_calls",
+    "exit_code": 0,
+    "wall_seconds": 421.5,
+    "usage": {
+      "prompt_tokens": 429990,
+      "completion_tokens": 16203,
+      "total_tokens": 446193,
+      "cost_usd": 1.6938144999999998,
+      "num_turns": 20
+    }
+  },
+  "before": {
+    "length": 1217,
+    "heartbeats": 42401,
+    "compiled": true
+  },
+  "after": {
+    "name": "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time",
+    "compiled": true,
+    "length": 568,
+    "reference_length": 1217,
+    "length_reduction_pct": 53.33,
+    "heartbeats": 23511,
+    "reference_heartbeats": 42401,
+    "heartbeat_reduction_pct": 44.55,
+    "objective_sum_pct": 97.88,
+    "survival_pct": 100.0,
+    "combined_pct": 65.96,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 23511,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 42225
+  },
+  "agent_final": {
+    "name": "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time",
+    "compiled": true,
+    "length": 568,
+    "reference_length": 1217,
+    "length_reduction_pct": 53.33,
+    "heartbeats": 23511,
+    "reference_heartbeats": 42401,
+    "heartbeat_reduction_pct": 44.55,
+    "objective_sum_pct": 97.88,
+    "survival_pct": 100.0,
+    "combined_pct": 65.96,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 23511,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 42225
+  },
+  "checkpoint_promotions": [],
+  "candidate": "lemma \u03b9_timeOrderF_superCommuteF_eq_time {\u03c6 \u03c8 : \ud835\udcd5.CrAnFieldOp}\n    (h\u03c6\u03c8 : crAnTimeOrderRel \u03c6 \u03c8) (h\u03c8\u03c6 : crAnTimeOrderRel \u03c8 \u03c6) (a b : \ud835\udcd5.FieldOpFreeAlgebra) :\n    \u03b9 \ud835\udce3\u1da0(a * [ofCrAnOpF \u03c6, ofCrAnOpF \u03c8]\u209bF * b) =\n    \u03b9 ([ofCrAnOpF \u03c6, ofCrAnOpF \u03c8]\u209bF * \ud835\udce3\u1da0(a * b)) := by\n  induction Basis.mem_span ofCrAnListFBasis a, Basis.mem_span ofCrAnListFBasis b\n      using Submodule.span_induction\u2082 with\n  | mem_mem a b ha hb =>\n    obtain \u27e8l, rfl\u27e9 := ha\n    obtain \u27e8r, rfl\u27e9 := hb\n    simp only [ofListBasis_eq_ofList]\n    let L := (List.takeWhile (fun c => \u00ac crAnTimeOrderRel \u03c6 c)\n      ((l ++ r).insertionSort crAnTimeOrderRel)) ++\n      List.filter (fun c => crAnTimeOrderRel \u03c6 c \u2227 crAnTimeOrderRel c \u03c6) l\n    let R := (List.filter (fun c => crAnTimeOrderRel \u03c6 c \u2227 crAnTimeOrderRel c \u03c6) r) ++\n      List.filter (fun c => crAnTimeOrderRel \u03c6 c \u2227 \u00ac crAnTimeOrderRel c \u03c6)\n        ((l ++ r).insertionSort crAnTimeOrderRel)\n    have hs (m : List \ud835\udcd5.CrAnFieldOp)\n        (hm : \u2200 c \u2208 m, crAnTimeOrderRel \u03c6 c \u2227 crAnTimeOrderRel c \u03c6) :\n        \u03b9 (ofCrAnListF (crAnTimeOrderList (l ++ m ++ r))) =\n          \u03b9 (ofCrAnListF L) * \u03b9 (ofCrAnListF m) * \u03b9 (ofCrAnListF R) := by\n      rw [crAnTimeOrderList, insertionSort_of_eq_list _ \u03c6 l m r hm]\n      simp only [L, R, ofCrAnListF_append, map_mul, mul_assoc]\n    have h\u2081 := hs [\u03c6, \u03c8] (by simp [h\u03c6\u03c8, h\u03c8\u03c6])\n    have h\u2082 := hs [\u03c8, \u03c6] (by simp [h\u03c6\u03c8, h\u03c8\u03c6])\n    have h\u2080 := hs [] (by simp)\n    simp only [List.append_nil, ofCrAnListF_nil, map_one, mul_one] at h\u2080\n    have hc : [ofCrAnOpF \u03c6, ofCrAnOpF \u03c8]\u209bF =\n        ofCrAnListF [\u03c6, \u03c8] - \ud835\udce2(\ud835\udcd5.crAnStatistics \u03c6, \ud835\udcd5.crAnStatistics \u03c8) \u2022\n          ofCrAnListF [\u03c8, \u03c6] := by\n      rw [\u2190 ofCrAnListF_singleton, \u2190 ofCrAnListF_singleton,\n        superCommuteF_ofCrAnListF_ofCrAnListF]\n      simp only [List.singleton_append, ofList_singleton]\n    trans crAnTimeOrderSign (l ++ \u03c6 :: \u03c8 :: r) \u2022\n      (\u03b9 (ofCrAnListF L) * \u03b9 [ofCrAnOpF \u03c6, ofCrAnOpF \u03c8]\u209bF * \u03b9 (ofCrAnListF R))\n    \u00b7 conv_lhs =>\n        rw [hc]\n        simp only [mul_sub, sub_mul, Algebra.mul_smul_comm, Algebra.smul_mul_assoc,\n          \u2190 ofCrAnListF_append, map_sub, map_smul, timeOrderF_ofCrAnListF]\n      rw [h\u2081, h\u2082, hc]\n      simp only [List.append_assoc, List.cons_append, List.nil_append]\n      rw [\u2190 crAnTimeOrderSign_swap_eq_time h\u03c6\u03c8 h\u03c8\u03c6]\n      simp only [map_sub, map_smul, mul_sub, sub_mul, smul_sub,\n        Algebra.mul_smul_comm, Algebra.smul_mul_assoc]\n      rw [smul_comm]\n    \u00b7 rw [Subalgebra.mem_center_iff.mp\n        (\u03b9_superCommuteF_ofCrAnOpF_ofCrAnOpF_mem_center \u03c6 \u03c8),\n        mul_assoc, \u2190 h\u2080]\n      by_cases hq : \ud835\udcd5.crAnStatistics \u03c6 = \ud835\udcd5.crAnStatistics \u03c8\n      \u00b7 rw [crAnTimeOrderSign, Wick.koszulSign_eq_rel_eq_stat _ _ h\u03c6\u03c8 h\u03c8\u03c6 hq.symm,\n          \u2190 crAnTimeOrderSign, \u2190 ofCrAnListF_append, timeOrderF_ofCrAnListF]\n        simp only [map_mul, map_smul, Algebra.mul_smul_comm]\n      \u00b7 simp [map_mul, \u03b9_superCommuteF_of_diff_statistic hq]\n  | zero_left => simp\n  | zero_right => simp\n  | add_left x y z hx hy hz ihx ihy => simp_all [add_mul, mul_add]\n  | add_right x y z hx hy hz ihy ihz => simp_all [mul_add]\n  | smul_left c x y hx hy ih => simpa using congrArg (c \u2022 \u00b7) ih\n  | smul_right c x y hx hy ih => simpa using congrArg (c \u2022 \u00b7) ih"
+}

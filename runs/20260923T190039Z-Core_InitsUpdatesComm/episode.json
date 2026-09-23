@@ -1,0 +1,127 @@
+{
+  "timestamp": "20260923T190039Z",
+  "name": "Core.InitsUpdatesComm",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260923T190039Z-Core_InitsUpdatesComm",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "toolset": "student-v1",
+    "tool_log": "/home/auras/Projects/Lean_Refactor/runs/20260923T190039Z-Core_InitsUpdatesComm/tools.jsonl",
+    "thread_id": "01a0cfa4-3124-75e3-8b5a-6334f95fc42b",
+    "exit_code": 0,
+    "wall_seconds": 756.9,
+    "usage": {
+      "input_tokens": 955821,
+      "cached_input_tokens": 895232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 14528,
+      "reasoning_output_tokens": 7177,
+      "num_turns": 4
+    }
+  },
+  "before": {
+    "length": 224,
+    "heartbeats": 4547,
+    "compiled": true
+  },
+  "after": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "length": 85,
+    "reference_length": 224,
+    "length_reduction_pct": 62.05,
+    "heartbeats": 404,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": 91.12,
+    "objective_sum_pct": 153.17,
+    "survival_pct": 100.0,
+    "combined_pct": 84.39,
+    "eligible": true,
+    "compat": {
+      "v4.29.1": true,
+      "v4.27.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": true,
+        "heartbeats": 404,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 323,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 284,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "agent_final": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "length": 85,
+    "reference_length": 224,
+    "length_reduction_pct": 62.05,
+    "heartbeats": 404,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": 91.12,
+    "objective_sum_pct": 153.17,
+    "survival_pct": 100.0,
+    "combined_pct": 84.39,
+    "eligible": true,
+    "compat": {
+      "v4.29.1": true,
+      "v4.27.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": true,
+        "heartbeats": 404,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 323,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 284,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem InitsUpdatesComm\n  {P : PureExpr} {\u03c3 \u03c3' \u03c3'' : SemanticStore P}\n  {ks ks' : List P.Ident} {vs vs' : List P.Expr} :\n  UpdateStates \u03c3 ks vs \u03c3' \u2192\n  InitStates \u03c3' ks' vs' \u03c3'' \u2192\n  \u2203 \u03c3\u2081,\n    \u03c3\u2081 = (updatedStates \u03c3 ks' vs') \u2227\n    InitStates \u03c3 ks' vs' \u03c3\u2081 \u2227\n    UpdateStates \u03c3\u2081 ks vs \u03c3'' := by\n  intro hu hi\n  refine \u27e8_, rfl, updatedStatesInit (InitStatesLength hi)\n    (UpdateStatesNotDefMonotone' (InitStatesNotDefined hi) hu)\n    (InitStatesNodup hi), ?_\u27e9\n  rw [InitStatesUpdated hi, UpdateStatesUpdated hu]\n  unfold updatedStates\n  rw [updatedStatesComm]\n  \u00b7 apply updatedStatesUpdate (UpdateStatesLength hu)\n    apply updatedStatesDefMonotone\n    exact UpdateStatesDefined' hu\n  \u00b7 simp [List.unzip_zip, UpdateStatesLength hu, InitStatesLength hi,\n      List.Disjoint]\n    intro k hk hk'\n    simpa [InitStatesNotDefined hi k hk'] using UpdateStatesDefined hu k hk"
+}

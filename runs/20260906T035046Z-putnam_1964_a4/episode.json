@@ -1,0 +1,124 @@
+{
+  "timestamp": "20260906T035046Z",
+  "name": "putnam_1964_a4",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260906T035046Z-putnam_1964_a4",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turn_budget": 20,
+    "thread_id": "01a074d7-15ad-7903-b08c-05bb6ffcd1e0",
+    "exit_code": 0,
+    "wall_seconds": 2004.5,
+    "usage": {
+      "input_tokens": 3919610,
+      "cached_input_tokens": 3856896,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 20325,
+      "reasoning_output_tokens": 6606,
+      "num_turns": 32
+    }
+  },
+  "before": {
+    "length": 1769,
+    "heartbeats": 111479,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1964_a4",
+    "compiled": true,
+    "length": 669,
+    "reference_length": 1769,
+    "length_reduction_pct": 62.18,
+    "heartbeats": 9091,
+    "reference_heartbeats": 111479,
+    "heartbeat_reduction_pct": 91.85,
+    "objective_sum_pct": 154.03,
+    "survival_pct": 100.0,
+    "combined_pct": 84.68,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 10819,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 9199,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 9091,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 111476
+  },
+  "agent_final": {
+    "name": "putnam_1964_a4",
+    "compiled": true,
+    "length": 669,
+    "reference_length": 1769,
+    "length_reduction_pct": 62.18,
+    "heartbeats": 9091,
+    "reference_heartbeats": 111479,
+    "heartbeat_reduction_pct": 91.85,
+    "objective_sum_pct": 154.03,
+    "survival_pct": 100.0,
+    "combined_pct": 84.68,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 10819,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 9199,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 9091,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 111476
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem putnam_1964_a4\n(u : \u2115 \u2192 \u2124)\n(boundedu : \u2203 B T : \u2124, \u2200 n : \u2115, B \u2264 u n \u2227 u n \u2264 T)\n(hu : \u2200 n \u2265 4, u n = ((u (n - 1) + u (n - 2) + u (n - 3) * u (n - 4)) : \u211d) / (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) \u2227 (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) \u2260 0)\n: (\u2203 N c : \u2115, c > 0 \u2227 \u2200 n \u2265 N, u (n + c) = u n) := by\n  obtain \u27e8B, T, hB\u27e9 := boundedu\n  let f : \u2115 \u2192 \u2124 \u00d7 \u2124 \u00d7 \u2124 \u00d7 \u2124 := fun n \u21a6 (u n, u (n + 1), u (n + 2), u (n + 3))\n  let S : Set (\u2124 \u00d7 \u2124 \u00d7 \u2124 \u00d7 \u2124) :=\n    Set.Icc B T \u00d7\u02e2 (Set.Icc B T \u00d7\u02e2 (Set.Icc B T \u00d7\u02e2 Set.Icc B T))\n  have hfin : S.Finite := (Set.finite_Icc B T).prod ((Set.finite_Icc B T).prod\n    ((Set.finite_Icc B T).prod (Set.finite_Icc B T)))\n  obtain \u27e8i, j, hij, hf\u27e9 := hfin.exists_lt_map_eq_of_forall_mem (f := f) (fun n \u21a6 by\n    exact \u27e8hB n, hB (n + 1), hB (n + 2), hB (n + 3)\u27e9)\n  have hf' : u i = u j \u2227 u (i + 1) = u (j + 1) \u2227 u (i + 2) = u (j + 2) \u2227\n      u (i + 3) = u (j + 3) := by\n    simpa only [f, Prod.mk.injEq] using hf\n  have huv : \u2200 m, u (i + m) = u (j + m) := by\n    intro m\n    induction m using Nat.strong_induction_on with\n    | h m ih =>\n      match m with\n      | 0 => simpa using hf'.1\n      | 1 => simpa using hf'.2.1\n      | 2 => simpa using hf'.2.2.1\n      | 3 => simpa using hf'.2.2.2\n      | m + 4 =>\n        have hi := (hu (i + (m + 4)) (by omega)).1\n        have hj := (hu (j + (m + 4)) (by omega)).1\n        have h0 := ih m (by omega)\n        have h1 := ih (m + 1) (by omega)\n        have h2 := ih (m + 2) (by omega)\n        have h3 := ih (m + 3) (by omega)\n        simp only [show i + (m + 4) - 1 = i + (m + 3) by omega,\n          show i + (m + 4) - 2 = i + (m + 2) by omega,\n          show i + (m + 4) - 3 = i + (m + 1) by omega,\n          show i + (m + 4) - 4 = i + m by omega] at hi\n        simp only [show j + (m + 4) - 1 = j + (m + 3) by omega,\n          show j + (m + 4) - 2 = j + (m + 2) by omega,\n          show j + (m + 4) - 3 = j + (m + 1) by omega,\n          show j + (m + 4) - 4 = j + m by omega] at hj\n        have hr : (u (i + (m + 4)) : \u211d) = u (j + (m + 4)) := by\n          rw [hi, hj, h0, h1, h2, h3]\n        exact Int.cast_injective hr\n  refine \u27e8i, j - i, by omega, ?_\u27e9\n  intro n hn\n  have hni : i + (n - i) = n := by omega\n  have hnj : j + (n - i) = n + (j - i) := by omega\n  simpa only [hni, hnj] using (huv (n - i)).symm"
+}

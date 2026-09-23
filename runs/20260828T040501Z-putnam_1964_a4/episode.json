@@ -1,0 +1,85 @@
+{
+  "timestamp": "20260828T040501Z",
+  "name": "putnam_1964_a4",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260828T040501Z-putnam_1964_a4",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a0468a-e06d-7210-b3a6-b32cae03e816",
+    "exit_code": 0,
+    "wall_seconds": 2655.5
+  },
+  "before": {
+    "length": 1769,
+    "heartbeats": 111479,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1964_a4",
+    "compiled": true,
+    "statement_ok": true,
+    "objective_sum_pct": 0.0,
+    "survival_pct": 100.0,
+    "length_reduction_pct": 0.0,
+    "heartbeat_reduction_pct": 0.0,
+    "seed": "reference"
+  },
+  "agent_final": {
+    "name": "putnam_1964_a4",
+    "compiled": true,
+    "length": 435,
+    "reference_length": 1769,
+    "length_reduction_pct": 75.41,
+    "heartbeats": 3620,
+    "reference_heartbeats": 111479,
+    "heartbeat_reduction_pct": 96.75,
+    "objective_sum_pct": 172.16,
+    "survival_pct": 66.67,
+    "combined_pct": 79.61,
+    "compat": {
+      "v4.25.0": false,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 3678,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 3620,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 111476
+  },
+  "checkpoint_promotions": [
+    {
+      "hash": "a842952a28ae",
+      "claimed_sum": 172.16,
+      "confirmed_sum": 172.16,
+      "survival_pct": 66.67,
+      "accepted": false,
+      "reused": false
+    }
+  ],
+  "candidate": "theorem putnam_1964_a4\n(u : \u2115 \u2192 \u2124)\n(boundedu : \u2203 B T : \u2124, \u2200 n : \u2115, B \u2264 u n \u2227 u n \u2264 T)\n(hu : \u2200 n \u2265 4, u n = ((u (n - 1) + u (n - 2) + u (n - 3) * u (n - 4)) : \u211d) / (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) \u2227 (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) \u2260 0)\n: (\u2203 N c : \u2115, c > 0 \u2227 \u2200 n \u2265 N, u (n + c) = u n) := by \n  have h_main : \u2203 (i j : \u2115), i < j \u2227 (u i = u j \u2227 u (i + 1) = u (j + 1) \u2227 u (i + 2) = u (j + 2) \u2227 u (i + 3) = u (j + 3)) := by\n    obtain \u27e8B, T, hB\u27e9 := boundedu\n    have h\u2081 : \u2203 (i j : \u2115), i < j \u2227 (u i = u j \u2227 u (i + 1) = u (j + 1) \u2227 u (i + 2) = u (j + 2) \u2227 u (i + 3) = u (j + 3)) := by\n      \n      classical\n      \n      let f : \u2115 \u2192 (\u2124 \u00d7 \u2124 \u00d7 \u2124 \u00d7 \u2124) := fun n => (u n, u (n + 1), u (n + 2), u (n + 3))\n      have h\u2082 : Set.Finite (Set.range f) := by\n        have h\u2083 : Set.range f \u2286 Set.Icc (B, B, B, B) (T, T, T, T) := by\n          intro x hx\n          rcases hx with \u27e8n, rfl\u27e9\n          have h\u2084 := hB n\n          have h\u2085 := hB (n + 1)\n          have h\u2086 := hB (n + 2)\n          have h\u2087 := hB (n + 3)\n          simp only [Set.mem_Icc, Prod.le_def] at h\u2084 h\u2085 h\u2086 h\u2087 \u22a2\n          constructor <;>\n          (try constructor) <;>\n          (try constructor) <;>\n          (try constructor) <;>\n          (try simp_all [f]) <;>\n          (try nlinarith)\n        \n        have h\u2084 : Set.Finite (Set.Icc (B, B, B, B) (T, T, T, T)) := by\n          apply Set.Finite.subset (Set.finite_mem_finset (Finset.Icc (B, B, B, B) (T, T, T, T)))\n          intro x hx\n          simp_all [Set.mem_Icc]\n          <;>\n          (try aesop)\n        exact Set.Finite.subset h\u2084 h\u2083\n      \n      have h\u2083 : \u2203 (i j : \u2115), i < j \u2227 f i = f j := by\n        by_contra! h\u2084\n        have h\u2085 : Function.Injective f := by\n          intro i j h\u2086\n          by_cases h\u2087 : i = j\n          \u00b7 exact h\u2087\n          \u00b7 have h\u2088 : i < j \u2228 j < i := by omega\n            cases h\u2088 with\n            | inl h\u2088 =>\n              have h\u2089 := h\u2084 i j h\u2088\n              simp_all\n            | inr h\u2088 =>\n              have h\u2089 := h\u2084 j i h\u2088\n              simp_all\n        have h\u2086 : Set.Infinite (Set.range f) := Set.infinite_range_of_injective h\u2085\n        exact Set.not_infinite.mpr h\u2082 h\u2086\n      \n      obtain \u27e8i, j, h\u2084, h\u2085\u27e9 := h\u2083\n      refine' \u27e8i, j, h\u2084, _\u27e9\n      simp [f] at h\u2085 \u22a2\n      <;>\n      (try simp_all [Prod.ext_iff]) <;>\n      (try omega) <;>\n      (try aesop)\n    exact h\u2081\n  \n  have h_periodic : \u2203 N c : \u2115, c > 0 \u2227 \u2200 n \u2265 N, u (n + c) = u n := by\n    obtain \u27e8i, j, hij, h_eq\u27e9 := h_main\n    have h\u2081 : \u2200 m : \u2115, u (i + m) = u (j + m) := by\n      intro m\n      have h\u2082 : \u2200 m : \u2115, u (i + m) = u (j + m) := by\n        intro m\n        induction m using Nat.strong_induction_on with\n        | h m ih =>\n          match m with\n          | 0 =>\n            have h\u2083 := h_eq.1\n            simp at h\u2083 \u22a2\n            <;> simp_all [add_assoc]\n          | 1 =>\n            have h\u2083 := h_eq.2.1\n            simp at h\u2083 \u22a2\n            <;> simp_all [add_assoc]\n            <;> ring_nf at *\n            <;> omega\n          | 2 =>\n            have h\u2083 := h_eq.2.2.1\n            simp at h\u2083 \u22a2\n            <;> simp_all [add_assoc]\n            <;> ring_nf at *\n            <;> omega\n          | 3 =>\n            have h\u2083 := h_eq.2.2.2\n            simp at h\u2083 \u22a2\n            <;> simp_all [add_assoc]\n            <;> ring_nf at *\n            <;> omega\n          | m + 4 =>\n            have h\u2083 : i + (m + 4) \u2265 4 := by\n              have h\u2084 : i \u2265 0 := by linarith\n              omega\n            have h\u2084 : u (i + (m + 4)) = ((u (i + (m + 4) - 1) + u (i + (m + 4) - 2) + u (i + (m + 4) - 3) * u (i + (m + 4) - 4)) : \u211d) / (u (i + (m + 4) - 1) * u (i + (m + 4) - 2) + u (i + (m + 4) - 3) + u (i + (m + 4) - 4)) := by\n              have h\u2085 := hu (i + (m + 4)) (by omega)\n              have h\u2086 := h\u2085.1\n              norm_cast at h\u2086 \u22a2\n              <;> simp_all [add_assoc]\n              <;> ring_nf at *\n              <;> norm_num at *\n              <;> linarith\n            have h\u2085 : u (j + (m + 4)) = ((u (j + (m + 4) - 1) + u (j + (m + 4) - 2) + u (j + (m + 4) - 3) * u (j + (m + 4) - 4)) : \u211d) / (u (j + (m + 4) - 1) * u (j + (m + 4) - 2) + u (j + (m + 4) - 3) + u (j + (m + 4) - 4)) := by\n              have h\u2086 := hu (j + (m + 4)) (by\n                have h\u2087 : j \u2265 i + 1 := by omega\n                omega\n              )\n              have h\u2087 := h\u2086.1\n              norm_cast at h\u2087 \u22a2\n              <;> simp_all [add_assoc]\n              <;> ring_nf at *\n              <;> norm_num at *\n              <;> linarith\n            have h\u2086 : (i + (m + 4) - 1 : \u2115) = i + (m + 3) := by\n              omega\n            have h\u2087 : (i + (m + 4) - 2 : \u2115) = i + (m + 2) := by\n              omega\n            have h\u2088 : (i + (m + 4) - 3 : \u2115) = i + (m + 1) := by\n              omega\n            have h\u2089 : (i + (m + 4) - 4 : \u2115) = i + m := by\n              omega\n            have h\u2081\u2080 : (j + (m + 4) - 1 : \u2115) = j + (m + 3) := by\n              omega\n            have h\u2081\u2081 : (j + (m + 4) - 2 : \u2115) = j + (m + 2) := by\n              omega\n            have h\u2081\u2082 : (j + (m + 4) - 3 : \u2115) = j + (m + 1) := by\n              omega\n            have h\u2081\u2083 : (j + (m + 4) - 4 : \u2115) = j + m := by\n              omega\n            have h\u2081\u2084 : u (i + (m + 3)) = u (j + (m + 3)) := by\n              have h\u2081\u2085 := ih (m + 3) (by omega)\n              simp [add_assoc] at h\u2081\u2085 \u22a2\n              <;> omega\n            have h\u2081\u2085 : u (i + (m + 2)) = u (j + (m + 2)) := by\n              have h\u2081\u2086 := ih (m + 2) (by omega)\n              simp [add_assoc] at h\u2081\u2086 \u22a2\n              <;> omega\n            have h\u2081\u2086 : u (i + (m + 1)) = u (j + (m + 1)) := by\n              have h\u2081\u2087 := ih (m + 1) (by omega)\n              simp [add_assoc] at h\u2081\u2087 \u22a2\n              <;> omega\n            have h\u2081\u2087 : u (i + m) = u (j + m) := by\n              have h\u2081\u2088 := ih m (by omega)\n              simp [add_assoc] at h\u2081\u2088 \u22a2\n              <;> omega\n            have h\u2081\u2088 : (u (i + (m + 4)) : \u211d) = (u (j + (m + 4)) : \u211d) := by\n              rw [h\u2084, h\u2085]\n              simp [h\u2086, h\u2087, h\u2088, h\u2089, h\u2081\u2080, h\u2081\u2081, h\u2081\u2082, h\u2081\u2083] at *\n              norm_cast at *\n              <;>\n              (try simp_all [h\u2081\u2084, h\u2081\u2085, h\u2081\u2086, h\u2081\u2087]) <;>\n              (try ring_nf at *) <;>\n              (try field_simp at *) <;>\n              (try norm_cast at *) <;>\n              (try linarith)\n            norm_cast at h\u2081\u2088 \u22a2\n            <;>\n            (try simp_all) <;>\n            (try linarith)\n      exact h\u2082 m\n    have h\u2082 : \u2203 N c : \u2115, c > 0 \u2227 \u2200 n \u2265 N, u (n + c) = u n := by\n      use i, (j - i)\n      have h\u2083 : j - i > 0 := by\n        omega\n      constructor\n      \u00b7 exact h\u2083\n      \u00b7 intro n hn\n        have h\u2084 : u (n + (j - i)) = u n := by\n          have h\u2085 : u (i + (n - i)) = u (j + (n - i)) := by\n            have h\u2086 := h\u2081 (n - i)\n            simp [add_assoc] at h\u2086 \u22a2\n            <;> omega\n          have h\u2086 : i + (n - i) = n := by\n            omega\n          have h\u2087 : j + (n - i) = n + (j - i) := by\n            omega\n          rw [h\u2086] at h\u2085\n          rw [h\u2087] at h\u2085\n          linarith\n        exact h\u2084\n    exact h\u2082\n  \n  exact h_periodic"
+}

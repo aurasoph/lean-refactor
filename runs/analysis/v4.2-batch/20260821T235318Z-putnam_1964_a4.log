@@ -1,0 +1,43 @@
+{
+  "name": "putnam_1964_a4",
+  "compiled": true,
+  "length": 291,
+  "reference_length": 1769,
+  "length_reduction_pct": 83.55,
+  "heartbeats": 2010,
+  "reference_heartbeats": 111479,
+  "heartbeat_reduction_pct": 98.2,
+  "objective_sum_pct": 181.75,
+  "survival_pct": 100.0,
+  "combined_pct": 93.92,
+  "compat": {
+    "v4.25.0": true,
+    "v4.26.0": true,
+    "v4.27.0": true
+  },
+  "statement_ok": true,
+  "per_version": [
+    {
+      "version": "v4.25.0",
+      "ok": true,
+      "heartbeats": 2621,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "version": "v4.26.0",
+      "ok": true,
+      "heartbeats": 2056,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "version": "v4.27.0",
+      "ok": true,
+      "heartbeats": 2010,
+      "errors": [],
+      "note": ""
+    }
+  ],
+  "published_heartbeats": 111476
+}

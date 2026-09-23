@@ -1,0 +1,15 @@
+# Regenerable Lake / Lean artifacts (tens of GB). Keep lakefile.toml,
+# lake-manifest.json, lean-toolchain, and problems/.
+**/.lake/
+**/lake-packages/
+*.olean
+*.ilean
+*.c
+*.o
+
+__pycache__/
+*.pyc
+.DS_Store
+
+build-logs/
+_syntax_raw_hits.txt

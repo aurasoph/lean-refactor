@@ -1,0 +1,43 @@
+{
+  "name": "Cslib.CCS.bisimilarity_congr_choice",
+  "compiled": true,
+  "length": 96,
+  "reference_length": 251,
+  "length_reduction_pct": 61.75,
+  "heartbeats": 516,
+  "reference_heartbeats": 4002,
+  "heartbeat_reduction_pct": 87.11,
+  "objective_sum_pct": 148.86,
+  "survival_pct": 100.0,
+  "combined_pct": 82.95,
+  "compat": {
+    "v4.33.0-rc2": true,
+    "v4.32.0": true,
+    "v4.31.0": true
+  },
+  "statement_ok": true,
+  "per_version": [
+    {
+      "version": "v4.33.0-rc2",
+      "ok": true,
+      "heartbeats": 516,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "version": "v4.32.0",
+      "ok": true,
+      "heartbeats": 518,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "version": "v4.31.0",
+      "ok": true,
+      "heartbeats": 518,
+      "errors": [],
+      "note": ""
+    }
+  ],
+  "published_heartbeats": 3858
+}

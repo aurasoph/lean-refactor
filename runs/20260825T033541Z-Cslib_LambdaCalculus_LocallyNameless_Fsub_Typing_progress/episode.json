@@ -1,0 +1,109 @@
+{
+  "timestamp": "20260825T033541Z",
+  "name": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260825T033541Z-Cslib_LambdaCalculus_LocallyNameless_Fsub_Typing_progress",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a036fc-fb81-7d83-afeb-c0431627eb90",
+    "exit_code": 0,
+    "wall_seconds": 1151.2
+  },
+  "before": {
+    "length": 408,
+    "heartbeats": 60266,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+    "compiled": true,
+    "length": 360,
+    "reference_length": 408,
+    "length_reduction_pct": 11.76,
+    "heartbeats": 2563,
+    "reference_heartbeats": 60266,
+    "heartbeat_reduction_pct": 95.75,
+    "objective_sum_pct": 107.51,
+    "survival_pct": 100.0,
+    "combined_pct": 69.17,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 2563,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 2765,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 2734,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 59830
+  },
+  "agent_final": {
+    "name": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+    "compiled": true,
+    "length": 360,
+    "reference_length": 408,
+    "length_reduction_pct": 11.76,
+    "heartbeats": 2563,
+    "reference_heartbeats": 60266,
+    "heartbeat_reduction_pct": 95.75,
+    "objective_sum_pct": 107.51,
+    "survival_pct": 100.0,
+    "combined_pct": 69.17,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 2563,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 2765,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 2734,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 59830
+  },
+  "checkpoint_promotions": [],
+  "candidate": "lemma Typing.progress (der : Typing [] t \u03c4) : t.Value \u2228 \u2203 t', t \u2b62\u03b2\u1d5b t' := by\n  generalize eq : [] = \u0393 at der\n  have der' : Typing \u0393 t \u03c4 := der\n  induction der <;> subst eq\n  case var mem => grind\n  case app l r ih\u2081 ih\u2082 =>\n    cases ih\u2081 rfl l with\n    | inr h => exact .inr \u27e8_, .app\u2097 r.wf.2.1 h.choose_spec\u27e9\n    | inl v\u2081 =>\n      cases ih\u2082 rfl r with\n      | inr h => exact .inr \u27e8_, .app\u1d63 v\u2081 h.choose_spec\u27e9\n      | inl v\u2082 =>\n        obtain \u27e8_, b, rfl\u27e9 := l.canonical_form_abs v\u2081\n        exact .inr \u27e8_, .abs l.wf.2.1 v\u2082\u27e9\n  case tapp der sub ih =>\n    cases ih rfl der with\n    | inr h => exact .inr \u27e8_, .tapp sub.wf.2.1.lc h.choose_spec\u27e9\n    | inl v =>\n      obtain \u27e8_, b, rfl\u27e9 := der.canonical_form_tabs v\n      exact .inr \u27e8_, .tabs der.wf.2.1 sub.wf.2.1.lc\u27e9\n  case let' der _ ih _ =>\n    have \u27e8_, body\u27e9 := body_let.mp der'.wf.2.1\n    cases ih rfl der with\n    | inl v => exact .inr \u27e8_, .let_body v body\u27e9\n    | inr r => exact .inr \u27e8_, .let_bind r.choose_spec body\u27e9\n  case inl der _ ih => exact (ih rfl der).imp Value.inl fun \u27e8u, r\u27e9 => \u27e8_, .inl r\u27e9\n  case inr der _ ih => exact (ih rfl der).imp Value.inr fun \u27e8u, r\u27e9 => \u27e8_, .inr r\u27e9\n  case case der _ _ ih _ _ =>\n    have \u27e8_, b\u2082, b\u2083\u27e9 := body_case.mp der'.wf.2.1\n    cases ih rfl der with\n    | inr r => exact .inr \u27e8_, .case r.choose_spec b\u2082 b\u2083\u27e9\n    | inl v =>\n      obtain \u27e8u, rfl | rfl\u27e9 := der.canonical_form_sum v\n      all_goals cases v <;> grind only [Red.case_inl, Red.case_inr]\n  case sub => grind\n  case abs L _ _ =>\n    left\n    constructor\n    apply LC.abs L <;> grind only [\u2192 wf, cases Term.LC]\n  case tabs L _ _ =>\n    left\n    constructor\n    apply LC.tabs L <;> grind only [\u2192 wf, cases Term.LC]"
+}

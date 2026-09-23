@@ -1,0 +1,85 @@
+{
+  "timestamp": "20260825T070750Z",
+  "name": "Binius.BinaryBasefold.fold_advances_evaluation_poly",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260825T070750Z-Binius_BinaryBasefold_fold_advances_evaluation_poly",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a037bf-332e-7292-b6d8-dc1b16916be2",
+    "exit_code": 0,
+    "wall_seconds": 2177.3
+  },
+  "before": {
+    "length": 1906,
+    "heartbeats": 49451,
+    "compiled": true
+  },
+  "after": {
+    "name": "Binius.BinaryBasefold.fold_advances_evaluation_poly",
+    "compiled": true,
+    "statement_ok": true,
+    "objective_sum_pct": 0.0,
+    "survival_pct": 100.0,
+    "length_reduction_pct": 0.0,
+    "heartbeat_reduction_pct": 0.0,
+    "seed": "reference"
+  },
+  "agent_final": {
+    "name": "Binius.BinaryBasefold.fold_advances_evaluation_poly",
+    "compiled": true,
+    "length": 668,
+    "reference_length": 1906,
+    "length_reduction_pct": 64.95,
+    "heartbeats": 17413,
+    "reference_heartbeats": 49451,
+    "heartbeat_reduction_pct": 64.79,
+    "objective_sum_pct": 129.74,
+    "survival_pct": 33.33,
+    "combined_pct": 54.36,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": false,
+      "v4.29.0": false
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 17413,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.30.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [],
+        "note": "source file not found: ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude.lean"
+      },
+      {
+        "version": "v4.29.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [],
+        "note": "source file not found: ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude.lean"
+      }
+    ],
+    "published_heartbeats": 45273
+  },
+  "checkpoint_promotions": [
+    {
+      "hash": "c9ccfbf100a4",
+      "claimed_sum": 129.74,
+      "confirmed_sum": 129.74,
+      "survival_pct": 33.33,
+      "accepted": false,
+      "reused": false
+    }
+  ],
+  "candidate": "theorem fold_advances_evaluation_poly\n  (i : Fin (\u2113)) (h_i_succ_lt : i + 1 < \u2113 + \ud835\udce1)\n  (coeffs : Fin (2 ^ (\u2113 - \u2191i)) \u2192 L) (r_chal : L) :\n  let P_i : L[X] := intermediateEvaluationPoly \ud835\udd3dq \u03b2 h_\u2113_add_R_rate (i := \u27e8i, by\n    exact Nat.lt_trans (n := i) (k := \u2113+1) (m := \u2113) (h\u2081 := i.isLt) (by exact Nat.lt_add_one \u2113)\n  \u27e9) coeffs\n  let f_i := fun (x : (sDomain \ud835\udd3dq \u03b2 h_\u2113_add_R_rate)\n      \u27e8i, by exact Nat.lt_trans (n := i) (k := r) (m := \u2113) (h\u2081 := by omega) (by omega)\u27e9) =>\n    P_i.eval (x.val : L)\n  let f_i_plus_1 := fold (i := \u27e8i, by omega\u27e9) (h_i := by omega) (f := f_i) (r_chal := r_chal)\n  let new_coeffs := fun j : Fin (2^(\u2113 - (i + 1))) =>\n    (1 - r_chal) * (coeffs \u27e8j.val * 2, by\n      rw [\u2190Nat.add_zero (j.val * 2)]\n      apply mul_two_add_bit_lt_two_pow (c := \u2113 - i) (a := j) (b := \u2113 - (\u2191i + 1))\n        (i := 0) (by omega) (by omega)\n    \u27e9) +\n    r_chal * (coeffs \u27e8j.val * 2 + 1, by\n      apply mul_two_add_bit_lt_two_pow (c := \u2113 - i) (a := j) (b := \u2113 - (\u2191i + 1))\n        (i := 1) (by omega) (by omega)\n    \u27e9)\n  let P_i_plus_1 :=\n    intermediateEvaluationPoly \ud835\udd3dq \u03b2 h_\u2113_add_R_rate (i := \u27e8i+1, by omega\u27e9) new_coeffs\n  \u2200 (y : (sDomain \ud835\udd3dq \u03b2 h_\u2113_add_R_rate)\n    \u27e8i+1, by omega\u27e9), f_i_plus_1 y = P_i_plus_1.eval y.val := by\n  simp only\n  intro y\n  set fiberMap := qMap_total_fiber \ud835\udd3dq \u03b2 (i := \u27e8i, by omega\u27e9) (steps := 1)\n    (h_i_add_steps := by simp only; omega) (y := y)\n  set x\u2080 := fiberMap 0\n  set x\u2081 := fiberMap 1\n  set P_i := intermediateEvaluationPoly \ud835\udd3dq \u03b2 h_\u2113_add_R_rate (i := \u27e8i, by omega\u27e9) coeffs\n  set new_coeffs := fun j : Fin (2^(\u2113 - (i + 1))) =>\n    (1 - r_chal) * (coeffs \u27e8j.val * 2, by\n      have h : j.val * 2 < 2^(\u2113 - (i + 1)) * 2 := by omega\n      have h2 : 2^(\u2113 - i) = 2^(\u2113 - (i + 1)) * 2 := by\n        conv_rhs => enter[2]; rw [\u2190Nat.pow_one 2]\n        rw [\u2190pow_add]; congr\n        rw [Nat.sub_add_eq_sub_sub_rev (h1 := by omega) (h2 := by omega)]\n        -- \u22a2 \u2113 - \u2191i = \u2113 - (\u2191i + 1 - 1)\n        rw [Nat.add_sub_cancel (n := i) (m := 1)]\n      omega\n    \u27e9) +\n    r_chal * (coeffs \u27e8j.val * 2 + 1, by\n      apply mul_two_add_bit_lt_two_pow (c := \u2113 - i) (a := j) (b := \u2113 - (\u2191i + 1)) (i := 1)\n      \u00b7 omega\n      \u00b7 omega\n    \u27e9)\n  have h_eval_qMap_x\u2080 : (AdditiveNTT.qMap \ud835\udd3dq \u03b2 \u27e8i, by omega\u27e9).eval x\u2080.val = y := by\n    have h := iteratedQuotientMap_k_eq_1_is_qMap \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i (by omega) x\u2080\n    simp only [Subtype.eq_iff] at h\n    rw [h.symm]\n    have h_res := is_fiber_iff_generates_quotient_point \ud835\udd3dq \u03b2 i (steps := 1) (by omega)\n      (x := x\u2080) (y := y).mpr (by rw [pointToIterateQuotientIndex_qMap_total_fiber_eq_self])\n    rw [h_res]\n    -- exact qMap_eval_fiber_eq_self \u27e6L\u27e7 \u27e8i + 1, by omega\u27e9 (by simp only; omega) h_i_succ_lt y 0\n  have h_eval_qMap_x\u2081 : (AdditiveNTT.qMap \ud835\udd3dq \u03b2 \u27e8i, by omega\u27e9).eval x\u2081.val = y := by\n    have h := iteratedQuotientMap_k_eq_1_is_qMap \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i (by omega) x\u2081\n    simp only [Subtype.eq_iff] at h\n    rw [h.symm]\n    have h_res := is_fiber_iff_generates_quotient_point \ud835\udd3dq \u03b2 i (steps := 1) (by omega)\n      (x := x\u2081) (y := y).mpr (by rw [pointToIterateQuotientIndex_qMap_total_fiber_eq_self])\n    rw [h_res]\n  have hx\u2080 := qMap_total_fiber_basis_sum_repr \ud835\udd3dq \u03b2 i (steps := 1)\n    (h_i_add_steps := by omega) y 0\n  have hx\u2081 := qMap_total_fiber_basis_sum_repr \ud835\udd3dq \u03b2 i (steps := 1)\n    (h_i_add_steps := by omega) y 1\n  simp only [Fin.isValue] at hx\u2080 hx\u2081\n\n  have h_fiber_diff : x\u2081.val - x\u2080.val = 1 := by\n    simp only [Fin.isValue, x\u2081, x\u2080, fiberMap]\n    rw [hx\u2081, hx\u2080]\n    simp only [Fin.isValue, AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]\n    have h_index : \u2113 + \ud835\udce1 - i = (\u2113 + \ud835\udce1 - (i.val + 1)) + 1 := by omega\n    rw! (castMode := .all) [h_index]\n    rw [Fin.sum_univ_succ, Fin.sum_univ_succ] -- (free_term + y_repr) - (free_term + y_repr) = 1\n    -- First, simplify the free terms\n    simp only [fiber_coeff, eqRec_eq_cast, lt_one_iff, reducePow, Fin.isValue,\n      Fin.coe_ofNat_eq_mod, mod_succ, dite_smul, ite_smul, zero_smul, one_smul, zero_mod]\n    have h_cast_0 :\n        (cast (Eq.symm h_index \u25b8 rfl : Fin (\u2113 + \ud835\udce1 - (\u2191i + 1) + 1) = Fin (\u2113 + \ud835\udce1 - \u2191i)) 0).val =\n        0 := by\n      rw [\u2190Fin.cast_eq_cast (h := by omega)]\n      rw [Fin.cast_val_eq_val (h_eq := by omega)]\n      simp only [Fin.coe_ofNat_eq_mod, mod_succ_eq_iff_lt, succ_eq_add_one, lt_add_iff_pos_left]\n      omega\n    have h_cast_1 :\n        (cast (Eq.symm h_index \u25b8 rfl : Fin (\u2113 + \ud835\udce1 - (\u2191i + 1) + 1) = Fin (\u2113 + \ud835\udce1 - \u2191i)) 1).val =\n        1 := by\n      rw [\u2190Fin.cast_eq_cast (h := by omega)]\n      rw [Fin.cast_val_eq_val (h_eq := by omega)]\n      simp only [Fin.coe_ofNat_eq_mod, mod_succ_eq_iff_lt, succ_eq_add_one,\n        lt_add_iff_pos_left, tsub_pos_iff_lt]\n      omega\n    simp only [h_cast_0, \u2193reduceDIte]\n    have h_getBit_0_of_0 : Nat.getBit (k := 0) (n := 0) = 0 := by\n      simp only [getBit, shiftRight_zero, and_one_is_mod, zero_mod]\n    have h_getBit_0_of_1 : Nat.getBit (k := 0) (n := 1) = 1 := by\n      simp only [getBit, shiftRight_zero, Nat.and_self]\n    simp only [h_getBit_0_of_1, one_ne_zero, \u2193reduceIte, h_getBit_0_of_0, zero_add]\n    rw! (castMode := .all) [\u2190h_index]\n    rw [cast_eq]\n    simp only [get_sDomain_basis, Fin.coe_ofNat_eq_mod, zero_mod, add_zero, cast_eq]\n    rw [normalizedW\u1d62_eval_\u03b2\u1d62_eq_1 \ud835\udd3dq \u03b2]\n    ring_nf\n    conv_rhs => rw [\u2190add_zero (a := 1)]\n    rw [add_sub_assoc]\n    congr 1\n    rw [sub_eq_zero]\n    apply Finset.sum_congr (h := by rfl)\n    simp only [mem_univ, congr_eqRec, Fin.val_succ, Nat.add_eq_zero, one_ne_zero, and_false,\n      \u2193reduceDIte, add_tsub_cancel_right, Fin.eta, imp_self, implies_true]\n  set P_i_plus_1 :=\n    intermediateEvaluationPoly \ud835\udd3dq \u03b2 h_\u2113_add_R_rate (i := \u27e8i+1, by omega\u27e9) new_coeffs\n  -- Set up the even and odd refinement polynomials\n  set P\u2080_coeffs := fun j : Fin (2^(\u2113 - (i + 1))) => coeffs \u27e8j.val * 2, by\n    have h1 : \u2113 - (i + 1) + 1 = \u2113 - i := by omega\n    have h2 : 2^(\u2113 - (i + 1) + 1) = 2^(\u2113 - i) := by rw [h1]\n    have h3 : 2^(\u2113 - (i + 1)) * 2 = 2^(\u2113 - (i + 1) + 1) := by rw [pow_succ]\n    rw [\u2190 h2, \u2190 h3]; omega\u27e9\n  set P\u2081_coeffs := fun j : Fin (2^(\u2113 - (i + 1))) => coeffs \u27e8j.val * 2 + 1, by\n    have h1 : \u2113 - (i + 1) + 1 = \u2113 - i := by omega\n    have h2 : 2^(\u2113 - (i + 1) + 1) = 2^(\u2113 - i) := by rw [h1]\n    have h3 : 2^(\u2113 - (i + 1)) * 2 = 2^(\u2113 - (i + 1) + 1) := by rw [pow_succ]\n    rw [\u2190 h2, \u2190 h3]; omega\u27e9\n  set P\u2080 := evenRefinement \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i coeffs\n  set P\u2081 := oddRefinement \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i coeffs\n  have h_P_i_eval := evaluation_poly_split_identity \ud835\udd3dq \u03b2 h_\u2113_add_R_rate \u27e8i, by omega\u27e9 coeffs\n  -- Equation 39 : P^(i)(X) = P\u2080^(i+1)(q^(i)(X)) + X \u00b7 P\u2081^(i+1)(q^(i)(X))\n  have h_equation_39_x\u2080 : P_i.eval x\u2080.val = P\u2080.eval y.val + x\u2080.val * P\u2081.eval y.val := by\n    simp only [h_P_i_eval, Fin.eta, Polynomial.eval_add, eval_comp,\n      h_eval_qMap_x\u2080, Polynomial.eval_mul, Polynomial.eval_X, P_i, P\u2080, P\u2081]\n  have h_equation_39_x\u2081 : P_i.eval x\u2081.val = P\u2080.eval y.val + x\u2081.val * P\u2081.eval y.val := by\n    simp only [h_P_i_eval, Fin.eta, Polynomial.eval_add, eval_comp,\n      h_eval_qMap_x\u2081, Polynomial.eval_mul, Polynomial.eval_X, P_i, P\u2080, P\u2081]\n  set f_i := fun (x : (sDomain \ud835\udd3dq \u03b2 h_\u2113_add_R_rate) \u27e8i, by omega\u27e9) => P_i.eval (x.val : L)\n  set f_i_plus_1 := fold (i := \u27e8i, by omega\u27e9) (h_i := by omega) (f := f_i) (r_chal := r_chal)\n  -- Unfold the definition of f_i_plus_1 using the fold function\n  have h_fold_def : f_i_plus_1 y =\n      f_i x\u2080 * ((1 - r_chal) * x\u2081.val - r_chal) +\n      f_i x\u2081 * (r_chal - (1 - r_chal) * x\u2080.val) := rfl\n  -- Main calculation following the outline\n  calc f_i_plus_1 y\n    = f_i x\u2080 * ((1 - r_chal) * x\u2081.val - r_chal) +\n        f_i x\u2081 * (r_chal - (1 - r_chal) * x\u2080.val) := h_fold_def\n    _ = P_i.eval x\u2080.val * ((1 - r_chal) * x\u2081.val - r_chal) +\n        P_i.eval x\u2081.val * (r_chal - (1 - r_chal) * x\u2080.val) := by simp only [f_i]\n    _ = (P\u2080.eval y.val + x\u2080.val * P\u2081.eval y.val) * ((1 - r_chal) * x\u2081.val - r_chal) +\n        (P\u2080.eval y.val + x\u2081.val * P\u2081.eval y.val) * (r_chal - (1 - r_chal) * x\u2080.val) := by\n      rw [h_equation_39_x\u2080, h_equation_39_x\u2081]\n    _ = P\u2080.eval y.val * ((1 - r_chal) * x\u2081.val - r_chal + r_chal - (1 - r_chal) * x\u2080.val) +\n        P\u2081.eval y.val * (x\u2080.val * ((1 - r_chal) * x\u2081.val - r_chal) +\n          x\u2081.val * (r_chal - (1 - r_chal) * x\u2080.val)) := by ring\n    _ = P\u2080.eval y.val * ((1 - r_chal) * (x\u2081.val - x\u2080.val)) +\n        P\u2081.eval y.val * ((x\u2081.val - x\u2080.val) * r_chal) := by ring\n    _ = P\u2080.eval y.val * (1 - r_chal) + P\u2081.eval y.val * r_chal := by rw [h_fiber_diff]; ring\n    _ = P_i_plus_1.eval y.val := by\n      simp only [P_i_plus_1, P\u2080, P\u2081, new_coeffs, evenRefinement, oddRefinement,\n        intermediateEvaluationPoly]\n      conv_lhs => enter [1]; rw [mul_comm, \u2190Polynomial.eval_C_mul]\n      conv_lhs => enter [2]; rw [mul_comm, \u2190Polynomial.eval_C_mul]\n      -- \u22a2 eval y (C (1-r) * \u2211...) + eval y (C r * \u2211...) = eval y (\u2211...)\n      rw [\u2190Polynomial.eval_add]\n      -- \u22a2 poly_left.eval y = poly_right.eval y\n      congr\n      simp_rw [mul_sum, \u2190Finset.sum_add_distrib]\n      -- We now prove that the terms inside the sums are equal for each index.\n      apply Finset.sum_congr rfl\n      intro j hj\n      have h_j_lt : j.val < 2 ^ (\u2113 - (\u2191i + 1)) := by\n        rw [Nat.sub_add_eq]\n        omega\n      conv_lhs => enter [1]; rw [mul_comm (a := Polynomial.C (coeffs \u27e8j.val * 2, by\n        rw [\u2190Nat.add_zero (j.val * 2)]\n        apply mul_two_add_bit_lt_two_pow (c := \u2113 - i) (a := j) (b := \u2113 - (\u2191i + 1))\n          (i := 0) (by omega) (by omega)\u27e9)), \u2190mul_assoc,\n        mul_comm (a := Polynomial.C (1 - r_chal))]; rw [mul_assoc]\n      conv_lhs => enter [2]; rw [mul_comm (a := Polynomial.C (coeffs \u27e8j.val * 2 + 1, by\n        apply mul_two_add_bit_lt_two_pow (c := \u2113 - i) (a := j) (b := \u2113 - (\u2191i + 1))\n          (i := 1) (by omega) (by omega)\u27e9)), \u2190mul_assoc,\n        mul_comm (a := Polynomial.C r_chal)]; rw [mul_assoc]\n      conv_rhs => rw [mul_comm]\n      rw [\u2190mul_add]\n      congr\n      simp only [\u2190Polynomial.C_mul, \u2190Polynomial.C_add]"
+}

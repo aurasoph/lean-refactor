@@ -1,0 +1,109 @@
+{
+  "timestamp": "20260828T070523Z",
+  "name": "Core.InitsUpdatesComm",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260828T070523Z-Core_InitsUpdatesComm",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a04730-03fb-78c3-886e-b4f0a1bb112e",
+    "exit_code": 0,
+    "wall_seconds": 729.8
+  },
+  "before": {
+    "length": 224,
+    "heartbeats": 4547,
+    "compiled": true
+  },
+  "after": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "length": 87,
+    "reference_length": 224,
+    "length_reduction_pct": 61.16,
+    "heartbeats": 311,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": 93.16,
+    "objective_sum_pct": 154.32,
+    "survival_pct": 100.0,
+    "combined_pct": 84.77,
+    "compat": {
+      "v4.29.1": true,
+      "v4.27.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": true,
+        "heartbeats": 311,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 211,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 170,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "agent_final": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "length": 87,
+    "reference_length": 224,
+    "length_reduction_pct": 61.16,
+    "heartbeats": 311,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": 93.16,
+    "objective_sum_pct": 154.32,
+    "survival_pct": 100.0,
+    "combined_pct": 84.77,
+    "compat": {
+      "v4.29.1": true,
+      "v4.27.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": true,
+        "heartbeats": 311,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 211,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 170,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem InitsUpdatesComm\n  {P : PureExpr} {\u03c3 \u03c3' \u03c3'' : SemanticStore P}\n  {ks ks' : List P.Ident} {vs vs' : List P.Expr} :\n  UpdateStates \u03c3 ks vs \u03c3' \u2192\n  InitStates \u03c3' ks' vs' \u03c3'' \u2192\n  \u2203 \u03c3\u2081,\n    \u03c3\u2081 = (updatedStates \u03c3 ks' vs') \u2227\n    InitStates \u03c3 ks' vs' \u03c3\u2081 \u2227\n    UpdateStates \u03c3\u2081 ks vs \u03c3'' := by\n  intros Hup Hinit\n  have Hu := UpdateStatesLength Hup\n  have Hi := InitStatesLength Hinit\n  refine \u27e8_, rfl, updatedStatesInit Hi\n    (UpdateStatesNotDefMonotone' (InitStatesNotDefined Hinit) Hup) (InitStatesNodup Hinit), ?_\u27e9\n  \u00b7 simp [InitStatesUpdated Hinit, UpdateStatesUpdated Hup, updatedStates]\n    rw [updatedStatesComm]\n    \u00b7 apply updatedStatesUpdate Hu\n      exact updatedStatesDefMonotone <| UpdateStatesDefined' Hup\n    \u00b7 rw [List.unzip_zip Hu, List.unzip_zip Hi]\n      intro k hk hk'\n      simpa [InitStatesNotDefined Hinit k hk'] using\n        UpdateStatesDefined Hup k hk"
+}

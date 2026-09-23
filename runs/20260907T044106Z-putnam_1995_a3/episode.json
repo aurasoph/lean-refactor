@@ -1,0 +1,123 @@
+{
+  "timestamp": "20260907T044106Z",
+  "name": "putnam_1995_a3",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T044106Z-putnam_1995_a3",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 21,
+    "stop_reason": "max_turns",
+    "exit_code": 0,
+    "wall_seconds": 2710.9,
+    "usage": {
+      "prompt_tokens": 335091,
+      "completion_tokens": 9882,
+      "total_tokens": 344973,
+      "cost_usd": 1.157527,
+      "num_turns": 21
+    }
+  },
+  "before": {
+    "length": 4085,
+    "heartbeats": 14133,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1995_a3",
+    "compiled": true,
+    "length": 293,
+    "reference_length": 4085,
+    "length_reduction_pct": 92.83,
+    "heartbeats": 3828,
+    "reference_heartbeats": 14133,
+    "heartbeat_reduction_pct": 72.91,
+    "objective_sum_pct": 165.74,
+    "survival_pct": 100.0,
+    "combined_pct": 88.58,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 4792,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 3911,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 3828,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 14130
+  },
+  "agent_final": {
+    "name": "putnam_1995_a3",
+    "compiled": true,
+    "length": 293,
+    "reference_length": 4085,
+    "length_reduction_pct": 92.83,
+    "heartbeats": 3828,
+    "reference_heartbeats": 14133,
+    "heartbeat_reduction_pct": 72.91,
+    "objective_sum_pct": 165.74,
+    "survival_pct": 100.0,
+    "combined_pct": 88.58,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 4792,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 3911,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 3828,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 14130
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem putnam_1995_a3\n(relation : (Fin 9 \u2192 \u2124) \u2192 (Fin 9 \u2192 \u2124) \u2192 Prop)\n(digits_to_num : (Fin 9 \u2192 \u2124) \u2192 \u2124)\n(hdigits_to_num : digits_to_num = fun dig => \u2211 i : Fin 9, (dig i) * 10^i.1)\n(hrelation : \u2200 d e : (Fin 9 \u2192 \u2124), relation d e \u2194 (\u2200 i : Fin 9, d i < 10 \u2227 d i \u2265 0 \u2227 e i < 10 \u2227 e i \u2265 0) \u2227 (\u2200 i : Fin 9, 7 \u2223 (digits_to_num (fun j : Fin 9 => if j = i then e j else d j))))\n: \u2200 d e f : (Fin 9 \u2192 \u2124), ((relation d e) \u2227 (relation e f)) \u2192 (\u2200 i : Fin 9, 7 \u2223 d i - f i) := by\n  have step (d e : Fin 9 \u2192 \u2124) (h : relation d e) (i : Fin 9) :\n      7 \u2223 (e i - d i) * 10 ^ i.1 + digits_to_num d := by\n    have hi := ((hrelation d e).mp h).2 i\n    rw [hdigits_to_num] at hi \u22a2\n    convert hi using 1\n    symm\n    calc\n      _ = \u2211 j : Fin 9, ((if j = i then (e j - d j) * 10 ^ j.1 else 0) +\n          d j * 10 ^ j.1) := by\n        apply Finset.sum_congr rfl\n        intro j _\n        dsimp only\n        split_ifs <;> ring\n      _ = _ := by rw [Finset.sum_add_distrib]; simp\n  intro d e f h i\n  have hd := step d e h.1\n  have he := step e f h.2\n  have hs : 7 \u2223 digits_to_num e - digits_to_num d + 9 * digits_to_num d := by\n    simpa [sub_mul, Finset.sum_add_distrib, Finset.sum_sub_distrib, hdigits_to_num]\n      using Finset.dvd_sum (fun j (_ : j \u2208 (Finset.univ : Finset (Fin 9))) => hd j)\n  have hp : 7 \u2223 (d i - f i) * 10 ^ i.1 := by\n    convert dvd_sub (dvd_sub hs (dvd_mul_right 7 (digits_to_num d)))\n      (dvd_add (hd i) (he i)) using 1 <;> ring\n  have prime : Prime (7 : \u2124) := Int.prime_iff_natAbs_prime.mpr (by decide)\n  exact (prime.dvd_mul.mp hp).resolve_right\n    (fun hp => (by norm_num : \u00ac (7 : \u2124) \u2223 10) (prime.dvd_of_dvd_pow hp))"
+}

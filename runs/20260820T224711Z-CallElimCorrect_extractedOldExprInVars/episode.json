@@ -1,0 +1,42 @@
+{
+  "timestamp": "20260820T224711Z",
+  "name": "CallElimCorrect.extractedOldExprInVars",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260820T224711Z-CallElimCorrect_extractedOldExprInVars",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "thread_id": "01a0215b-5ec2-72a0-805b-1d8d2b906064",
+    "exit_code": 0,
+    "wall_seconds": 511.5
+  },
+  "before": {
+    "length": 222,
+    "heartbeats": 2708,
+    "compiled": true
+  },
+  "after": {
+    "name": "CallElimCorrect.extractedOldExprInVars",
+    "compiled": true,
+    "length": 148,
+    "reference_length": 222,
+    "length_reduction_pct": 33.33,
+    "heartbeats": 529,
+    "reference_heartbeats": 2708,
+    "heartbeat_reduction_pct": 80.47,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 529,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 2696
+  },
+  "candidate": "open OldExpressions in\ntheorem extractedOldExprInVars :\n  NormalizedOldExpr post \u2192\n  (extractOldExprVars post).Subset\n  (Imperative.HasVarsPure.getVars post) := by\n  intro h\n  change (extractOldExprVars post).Subset (Lambda.LExpr.LExpr.getVars post)\n  have ap {a b c d : List Expression.Ident} (h : a.Subset b) (k : c.Subset d) :=\n    List.Subset.app (List.subset_append_of_subset_left _ h)\n      (List.subset_append_of_subset_right _ k)\n  induction h with\n  | const | op | bvar | fvar => exact fun _ => nofun\n  | abs _ ih => exact ih\n  | quant _ _ iht ihe => exact ap iht ihe\n  | ite _ _ _ ihc iht ihe => exact ap (ap ihc iht) ihe\n  | eq _ _ ih\u2081 ih\u2082 => exact ap ih\u2081 ih\u2082\n  | app _ _ hn ihf ihe =>\n    unfold extractOldExprVars\n    split\n    \u00b7 exact List.subset_append_right _ _\n    \u00b7 next hf =>\n      cases hn .oldPred\n      exact (hf _ _ _ rfl).elim\n    \u00b7 exact ap ihf ihe"
+}

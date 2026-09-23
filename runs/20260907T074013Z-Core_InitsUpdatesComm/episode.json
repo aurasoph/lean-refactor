@@ -1,0 +1,123 @@
+{
+  "timestamp": "20260907T074013Z",
+  "name": "Core.InitsUpdatesComm",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T074013Z-Core_InitsUpdatesComm",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 15,
+    "stop_reason": "no_tool_calls",
+    "exit_code": 0,
+    "wall_seconds": 285.2,
+    "usage": {
+      "prompt_tokens": 174007,
+      "completion_tokens": 6970,
+      "total_tokens": 180977,
+      "cost_usd": 0.7096145,
+      "num_turns": 15
+    }
+  },
+  "before": {
+    "length": 224,
+    "heartbeats": 4547,
+    "compiled": true
+  },
+  "after": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "length": 90,
+    "reference_length": 224,
+    "length_reduction_pct": 59.82,
+    "heartbeats": 312,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": 93.14,
+    "objective_sum_pct": 152.96,
+    "survival_pct": 100.0,
+    "combined_pct": 84.32,
+    "compat": {
+      "v4.29.1": true,
+      "v4.27.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": true,
+        "heartbeats": 312,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 212,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 172,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "agent_final": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "length": 90,
+    "reference_length": 224,
+    "length_reduction_pct": 59.82,
+    "heartbeats": 312,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": 93.14,
+    "objective_sum_pct": 152.96,
+    "survival_pct": 100.0,
+    "combined_pct": 84.32,
+    "compat": {
+      "v4.29.1": true,
+      "v4.27.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": true,
+        "heartbeats": 312,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 212,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 172,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem InitsUpdatesComm\n  {P : PureExpr} {\u03c3 \u03c3' \u03c3'' : SemanticStore P}\n  {ks ks' : List P.Ident} {vs vs' : List P.Expr} :\n  UpdateStates \u03c3 ks vs \u03c3' \u2192\n  InitStates \u03c3' ks' vs' \u03c3'' \u2192\n  \u2203 \u03c3\u2081,\n    \u03c3\u2081 = (updatedStates \u03c3 ks' vs') \u2227\n    InitStates \u03c3 ks' vs' \u03c3\u2081 \u2227\n    UpdateStates \u03c3\u2081 ks vs \u03c3'' := by\n  intro hu hi\n  refine \u27e8_, rfl, updatedStatesInit (InitStatesLength hi)\n    (UpdateStatesNotDefMonotone' (InitStatesNotDefined hi) hu)\n    (InitStatesNodup hi), ?_\u27e9\n  simp only [InitStatesUpdated hi, UpdateStatesUpdated hu, updatedStates]\n  rw [updatedStatesComm]\n  \u00b7 exact updatedStatesUpdate (UpdateStatesLength hu)\n      (updatedStatesDefMonotone (UpdateStatesDefined' hu))\n  \u00b7 rw [List.unzip_zip (UpdateStatesLength hu), List.unzip_zip (InitStatesLength hi)]\n    intro k hk hk'\n    simpa [InitStatesNotDefined hi k hk'] using UpdateStatesDefined hu k hk"
+}

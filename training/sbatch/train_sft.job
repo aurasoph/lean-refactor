@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Real SFT run on a build_sft.py mixture, default base m-a-p/OProver-8B
+# (~16GB bf16). Needs an Ampere-or-newer card: on gpu-rtx6k (Turing, no bf16
+# SDPA kernels) attention falls back to the math kernel and OOMs on 20k-token
+# traces. ckpt-g2 (L40/L40S/H200) is preemptible; save_strategy=epoch keeps it
+# resumable. Stage templates/ next to train_sft.py in $ROOT.
+#SBATCH --job-name=lra-sft
+#SBATCH --account=ckpt-amath
+#SBATCH --partition=ckpt-g2
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=128G
+#SBATCH --time=12:00:00
+#SBATCH --output=/gscratch/amath/aurasoph/lean-refactor-training/logs/%x-%j.out
+
+set -euo pipefail
+ROOT=/gscratch/amath/aurasoph/lean-refactor-training
+MIXTURE=${MIXTURE:?set MIXTURE=data/<mixture>/<version>}
+MODEL=${MODEL:-m-a-p/OProver-8B}
+
+export HF_HOME=/gscratch/amath/aurasoph/hf_cache
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+
+source "$ROOT/venv/bin/activate"
+cd "$ROOT"
+
+python3 train_sft.py --data "$MIXTURE" --model "$MODEL" \
+    --out "checkpoints/$(basename "$(dirname "$MIXTURE")")-$(basename "$MIXTURE")" "$@"

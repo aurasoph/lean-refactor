@@ -1,0 +1,58 @@
+{
+  "timestamp": "20260820T231405Z",
+  "name": "interleaved_affine_gaps_imply_tensor_gaps",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260820T231405Z-interleaved_affine_gaps_imply_tensor_gaps",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "thread_id": "01a02174-029d-78f0-99ba-9c5b9b024dd8",
+    "exit_code": 0,
+    "wall_seconds": 1766.9
+  },
+  "before": {
+    "length": 1353,
+    "heartbeats": 10119,
+    "compiled": true
+  },
+  "after": {
+    "name": "interleaved_affine_gaps_imply_tensor_gaps",
+    "compiled": true,
+    "length": 620,
+    "reference_length": 1353,
+    "length_reduction_pct": 54.18,
+    "heartbeats": 5109,
+    "reference_heartbeats": 10119,
+    "heartbeat_reduction_pct": 49.51,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": true,
+      "v4.29.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 5109,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 5147,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.29.0",
+        "ok": true,
+        "heartbeats": 5752,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 9198
+  },
+  "candidate": "theorem interleaved_affine_gaps_imply_tensor_gaps\n    (hC_proximityGapAffineLines : e_\u03b5_correlatedAgreementAffineLinesNat\n      (F := F) (A := A) (\u03b9 := \u03b9) (C := MC) (e := e) (\u03b5 := \u03b5))\n    (h_interleaved_gaps : \u2200 m : \u2115, m \u2265 1 \u2192\n      e_\u03b5_correlatedAgreementAffineLinesNat (F := F)\n        (A := InterleavedSymbol A (Fin m)) (\u03b9 := \u03b9) (C := MC ^\u22c8 (Fin m)) e \u03b5) :\n    \u2200 (\u03d1 : \u2115), (h\u03d1_gt_0 : \u03d1 > 0) \u2192 \u03b4_\u03b5_multilinearCorrelatedAgreement_Nat (F := F) (A := A)\n      (\u03b9 := \u03b9) (C := MC) (\u03d1 := \u03d1) (e := e) (\u03b5 := \u03b5) := by\n    classical\n    intro \u03d1\n    induction \u03d1 with\n    | zero =>\n      intro u\n      contradiction\n    | succ \u03d1_sub_1 ih =>\n      cases \u03d1_sub_1 with\n      | zero =>\n        -- `\u03d1 = 1`\n        simp only [zero_add, gt_iff_lt, zero_lt_one, ModuleCode, forall_const]\n        intro u hprob_gt\n        simp_rw [multilinearCombine\u2081_eq_affineLineEvaluation (F := F) (u := u)] at hprob_gt\n        -- Convert sampling (r \u2190 (Fin 1 \u2192 F)) into sampling (r \u2190 F)\n        rw [prob_uniform_singleton_finFun_eq (F := F)\n          (P := fun r => \u0394\u2080(affineLineEvaluation (u 0) (u 1) r, MC) \u2264 e)] at hprob_gt\n        simp only [Nat.cast_one, ENNReal.coe_one, one_mul] at hprob_gt\n        have h_correlated_agreement := hC_proximityGapAffineLines (u 0) (u 1) hprob_gt\n        simp only [jointProximityNat\u2082, Fin.isValue] at h_correlated_agreement\n        have h_u_eq: u = finMapTwoWords (u 0) (u 1) := by\n          funext rowIdx\n          match rowIdx with\n          | 0 => rfl\n          | 1 => rfl\n        rw [h_u_eq.symm] at h_correlated_agreement\n        exact h_correlated_agreement\n      | succ \u03d1_sub_2 =>\n        intro _ u hP_multilinearCombine_close_gt\n        let n := \u03d1_sub_2 + 1\n        set U\u2080 : Fin (2 ^ n) \u2192 Word A \u03b9 :=\n          (splitHalfRowWiseInterleavedWords (\u03d1 := n) u).1\n        set U\u2081 : Fin (2 ^ n) \u2192 Word A \u03b9 :=\n          (splitHalfRowWiseInterleavedWords (\u03d1 := n) u).2\n        have h_snoc (r : Fin (n + 1) \u2192 F) :\n            Fin.snoc (fun i \u21a6 r i.castSucc) (r (Fin.last _)) = r := Fin.snoc_init_self r\n        have hP_split_r_last := prob_split_last_uniform_sampling_of_finFun\n          (\u03d1 := n) (F := F)\n          (P := fun r_last r_init \u21a6\n            \u0394\u2080(multilinearCombine (u:=u) (r:=Fin.snoc r_init r_last), MC) \u2264 e)\n        simp_rw [h_snoc] at hP_split_r_last\n        rw [hP_split_r_last] at hP_multilinearCombine_close_gt\n        -- Now we have two randomness sampling in hP_multilinearCombine_close_gt :\n        -- `((\u03d1_sub_2 + 1 + 1) * \u03b5) / |\ud835\udd3d|\n          -- < Pr_{ r_last; r_init }[  \u0394\u2080((Fin.snoc r_init r_last)|\u2a02|u, \u2191MC) \u2264 \u2191e)) ]` (0)\n        -- We need to achieve the upperbound for hP_multilinearCombine_close_gt probability by:\n        -- i.e. `Pr_{ r_last; r_init }[  \u0394\u2080((Fin.snoc r_init r_last)|\u2a02|u, \u2191MC) \u2264 \u2191e)) ]`\n        -- `= Pr_{ r_last; r_init }[ \u0394\u2080((r_init)|\u2a02|affineCombine(U\u2080, U\u2081, r_last), \u2191MC) \u2264 \u2191e)) ]`\n        -- `= PR_{ r_last }[ r_init; \u0394\u2080((r_init)|\u2a02|affineCombine(U\u2080, U\u2081, r_last), \u2191MC) \u2264 \u2191e)) ]`\n        -- Divide into two cases: r_last \u2208 R* and r_last \u2209 R*\n        -- `= Pr_{ r_last }[ r_last \u2208 R* \u2227\n          -- Pr_{ r_init }[ \u0394\u2080((r_init)|\u2a02|affineCombine(U\u2080, U\u2081, r_last), \u2191MC) \u2264 \u2191e)) ]` (1)\n        -- `+ Pr_{ r_last }[ r_last \u2209 R* \u2227\n          -- Pr_{ r_init }[ \u0394\u2080((r_init)|\u2a02|affineCombine(U\u2080, U\u2081, r_last), \u2191MC) \u2264 \u2191e)) ]` (2)\n        -- `(1) = Pr_{ r_last }[ r_last \u2208 R* ]` (3)\n        -- `(2): \u2200 r \u2209 R*, it's trivial that the probability\n          -- \u2264 ((\u03d1_sub_2 + 1) * \u03b5) / |\ud835\udd3d|, due to definition of membership of R*` (4)\n\n        -- Combine (0), (3), (4): we have `Pr_{ r_last }[ r_last \u2208 R* ] > \u03b5/|\ud835\udd3d|` (5)\n\n        -- Applying `correlatedAgreement_of_mem_R_star_tensor` to (5), we get\n          -- `\u0394\u2080((r_last)|\u2a02|affineCombine(U\u2080, U\u2081, r_last), \u2191MC) \u2264 \u2191e)) ] > \u03b5/|\ud835\udd3d|` (6)\n        -- This is premise for affineProxmityGaps of interleaved code (`h_interleaved_gaps`)\n          -- for `m = 2^{\u03d1_sub_2 + 1}`, which directly leads to Q.E.D.\n        -- Step 1: Apply multilinearCombine recursive form\n        -- We need the lemma `multilinearCombine u r = multilinearCombine`\n          -- `(affineLineEvaluation U\u2080 U\u2081 r_last) r_init` where `r = Fin.snoc r_init r_last`\n        have multilinearCombine_snoc_eq_multilinearCombine_affine\n          (r_init : Fin n \u2192 F) (r_last : F) : multilinearCombine u (Fin.snoc r_init r_last) =\n            multilinearCombine (affineLineEvaluation U\u2080 U\u2081 r_last) r_init := by\n          simpa only [Fin.snoc_last, Fin.init_snoc] using\n            multilinearCombine_recursive_form (u := u) (r := Fin.snoc r_init r_last)\n        simp_rw [multilinearCombine_snoc_eq_multilinearCombine_affine]\n          at hP_multilinearCombine_close_gt\n        -- hP_multilinearCombine_close_gt now looks like:\n        -- Pr_{ r_last \u2190 $\u1d56 F; r_init \u2190 $\u1d56 (Fin \u03d1_pred \u2192 F) }[ \u0394\u2080(multilinearCombine\n            -- (affineLineEvaluation U\u2080 U\u2081 r_last) r_init, \u2191MC) \u2264 \u2191e ] > \u2191(\u2191\u03d1 * \u2191\u03b5) / q\n        -- Step 2 & 3: Define R* and apply Law of Total Probability\n        let R_star_set := R_star_tensor MC (m:=n) (e:=e) (\u03b5:=\u03b5) U\u2080 U\u2081\n        -- Step 5: Show Pr[R*] > \u03b5 / q\n        have h_prob_Rstar_gt_eps_div_q : Pr_{ let r \u2190 $\u1d56 F }[ r \u2208 R_star_set ]\n          > (\u2191\u03b5 : ENNReal) / (Fintype.card F : ENNReal) :=\n          prob_R_star_gt_threshold (MC := MC) (\u03b5 := \u03b5) (\u03d1 := n) (u := u)\n            (e := e) hP_multilinearCombine_close_gt\n        have h_line_close_to_C_m : \u2200 (r : R_star_set),\n          jointProximityNat (u := affineLineEvaluation U\u2080 U\u2081 r.val) (e := e) (C := MC) := by\n          intro r_in_Rstar\n          apply correlatedAgreement_of_mem_R_star_tensor\n            (ih := ih (Nat.zero_lt_succ _)) (u := u)\n        -- Step 6: Apply Inductive Hypothesis for r_last \u2208 R*\n        -- Step 7: Apply Affine Gap of Interleaved Code C^(m = 2^(\u03d1_sub_2 + 1))\n        let good : F \u2192 Prop := fun r =>\n          jointProximityNat (C := MC) (u := affineLineEvaluation U\u2080 U\u2081 r) e\n        -- Need the hypothesis Pr[...] > \u03b5/q for h_C_m_gap\n        have h_prob_line_gt_eps_div_q :\n          Pr_{ let r \u2190 $\u1d56 F }[good r]\n            > (\u2191\u03b5 : ENNReal) / (Fintype.card F : ENNReal) := by\n            -- This is implied by h_prob_Rstar_gt_eps_div_q becuz R* is a subset of the success set\n            apply lt_of_le_of_lt' _ h_prob_Rstar_gt_eps_div_q\n            exact Pr_le_Pr_of_implies (D := $\u1d56 F)\n              (h_imp := fun r hr \u21a6 h_line_close_to_C_m \u27e8r, hr\u27e9)\n        -- Apply the gap property of C^m\n        have h_final_gap := h_interleaved_gaps (2^n) Nat.one_le_two_pow\n          (interleaveWordStack U\u2080) (interleaveWordStack U\u2081)\n          h_prob_line_gt_eps_div_q\n        apply CA_split_rowwise_implies_CA (u := u) (e := e)\n        exact h_final_gap"
+}

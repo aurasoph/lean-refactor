@@ -1,0 +1,43 @@
+{
+  "name": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+  "compiled": true,
+  "length": 344,
+  "reference_length": 408,
+  "length_reduction_pct": 15.69,
+  "heartbeats": 6096,
+  "reference_heartbeats": 60266,
+  "heartbeat_reduction_pct": 89.88,
+  "objective_sum_pct": 105.57,
+  "survival_pct": 100.0,
+  "combined_pct": 68.52,
+  "compat": {
+    "v4.33.0-rc2": true,
+    "v4.32.0": true,
+    "v4.31.0": true
+  },
+  "statement_ok": true,
+  "per_version": [
+    {
+      "version": "v4.33.0-rc2",
+      "ok": true,
+      "heartbeats": 6096,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "version": "v4.32.0",
+      "ok": true,
+      "heartbeats": 9120,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "version": "v4.31.0",
+      "ok": true,
+      "heartbeats": 9118,
+      "errors": [],
+      "note": ""
+    }
+  ],
+  "published_heartbeats": 59830
+}

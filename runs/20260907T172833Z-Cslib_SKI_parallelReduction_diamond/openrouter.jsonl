@@ -1,0 +1,4 @@
+{"turn": 1, "harness": "outer retry (2 left) after: openrouter request failed after 6 tries: HTTP Error 402: Payment Required"}
+{"turn": 1, "harness": "outer retry (1 left) after: openrouter request failed after 6 tries: HTTP Error 402: Payment Required"}
+{"turn": 1, "harness": "outer retry (0 left) after: openrouter request failed after 6 tries: HTTP Error 402: Payment Required"}
+{"turn": 1, "harness_error": "openrouter request failed after 6 tries: HTTP Error 402: Payment Required"}

@@ -1,0 +1,85 @@
+{
+  "timestamp": "20260822T164946Z",
+  "name": "Core.InitsUpdatesComm",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260822T164946Z-Core_InitsUpdatesComm",
+  "backend": "claude",
+  "codex": {
+    "backend": "claude",
+    "model": "opus",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "session_id": "7f684484-a996-4061-a733-414045df2b1e",
+    "exit_code": 1,
+    "wall_seconds": 599.8
+  },
+  "before": {
+    "length": 224,
+    "heartbeats": 4547,
+    "compiled": true
+  },
+  "after": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "statement_ok": true,
+    "objective_sum_pct": 0.0,
+    "survival_pct": 100.0,
+    "length_reduction_pct": 0.0,
+    "heartbeat_reduction_pct": 0.0,
+    "seed": "reference"
+  },
+  "agent_final": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": false,
+    "length": 1,
+    "reference_length": 224,
+    "length_reduction_pct": 99.55,
+    "heartbeats": null,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": null,
+    "objective_sum_pct": null,
+    "survival_pct": 0.0,
+    "combined_pct": null,
+    "compat": {
+      "v4.29.1": false,
+      "v4.27.0": false,
+      "v4.26.0": false
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [
+          "unexpected end of input; expected '{'",
+          "unsolved goals"
+        ],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [
+          "unexpected end of input; expected '{'",
+          "unsolved goals"
+        ],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [
+          "unexpected end of input; expected '{'",
+          "unsolved goals"
+        ],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem InitsUpdatesComm\n  {P : PureExpr} {\u03c3 \u03c3' \u03c3'' : SemanticStore P}\n  {ks ks' : List P.Ident} {vs vs' : List P.Expr} :\n  UpdateStates \u03c3 ks vs \u03c3' \u2192\n  InitStates \u03c3' ks' vs' \u03c3'' \u2192\n  \u2203 \u03c3\u2081,\n    \u03c3\u2081 = (updatedStates \u03c3 ks' vs') \u2227\n    InitStates \u03c3 ks' vs' \u03c3\u2081 \u2227\n    UpdateStates \u03c3\u2081 ks vs \u03c3'' := by\n  intros Hup Hinit\n  exists (updatedStates \u03c3 ks' vs')\n  have Hk : (isDefined \u03c3' ks) := UpdateStatesDefined Hup\n  have Hlen1 := InitStatesLength Hinit\n  have Hlen2 := UpdateStatesLength Hup\n  induction Hup generalizing \u03c3''\n  case update_none =>\n    simp_all\n    apply And.intro\n    refine updatedStatesInit Hlen1 ?_ ?_\n    exact InitStatesNotDefined Hinit\n    exact InitStatesNodup Hinit\n    simp [InitStatesUpdated Hinit]\n    constructor\n  case update_some \u03c3 x v \u03c3\u2080 xs vs \u03c3\u2081 Hup Hups ih =>\n    refine \u27e8rfl, ?_, ?_\u27e9\n    . apply updatedStatesInit Hlen1\n      apply UpdateStateNotDefMonotone' ?_ Hup\n      apply UpdateStatesNotDefMonotone' ?_ Hups\n      exact InitStatesNotDefined Hinit\n      exact InitStatesNodup Hinit\n    . apply UpdateStates.update_some (\u03c3':=updatedStates \u03c3\u2080 ks' vs')\n      . simp [UpdateStateUpdated Hup, updatedStates]\n        rw [\u2190 updatedStateComm']\n        . have Hdef := UpdateStateDefined' Hup\n          simp [isDefined, Option.isSome] at Hdef\n          split at Hdef <;> simp_all\n          next val heq =>\n          apply updatedStateUpdate (v':=val)\n          apply InitStatesSomeMonotone heq\n          apply updatedStatesInit\n          . simp_all\n          . apply UpdateStateNotDefMonotone' ?_ Hup\n            apply UpdateStatesNotDefMonotone' ?_ Hups\n            apply InitStatesNotDefined Hinit\n          . exact InitStatesNodup Hinit\n        . rw [List.unzip_zip] <;> simp_all\n          have Hnd := InitStatesNotDefined Hinit\n          simp [isNotDefined, isDefined] at *\n          apply Not.intro\n          intros Hin\n          specialize Hnd _ Hin\n          simp_all\n      . apply (ih Hinit ?_ ?_).2.2\n        . simp [isDefined] at * <;> simp_all\n        . simp_all"
+}

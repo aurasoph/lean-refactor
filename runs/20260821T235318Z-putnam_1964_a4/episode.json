@@ -1,0 +1,107 @@
+{
+  "timestamp": "20260821T235318Z",
+  "name": "putnam_1964_a4",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T235318Z-putnam_1964_a4",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a026be-47ac-7250-9412-623a67943ff4",
+    "exit_code": 0,
+    "wall_seconds": 1972.4
+  },
+  "before": {
+    "length": 1769,
+    "heartbeats": 111479,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1964_a4",
+    "compiled": true,
+    "length": 291,
+    "reference_length": 1769,
+    "length_reduction_pct": 83.55,
+    "heartbeats": 2010,
+    "reference_heartbeats": 111479,
+    "heartbeat_reduction_pct": 98.2,
+    "objective_sum_pct": 181.75,
+    "survival_pct": 100.0,
+    "combined_pct": 93.92,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 2621,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 2056,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 2010,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 111476
+  },
+  "agent_final": {
+    "name": "putnam_1964_a4",
+    "compiled": true,
+    "length": 291,
+    "reference_length": 1769,
+    "length_reduction_pct": 83.55,
+    "heartbeats": 2010,
+    "reference_heartbeats": 111479,
+    "heartbeat_reduction_pct": 98.2,
+    "objective_sum_pct": 181.75,
+    "survival_pct": 100.0,
+    "combined_pct": 93.92,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 2621,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 2056,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 2010,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 111476
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem putnam_1964_a4\n(u : \u2115 \u2192 \u2124)\n(boundedu : \u2203 B T : \u2124, \u2200 n : \u2115, B \u2264 u n \u2227 u n \u2264 T)\n(hu : \u2200 n \u2265 4, u n = ((u (n - 1) + u (n - 2) + u (n - 3) * u (n - 4)) : \u211d) / (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) \u2227 (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) \u2260 0)\n: (\u2203 N c : \u2115, c > 0 \u2227 \u2200 n \u2265 N, u (n + c) = u n) := by\n  obtain \u27e8B, T, h\u27e9 := boundedu\n  let f : \u2115 \u2192 Fin 4 \u2192 Set.Icc B T := fun n k => \u27e8u (n + k), h _\u27e9\n  obtain \u27e8i, j, hlt, hf\u27e9 := Set.finite_univ.exists_lt_map_eq_of_forall_mem (f := f)\n    fun _ => Set.mem_univ _\n  have hshift (m) : u (i + m) = u (j + m) :=\n    Nat.strong_induction_on m fun m ih => by\n    by_cases hm : m < 4\n    \u00b7 exact congrArg Subtype.val (congrFun hf \u27e8m, hm\u27e9)\n    \u00b7 apply Int.cast_injective (\u03b1 := \u211d)\n      rw [(hu (i + m) (by omega)).1, (hu (j + m) (by omega)).1]\n      have hp (k) (hk : 0 < k \u2227 k \u2264 4) :\n          u (i + m - k) = u (j + m - k) := by\n        have hkm := hk.2.trans (Nat.not_lt.mp hm)\n        rw [Nat.add_sub_assoc hkm i, Nat.add_sub_assoc hkm j]\n        exact ih (m - k) (Nat.sub_lt_of_pos_le hk.1 hkm)\n      rw [hp 1 (by decide), hp 2 (by decide), hp 3 (by decide), hp 4 (by decide)]\n  refine \u27e8i, j - i, Nat.sub_pos_of_lt hlt, ?_\u27e9\n  intro n hn\n  simpa only [show n + (j - i) = j + (n - i) by omega,\n    Nat.add_sub_of_le hn] using (hshift (n - i)).symm"
+}

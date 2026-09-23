@@ -1,0 +1,70 @@
+{
+  "timestamp": "20260824T185213Z",
+  "name": "putnam_1964_b2",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260824T185213Z-putnam_1964_b2",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a0351d-b522-7bd3-9c44-3a915f281d37",
+    "exit_code": 0,
+    "wall_seconds": 7139.1
+  },
+  "before": {
+    "length": 1754,
+    "heartbeats": 134501,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1964_b2",
+    "compiled": true,
+    "statement_ok": true,
+    "objective_sum_pct": 0.0,
+    "survival_pct": 100.0,
+    "length_reduction_pct": 0.0,
+    "heartbeat_reduction_pct": 0.0,
+    "seed": "reference"
+  },
+  "agent_final": {
+    "name": "putnam_1964_b2",
+    "compiled": false,
+    "length": 132,
+    "reference_length": 1754,
+    "length_reduction_pct": 92.47,
+    "heartbeats": 655,
+    "reference_heartbeats": 134501,
+    "heartbeat_reduction_pct": 99.51,
+    "objective_sum_pct": 191.98,
+    "survival_pct": 0.0,
+    "combined_pct": 63.99,
+    "compat": {
+      "v4.25.0": false,
+      "v4.26.0": false
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": false,
+        "heartbeats": 655,
+        "errors": [
+          "typeclass instance problem is stuck"
+        ],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 134499
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem putnam_1964_b2\n(S : Type*) [Fintype S] [Nonempty S]\n(P : Finset (Set S))\n(hPP : \u2200 T \u2208 P, \u2200 U \u2208 P, T \u2229 U \u2260 \u2205)\n(hPS : \u00ac\u2203 T : Set S, T \u2209 P \u2227 (\u2200 U \u2208 P, T \u2229 U \u2260 \u2205))\n: (P.card = 2 ^ (Fintype.card S - 1)) := by \n  have h_no_empty : \u2200 (T : Set S), T \u2208 P \u2192 T.Nonempty := by\n    intro T hT\n    have h\u2081 : T \u2229 T \u2260 \u2205 := hPP T hT T hT\n    have h\u2082 : T \u2229 T = T := by simp [Set.ext_iff]\n    rw [h\u2082] at h\u2081\n    exact Set.nonempty_iff_ne_empty.mpr h\u2081\n  \n  have h_subset_or_compl : \u2200 (A : Set S), A \u2208 P \u2228 A\u1d9c \u2208 P := by\n    intro A\n    by_contra! h\n    have h\u2081 : A \u2209 P := h.1\n    have h\u2082 : A\u1d9c \u2209 P := h.2\n    \n    have h\u2083 : \u2203 (U : Set S), U \u2208 P \u2227 A \u2229 U = \u2205 := by\n      have h\u2084 : \u00ac(A \u2209 P \u2227 \u2200 (U : Set S), U \u2208 P \u2192 A \u2229 U \u2260 \u2205) := by\n        intro h\u2085\n        have h\u2086 : \u2203 (T : Set S), T \u2209 P \u2227 (\u2200 U \u2208 P, T \u2229 U \u2260 \u2205) := by\n          refine' \u27e8A, _\u27e9\n          constructor\n          \u00b7 exact h\u2085.1\n          \u00b7 intro U hU\n            have h\u2087 := h\u2085.2 U hU\n            have h\u2088 : A \u2229 U \u2260 \u2205 := h\u2087\n            have h\u2089 : A \u2229 U = U \u2229 A := by\n              ext x\n              simp [Set.mem_inter_iff]\n              <;> tauto\n            have h\u2081\u2080 : U \u2229 A \u2260 \u2205 := by\n              intro h\u2081\u2081\n              apply h\u2088\n              simp_all [Set.ext_iff]\n              <;> aesop\n            simpa [Set.inter_comm] using h\u2081\u2080\n        exact hPS h\u2086\n      by_cases h\u2085 : A \u2209 P\n      \u00b7 have h\u2086 : \u00ac(\u2200 (U : Set S), U \u2208 P \u2192 A \u2229 U \u2260 \u2205) := by\n          intro h\u2087\n          exact h\u2084 \u27e8h\u2085, h\u2087\u27e9\n        push_neg at h\u2086\n        obtain \u27e8U, hU, h\u2088\u27e9 := h\u2086\n        refine' \u27e8U, hU, _\u27e9\n        have h\u2089 : A \u2229 U = \u2205 := by\n          by_contra h\u2081\u2080\n          have h\u2081\u2081 : A \u2229 U \u2260 \u2205 := h\u2081\u2080\n          simp_all [Set.ext_iff]\n          <;> aesop\n        exact h\u2089\n      \u00b7 exfalso\n        simp_all\n    \n    have h\u2084 : \u2203 (V : Set S), V \u2208 P \u2227 A\u1d9c \u2229 V = \u2205 := by\n      have h\u2085 : \u00ac(A\u1d9c \u2209 P \u2227 \u2200 (U : Set S), U \u2208 P \u2192 A\u1d9c \u2229 U \u2260 \u2205) := by\n        intro h\u2086\n        have h\u2087 : \u2203 (T : Set S), T \u2209 P \u2227 (\u2200 U \u2208 P, T \u2229 U \u2260 \u2205) := by\n          refine' \u27e8A\u1d9c, _\u27e9\n          constructor\n          \u00b7 exact h\u2086.1\n          \u00b7 intro U hU\n            have h\u2088 := h\u2086.2 U hU\n            have h\u2089 : A\u1d9c \u2229 U \u2260 \u2205 := h\u2088\n            have h\u2081\u2080 : A\u1d9c \u2229 U = U \u2229 A\u1d9c := by\n              ext x\n              simp [Set.mem_inter_iff]\n              <;> tauto\n            have h\u2081\u2081 : U \u2229 A\u1d9c \u2260 \u2205 := by\n              intro h\u2081\u2082\n              apply h\u2089\n              simp_all [Set.ext_iff]\n              <;> aesop\n            simpa [Set.inter_comm] using h\u2081\u2081\n        exact hPS h\u2087\n      by_cases h\u2086 : A\u1d9c \u2209 P\n      \u00b7 have h\u2087 : \u00ac(\u2200 (U : Set S), U \u2208 P \u2192 A\u1d9c \u2229 U \u2260 \u2205) := by\n          intro h\u2088\n          exact h\u2085 \u27e8h\u2086, h\u2088\u27e9\n        push_neg at h\u2087\n        obtain \u27e8V, hV, h\u2088\u27e9 := h\u2087\n        refine' \u27e8V, hV, _\u27e9\n        have h\u2089 : A\u1d9c \u2229 V = \u2205 := by\n          by_contra h\u2081\u2080\n          have h\u2081\u2081 : A\u1d9c \u2229 V \u2260 \u2205 := h\u2081\u2080\n          simp_all [Set.ext_iff]\n          <;> aesop\n        exact h\u2089\n      \u00b7 exfalso\n        simp_all\n    \n    obtain \u27e8U, hU, hU'\u27e9 := h\u2083\n    obtain \u27e8V, hV, hV'\u27e9 := h\u2084\n    \n    have h\u2085 : U \u2286 A\u1d9c := by\n      intro x hx\n      by_contra h\u2086\n      have h\u2087 : x \u2208 A := by simp_all [Set.mem_compl_iff]\n      have h\u2088 : x \u2208 A \u2229 U := Set.mem_inter h\u2087 hx\n      rw [hU'] at h\u2088\n      simp at h\u2088\n      <;> aesop\n    have h\u2086 : V \u2286 A := by\n      intro x hx\n      by_contra h\u2087\n      have h\u2088 : x \u2208 A\u1d9c := by simp_all [Set.mem_compl_iff]\n      have h\u2089 : x \u2208 A\u1d9c \u2229 V := Set.mem_inter h\u2088 hx\n      rw [hV'] at h\u2089\n      simp at h\u2089\n      <;> aesop\n    \n    have h\u2087 : U \u2229 V = \u2205 := by\n      apply Set.eq_empty_of_forall_not_mem\n      intro x hx\n      have h\u2088 : x \u2208 U := Set.mem_of_mem_inter_left hx\n      have h\u2089 : x \u2208 V := Set.mem_of_mem_inter_right hx\n      have h\u2081\u2080 : x \u2208 A\u1d9c := h\u2085 h\u2088\n      have h\u2081\u2081 : x \u2208 A := h\u2086 h\u2089\n      simp_all [Set.mem_compl_iff]\n      <;> aesop\n    \n    have h\u2088 : U \u2229 V \u2260 \u2205 := hPP U hU V hV\n    simp_all [Set.ext_iff]\n    <;> aesop\n  \n  have h_not_both : \u2200 (A : Set S), A \u2208 P \u2192 A\u1d9c \u2209 P := by\n    intro A hA\n    by_contra h\n    have h\u2081 : A\u1d9c \u2208 P := h\n    have h\u2082 : A \u2229 A\u1d9c = \u2205 := by\n      ext x\n      simp [Set.mem_inter_iff]\n      <;> tauto\n    have h\u2083 : A \u2229 A\u1d9c \u2260 \u2205 := hPP A hA A\u1d9c h\u2081\n    rw [h\u2082] at h\u2083\n    contradiction\n  \n  have h_card : P.card = 2 ^ (Fintype.card S - 1) := by\n    classical\n    \n    let Q : Finset (Set S) := (Finset.univ : Finset (Set S)) \\ P\n    \n    have h\u2081 : P.card = Q.card := by\n      \n      have h\u2082 : \u2200 (A : Set S), A \u2208 P \u2192 A\u1d9c \u2208 Q := by\n        intro A hA\n        have h\u2083 : A\u1d9c \u2208 (Finset.univ : Finset (Set S)) := Finset.mem_univ _\n        have h\u2084 : A\u1d9c \u2209 P := h_not_both A hA\n        simp only [Q, Finset.mem_sdiff] at *\n        tauto\n      have h\u2083 : \u2200 (A : Set S), A \u2208 Q \u2192 A\u1d9c \u2208 P := by\n        intro A hA\n        have h\u2084 : A \u2208 (Finset.univ : Finset (Set S)) := by\n          simp only [Q, Finset.mem_sdiff] at hA\n          tauto\n        have h\u2085 : A \u2209 P := by\n          simp only [Q, Finset.mem_sdiff] at hA\n          tauto\n        have h\u2086 : A \u2208 (Finset.univ : Finset (Set S)) := by tauto\n        have h\u2087 : A \u2208 P \u2228 A\u1d9c \u2208 P := h_subset_or_compl A\n        cases h\u2087 with\n        | inl h\u2088 =>\n          exfalso\n          tauto\n        | inr h\u2088 =>\n          exact h\u2088\n      \n      have h\u2084 : P.card = Q.card := by\n        \n        have h\u2085 : P.card = Q.card := by\n          \n          have h\u2086 : \u2200 (A : Set S), A \u2208 P \u2192 A\u1d9c \u2208 Q := h\u2082\n          have h\u2087 : \u2200 (A : Set S), A \u2208 Q \u2192 A\u1d9c \u2208 P := h\u2083\n          \n          have h\u2088 : P.card = Q.card := by\n            \n            apply Finset.card_bij' (fun A _ => A\u1d9c) (fun A _ => A\u1d9c)\n            <;> simp_all [Set.ext_iff]\n            <;>\n            (try\n              {\n                aesop\n              })\n            <;>\n            (try\n              {\n                tauto\n              })\n            <;>\n            (try\n              {\n                intros\n                <;>\n                simp_all [Set.ext_iff]\n                <;>\n                tauto\n              })\n            <;>\n            (try\n              {\n                intros\n                <;>\n                simp_all [Set.ext_iff]\n                <;>\n                tauto\n              })\n          exact h\u2088\n        exact h\u2085\n      exact h\u2084\n    \n    have h\u2082 : P.card + Q.card = 2 ^ Fintype.card S := by\n      have h\u2083 : P.card + Q.card = (Finset.univ : Finset (Set S)).card := by\n        have h\u2084 : Disjoint P Q := by\n          rw [Finset.disjoint_left]\n          intro A hA hA'\n          simp only [Q, Finset.mem_sdiff] at hA'\n          tauto\n        have h\u2085 : P \u222a Q = (Finset.univ : Finset (Set S)) := by\n          apply Finset.ext\n          intro A\n          simp only [Q, Finset.mem_union, Finset.mem_sdiff, Finset.mem_univ, true_and]\n          <;>\n          by_cases h\u2086 : A \u2208 P <;> simp_all [h_subset_or_compl]\n          <;>\n          (try tauto)\n          <;>\n          (try\n            {\n              have h\u2087 := h_subset_or_compl A\n              cases h\u2087 with\n              | inl h\u2088 => tauto\n              | inr h\u2088 =>\n                have h\u2089 : A\u1d9c \u2208 P := h\u2088\n                have h\u2081\u2080 : A \u2208 P \u2228 A\u1d9c \u2208 P := by tauto\n                tauto\n            })\n        have h\u2086 : P.card + Q.card = (P \u222a Q).card := by\n          rw [\u2190 Finset.card_union_add_card_inter P Q]\n          have h\u2087 : P \u2229 Q = \u2205 := Finset.disjoint_iff_inter_eq_empty.mp h\u2084\n          rw [h\u2087]\n          simp\n        rw [h\u2085] at h\u2086\n        exact h\u2086\n      have h\u2084 : (Finset.univ : Finset (Set S)).card = 2 ^ Fintype.card S := by\n        simp [Fintype.card_fun]\n        <;>\n        simp_all [Fintype.card_fun]\n        <;>\n        ring_nf\n        <;>\n        simp_all [Fintype.card_fun]\n        <;>\n        norm_num\n        <;>\n        aesop\n      linarith\n    \n    have h\u2083 : P.card * 2 = 2 ^ Fintype.card S := by\n      have h\u2084 : P.card + Q.card = 2 ^ Fintype.card S := h\u2082\n      have h\u2085 : P.card = Q.card := h\u2081\n      linarith\n    \n    have h\u2084 : Fintype.card S \u2265 1 := by\n      have h\u2085 : Nonempty S := inferInstance\n      have h\u2086 : 0 < Fintype.card S := by\n        apply Fintype.card_pos_iff.mpr\n        exact \u27e8Classical.choice h\u2085\u27e9\n      omega\n    have h\u2085 : P.card = 2 ^ (Fintype.card S - 1) := by\n      have h\u2086 : P.card * 2 = 2 ^ Fintype.card S := h\u2083\n      have h\u2087 : Fintype.card S \u2265 1 := h\u2084\n      have h\u2088 : 2 ^ (Fintype.card S - 1) * 2 = 2 ^ Fintype.card S := by\n        have h\u2089 : Fintype.card S - 1 + 1 = Fintype.card S := by\n          have h\u2081\u2080 : Fintype.card S \u2265 1 := h\u2084\n          omega\n        calc\n          2 ^ (Fintype.card S - 1) * 2 = 2 ^ (Fintype.card S - 1) * 2 ^ 1 := by norm_num\n          _ = 2 ^ ((Fintype.card S - 1) + 1) := by\n            rw [\u2190 pow_add]\n          _ = 2 ^ Fintype.card S := by\n            rw [h\u2089]\n            <;> simp [add_comm]\n      have h\u2089 : P.card = 2 ^ (Fintype.card S - 1) := by\n        have h\u2081\u2080 : P.card * 2 = 2 ^ Fintype.card S := h\u2083\n        have h\u2081\u2081 : 2 ^ (Fintype.card S - 1) * 2 = 2 ^ Fintype.card S := h\u2088\n        have h\u2081\u2082 : P.card = 2 ^ (Fintype.card S - 1) := by\n          nlinarith\n        exact h\u2081\u2082\n      exact h\u2089\n    exact h\u2085\n  \n  exact h_card"
+}

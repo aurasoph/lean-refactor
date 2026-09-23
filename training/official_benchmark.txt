@@ -1,0 +1,8 @@
+# Official Lean Refactor Arena benchmark problem names, one per line.
+# Every name here is treated as test: never collected on, never trained on
+# (training/splits.py). The 15 warm-up problems are already covered via
+# competition/benchmark_data_warmup.jsonl.
+#
+# TODO (Oct 1, 2026): paste all 50 full-benchmark names here when the full
+# benchmark is released, then rebuild any SFT mixture. A mined problem that
+# turns out to be official will be dropped automatically.

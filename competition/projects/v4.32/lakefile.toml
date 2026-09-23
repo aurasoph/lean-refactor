@@ -1,0 +1,12 @@
+name = "lean_refactor_v4_32"
+version = "0.1.0"
+
+[[require]]
+name = "cslib"
+git = "https://github.com/leanprover/cslib"
+rev = "197a7be621263b84c67ca4f803f69205b36d06df"
+
+[[require]]
+name = "Physlib"
+git = "https://github.com/leanprover-community/physlib"
+rev = "c48433678e8fb6306ebcd48453300c8e16058a62"

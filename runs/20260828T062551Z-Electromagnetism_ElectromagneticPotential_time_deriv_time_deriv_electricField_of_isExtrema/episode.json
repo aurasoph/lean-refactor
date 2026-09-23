@@ -1,0 +1,77 @@
+{
+  "timestamp": "20260828T062551Z",
+  "name": "Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260828T062551Z-Electromagnetism_ElectromagneticPotential_time_deriv_time_deriv_electricField_of_isExtrema",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a0470b-cffd-7821-b99b-5a8bcba2858d",
+    "exit_code": 0,
+    "wall_seconds": 2350.3
+  },
+  "before": {
+    "length": 1372,
+    "heartbeats": 27841,
+    "compiled": true
+  },
+  "after": {
+    "name": "Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema",
+    "compiled": true,
+    "length": 1041,
+    "reference_length": 1372,
+    "length_reduction_pct": 24.13,
+    "heartbeats": 23623,
+    "reference_heartbeats": 27841,
+    "heartbeat_reduction_pct": 15.15,
+    "objective_sum_pct": 39.28,
+    "survival_pct": 100.0,
+    "combined_pct": 46.43,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 23623,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 26970
+  },
+  "agent_final": {
+    "name": "Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema",
+    "compiled": true,
+    "length": 1041,
+    "reference_length": 1372,
+    "length_reduction_pct": 24.13,
+    "heartbeats": 23623,
+    "reference_heartbeats": 27841,
+    "heartbeat_reduction_pct": 15.15,
+    "objective_sum_pct": 39.28,
+    "survival_pct": 100.0,
+    "combined_pct": 46.43,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 23623,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 26970
+  },
+  "checkpoint_promotions": [],
+  "candidate": "lemma time_deriv_time_deriv_electricField_of_isExtrema {A : ElectromagneticPotential d}\n    {\ud835\udcd5 : FreeSpace}\n    (hA : ContDiff \u211d \u221e A) (J : LorentzCurrentDensity d)\n    (hJ : ContDiff \u211d \u221e J) (h : IsExtrema \ud835\udcd5 A J)\n    (t : Time) (x : Space d) (i : Fin d) :\n    \u2202\u209c (\u2202\u209c (A.electricField \ud835\udcd5.c \u00b7 x i)) t =\n      \ud835\udcd5.c ^ 2 * \u2211 j, (\u2202[j] (\u2202[j] (A.electricField \ud835\udcd5.c t \u00b7 i)) x) -\n      \ud835\udcd5.c ^ 2 / \ud835\udcd5.\u03b5\u2080 * \u2202[i] (J.chargeDensity \ud835\udcd5.c t \u00b7) x -\n      \ud835\udcd5.c ^ 2 * \ud835\udcd5.\u03bc\u2080 * \u2202\u209c (J.currentDensity \ud835\udcd5.c \u00b7 x i) t := by\n  let E := A.electricField \ud835\udcd5.c t\n  have hEs : \u2200 j, ContDiff \u211d 2 (fun y => E y j) :=\n    fun j => electricField_apply_contDiff_space (i := j) (hA.of_le (right_eq_inf.mp rfl)) t\n  have hEd : \u2200 j k, Differentiable \u211d (\u2202[k] (fun y => E y j)) :=\n    fun j k => Space.deriv_differentiable (hEs j) k\n  have hBt : \u2200 j, Differentiable \u211d\n      (fun s => \u2202[j] (fun y => A.magneticFieldMatrix \ud835\udcd5.c s y (j, i)) x) :=\n    fun j => Space.space_deriv_differentiable_time (i := j)\n      (magneticFieldMatrix_contDiff _ (hA.of_le (right_eq_inf.mp rfl)) (j, i)) x\n  have hJt : Differentiable \u211d (fun s => J.currentDensity \ud835\udcd5.c s x i) :=\n    LorentzCurrentDensity.currentDensity_apply_differentiable_time (hJ.differentiable (by simp)) x i\n  let m := fun s => \u2211 j, \u2202[j] (A.magneticFieldMatrix \ud835\udcd5.c s \u00b7 (j, i)) x\n  have hBs : Differentiable \u211d m := Differentiable.fun_sum fun j _ => hBt j\n  let a := 1 / (\ud835\udcd5.\u03bc\u2080 * \ud835\udcd5.\u03b5\u2080)\n  let b := 1 / \ud835\udcd5.\u03b5\u2080\n  let q := \u2202\u209c (J.currentDensity \ud835\udcd5.c \u00b7 x i) t\n  let p := \u2211 j, (\u2202[j] (\u2202[j] (E \u00b7 i)) x)\n  let r := \u2202[i] (J.chargeDensity \ud835\udcd5.c t \u00b7) x\n  calc _\n    _ = a * \u2202\u209c m t - b * q := by\n      conv_lhs =>\n        enter [1]\n        change fun t => \u2202\u209c (A.electricField \ud835\udcd5.c \u00b7 x i) t\n        enter [t]\n        rw [Time.deriv_euclid (electricField_differentiable_time\n          (hA.of_le (right_eq_inf.mp rfl)) _),\n          time_deriv_electricField_of_isExtrema hA J hJ h]\n      rw [Time.deriv_eq, fderiv_fun_sub (hBs.const_mul _).differentiableAt\n        (hJt.const_mul _).differentiableAt]\n      simp only [FunLike.coe_sub, Pi.sub_apply]\n      rw [fderiv_const_mul hBs.differentiableAt, fderiv_const_mul hJt.differentiableAt]\n      simp [a, b, q, Time.deriv_eq]\n    _ = a *(\u2211 j, \u2202[j] (fun x => \u2202[j] (E \u00b7 i) x -\n        \u2202[i] (E \u00b7 j) x)) x -\n        b * q := by\n        apply congrArg (fun z : \u211d => a * z - b * q)\n        calc\n          \u2202\u209c m t = (\u2211 j, \u2202\u209c (fun t => \u2202[j]\n              (A.magneticFieldMatrix \ud835\udcd5.c t \u00b7 (j, i)) x)) t := by\n            rw [Time.deriv_eq, fderiv_fun_sum fun i _ => (hBt i).differentiableAt]\n            simp only [FunLike.coe_sum, Finset.sum_apply]\n            rfl\n          _ = (\u2211 j, \u2202[j] (fun x => \u2202\u209c (A.magneticFieldMatrix \ud835\udcd5.c \u00b7 x (j, i)) t)) x := by\n            simp only [Finset.sum_apply]\n            congr\n            funext k\n            rw [Space.time_deriv_comm_space_deriv]\n            exact magneticFieldMatrix_contDiff _ (hA.of_le (right_eq_inf.mp rfl)) _\n          _ = _ := by\n            simp only [Finset.sum_apply]\n            congr\n            funext k\n            congr\n            funext x\n            rw [time_deriv_magneticFieldMatrix _ (hA.of_le (ENat.LEInfty.out))]\n    _ = (a * \u2211 j, (\u2202[j] (fun x => \u2202[j] (E \u00b7 i) x) x -\n          \u2202[j] (fun x => \u2202[i] (E \u00b7 j) x) x)) -\n          b * q := by\n        congr\n        simp only [Finset.sum_apply]\n        congr\n        funext j\n        exact congrFun (Space.deriv_sub _ _ (hEd _ _) (hEd _ _)) x\n    _ = a * p -\n          a * \u2211 j, (\u2202[j] (fun x => \u2202[i] (E \u00b7 j) x) x) - b * q := by simp [p, mul_sub]\n    _ = a * p - a * (\u2202[i] (fun x => (\u2207 \u2b1d E) x) x) - b * q := by\n      apply congrArg (fun z : \u211d => a * p - a * z - b * q)\n      trans (\u2211 j, \u2202[i] (fun x => \u2202[j] (E \u00b7 j) x) x)\n      \u00b7 congr\n        funext j\n        exact congrFun (Space.deriv_commute _ (hEs j)) x\n      \u00b7 change _ = \u2202[i] (fun x => \u2211 j, \u2202[j] (E \u00b7 j) x) x\n        rw [Space.deriv_eq_fderiv_basis, fderiv_fun_sum]\n        simp [\u2190 Space.deriv_eq_fderiv_basis]\n        exact fun j _ => (hEd j j).differentiableAt\n    _ = a * p -\n          1 / (\ud835\udcd5.\u03bc\u2080 * \ud835\udcd5.\u03b5\u2080 ^ 2) * r -\n          b * q := by\n        congr 2\n        rw [isExtrema_iff_gauss_ampere_magneticFieldMatrix] at h\n        conv_lhs =>\n          enter [2, 2, x]\n          rw [(h t x).1]\n        trans a * Space.deriv i\n            (fun x => (1/ \ud835\udcd5.\u03b5\u2080) * LorentzCurrentDensity.chargeDensity \ud835\udcd5.c J t x) x\n        \u00b7 congr\n          funext x\n          ring\n        \u00b7 rw [Space.deriv_eq_fderiv_basis]\n          rw [fderiv_const_mul]\n          simp [a, r, \u2190 Space.deriv_eq_fderiv_basis]\n          field_simp\n          apply Differentiable.differentiableAt\n          apply LorentzCurrentDensity.chargeDensity_differentiable_space\n          exact hJ.differentiable (by simp)\n        \u00b7 exact hA\n        \u00b7 exact hJ\n      _ = \ud835\udcd5.c ^ 2 * \u2211 j, (\u2202[j] (\u2202[j] (A.electricField \ud835\udcd5.c t \u00b7 i)) x) -\n            \ud835\udcd5.c ^ 2 / \ud835\udcd5.\u03b5\u2080 * \u2202[i] (J.chargeDensity \ud835\udcd5.c t \u00b7) x -\n            \ud835\udcd5.c ^ 2 * \ud835\udcd5.\u03bc\u2080 * \u2202\u209c (J.currentDensity \ud835\udcd5.c \u00b7 x i) t := by\n          simp [a, b, E, p, q, r, FreeSpace.c_sq]\n          field_simp"
+}

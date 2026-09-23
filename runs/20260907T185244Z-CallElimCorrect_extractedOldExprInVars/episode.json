@@ -1,0 +1,89 @@
+{
+  "timestamp": "20260907T185244Z",
+  "name": "CallElimCorrect.extractedOldExprInVars",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T185244Z-CallElimCorrect_extractedOldExprInVars",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a07d37-32ce-7111-abe9-51c08f7fd892",
+    "exit_code": 0,
+    "wall_seconds": 1378.0,
+    "usage": {
+      "input_tokens": 5190755,
+      "cached_input_tokens": 5106688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 27153,
+      "reasoning_output_tokens": 15938,
+      "num_turns": 64
+    }
+  },
+  "before": {
+    "length": 222,
+    "heartbeats": 2708,
+    "compiled": true
+  },
+  "after": {
+    "name": "CallElimCorrect.extractedOldExprInVars",
+    "compiled": true,
+    "length": 44,
+    "reference_length": 222,
+    "length_reduction_pct": 80.18,
+    "heartbeats": 640,
+    "reference_heartbeats": 2708,
+    "heartbeat_reduction_pct": 76.37,
+    "objective_sum_pct": 156.55,
+    "survival_pct": 100.0,
+    "combined_pct": 85.52,
+    "eligible": true,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 640,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 2696
+  },
+  "agent_final": {
+    "name": "CallElimCorrect.extractedOldExprInVars",
+    "compiled": true,
+    "length": 44,
+    "reference_length": 222,
+    "length_reduction_pct": 80.18,
+    "heartbeats": 640,
+    "reference_heartbeats": 2708,
+    "heartbeat_reduction_pct": 76.37,
+    "objective_sum_pct": 156.55,
+    "survival_pct": 100.0,
+    "combined_pct": 85.52,
+    "eligible": true,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 640,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 2696
+  },
+  "checkpoint_promotions": [],
+  "candidate": "open OldExpressions in\ntheorem extractedOldExprInVars :\n  NormalizedOldExpr post \u2192\n  (extractOldExprVars post).Subset\n  (Imperative.HasVarsPure.getVars post) := by\n  intro h x\n  induction h\n  case' app =>\n    unfold extractOldExprVars\n    split\n    \u00b7 exact id\n  all_goals repeat first\n    | assumption\n    | exact @List.Subset.empty _ _ x\n    | (intro h; refine List.mem_append.mpr ((List.mem_append.mp h).imp ?_ ?_))"
+}

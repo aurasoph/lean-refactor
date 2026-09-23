@@ -1,0 +1,77 @@
+{
+  "timestamp": "20260824T181256Z",
+  "name": "CallElimCorrect.substOldPostSubset",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260824T181256Z-CallElimCorrect_substOldPostSubset",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a034f9-ba50-7252-9519-a69bb6ea2cfb",
+    "exit_code": 0,
+    "wall_seconds": 1548.7
+  },
+  "before": {
+    "length": 313,
+    "heartbeats": 5184,
+    "compiled": true
+  },
+  "after": {
+    "name": "CallElimCorrect.substOldPostSubset",
+    "compiled": true,
+    "length": 173,
+    "reference_length": 313,
+    "length_reduction_pct": 44.73,
+    "heartbeats": 2814,
+    "reference_heartbeats": 5184,
+    "heartbeat_reduction_pct": 45.72,
+    "objective_sum_pct": 90.45,
+    "survival_pct": 100.0,
+    "combined_pct": 63.48,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 2814,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 5175
+  },
+  "agent_final": {
+    "name": "CallElimCorrect.substOldPostSubset",
+    "compiled": true,
+    "length": 173,
+    "reference_length": 313,
+    "length_reduction_pct": 44.73,
+    "heartbeats": 2814,
+    "reference_heartbeats": 5184,
+    "heartbeat_reduction_pct": 45.72,
+    "objective_sum_pct": 90.45,
+    "survival_pct": 100.0,
+    "combined_pct": 63.48,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 2814,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 5175
+  },
+  "checkpoint_promotions": [],
+  "candidate": "open OldExpressions in\ntheorem substOldPostSubset:\n  (Imperative.HasVarsPure.getVars (P:=Expression)\n    (substOld h2 (Lambda.LExpr.fvar m h1 ty) post)).Subset\n    (Imperative.HasVarsPure.getVars (P:=Expression) post ++ [h1]) := by\n  induction post <;>\n    simp only [substOld, Imperative.HasVarsPure.getVars,\n      Lambda.LExpr.LExpr.getVars, List.Subset, List.append_assoc,\n      List.mem_append, List.mem_singleton, List.not_mem_nil,\n      false_implies, forall_const, forall_eq, false_or,\n      true_or] at * <;> try assumption\n  case quant ih\u2081 ih\u2082 | eq ih\u2081 ih\u2082 =>\n    intro x h\n    rcases h with h | h\n    \u00b7 exact (ih\u2081 h).imp id Or.inr\n    \u00b7 exact Or.inr (ih\u2082 h)\n  case ite ih\u2081 ih\u2082 ih\u2083 =>\n    intro x h\n    rcases h with h | h | h\n    \u00b7 exact (ih\u2081 h).imp id fun h => Or.inr (Or.inr h)\n    \u00b7 exact Or.inr ((ih\u2082 h).imp id Or.inr)\n    \u00b7 exact Or.inr (Or.inr (ih\u2083 h))\n  case app ih\u2081 ih\u2082 =>\n    split\n    \u00b7 split <;> simp [Lambda.LExpr.LExpr.getVars]\n    \u00b7 simp only [Lambda.LExpr.LExpr.getVars, List.mem_append]\n      intro x h\n      rcases h with h | h\n      \u00b7 exact (ih\u2081 h).imp id Or.inr\n      \u00b7 exact Or.inr (ih\u2082 h)"
+}

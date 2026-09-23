@@ -1,0 +1,91 @@
+{
+  "timestamp": "20260822T001948Z",
+  "name": "putnam_1964_b2",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260822T001948Z-putnam_1964_b2",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a026d6-8520-7381-b82f-de939bb7f4ff",
+    "exit_code": 0,
+    "wall_seconds": 13293.4
+  },
+  "before": {
+    "length": 1754,
+    "heartbeats": 134501,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1964_b2",
+    "compiled": true,
+    "length": 119,
+    "reference_length": 1754,
+    "length_reduction_pct": 93.22,
+    "heartbeats": 1230,
+    "reference_heartbeats": 134501,
+    "heartbeat_reduction_pct": 99.09,
+    "objective_sum_pct": 192.31,
+    "survival_pct": 100.0,
+    "combined_pct": 97.44,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 1501,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 1230,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 134499
+  },
+  "agent_final": {
+    "name": "putnam_1964_b2",
+    "compiled": true,
+    "length": 119,
+    "reference_length": 1754,
+    "length_reduction_pct": 93.22,
+    "heartbeats": 1230,
+    "reference_heartbeats": 134501,
+    "heartbeat_reduction_pct": 99.09,
+    "objective_sum_pct": 192.31,
+    "survival_pct": 100.0,
+    "combined_pct": 97.44,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 1501,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 1230,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 134499
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem putnam_1964_b2\n(S : Type*) [Fintype S] [Nonempty S]\n(P : Finset (Set S))\n(hPP : \u2200 T \u2208 P, \u2200 U \u2208 P, T \u2229 U \u2260 \u2205)\n(hPS : \u00ac\u2203 T : Set S, T \u2209 P \u2227 (\u2200 U \u2208 P, T \u2229 U \u2260 \u2205))\n: (P.card = 2 ^ (Fintype.card S - 1)) := by\n  classical\n  push_neg at hPS\n  have hc A : A \u2208 P \u2194 A\u1d9c \u2209 P := by\n    constructor\n    \u00b7 intro hA hAc\n      simpa using hPP A hA A\u1d9c hAc\n    \u00b7 intro hA\n      by_contra hAc\n      obtain \u27e8U, hU, hAU\u27e9 := hPS A hAc\n      obtain \u27e8V, hV, hAV\u27e9 := hPS A\u1d9c hA\n      apply hPP U hU V hV\n      rw [\u2190 disjoint_iff_inter_eq_empty] at hAU hAV \u22a2\n      exact disjoint_compl_right.mono hAU.subset_compl_left hAV.subset_compl_left\n  have hcard : P.card = P\u1d9c.card :=\n    Finset.card_bijective compl compl_bijective\n      (by simpa using hc)\n  have htwice := Finset.card_compl_add_card P\n  rw [\u2190 hcard, Fintype.card_set, \u2190 Nat.sub_add_cancel Fintype.card_pos, pow_succ,\n    Nat.succ_eq_add_one,\n    Nat.zero_add] at htwice\n  omega"
+}

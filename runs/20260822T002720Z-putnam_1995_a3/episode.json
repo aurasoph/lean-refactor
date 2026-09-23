@@ -1,0 +1,107 @@
+{
+  "timestamp": "20260822T002720Z",
+  "name": "putnam_1995_a3",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260822T002720Z-putnam_1995_a3",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a026dd-6f4f-7ae3-b888-87a1564bc0df",
+    "exit_code": 0,
+    "wall_seconds": 13092.2
+  },
+  "before": {
+    "length": 4085,
+    "heartbeats": 14133,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1995_a3",
+    "compiled": true,
+    "length": 414,
+    "reference_length": 4085,
+    "length_reduction_pct": 89.87,
+    "heartbeats": 2227,
+    "reference_heartbeats": 14133,
+    "heartbeat_reduction_pct": 84.24,
+    "objective_sum_pct": 174.11,
+    "survival_pct": 100.0,
+    "combined_pct": 91.37,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 2865,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 2271,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 2227,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 14130
+  },
+  "agent_final": {
+    "name": "putnam_1995_a3",
+    "compiled": true,
+    "length": 414,
+    "reference_length": 4085,
+    "length_reduction_pct": 89.87,
+    "heartbeats": 2227,
+    "reference_heartbeats": 14133,
+    "heartbeat_reduction_pct": 84.24,
+    "objective_sum_pct": 174.11,
+    "survival_pct": 100.0,
+    "combined_pct": 91.37,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 2865,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 2271,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 2227,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 14130
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem putnam_1995_a3\n(relation : (Fin 9 \u2192 \u2124) \u2192 (Fin 9 \u2192 \u2124) \u2192 Prop)\n(digits_to_num : (Fin 9 \u2192 \u2124) \u2192 \u2124)\n(hdigits_to_num : digits_to_num = fun dig => \u2211 i : Fin 9, (dig i) * 10^i.1)\n(hrelation : \u2200 d e : (Fin 9 \u2192 \u2124), relation d e \u2194 (\u2200 i : Fin 9, d i < 10 \u2227 d i \u2265 0 \u2227 e i < 10 \u2227 e i \u2265 0) \u2227 (\u2200 i : Fin 9, 7 \u2223 (digits_to_num (fun j : Fin 9 => if j = i then e j else d j))))\n: \u2200 d e f : (Fin 9 \u2192 \u2124), ((relation d e) \u2227 (relation e f)) \u2192 (\u2200 i : Fin 9, 7 \u2223 d i - f i) := by\n  rintro d e f \u27e8hde, hef\u27e9 i\n  have hrep (a b : Fin 9 \u2192 \u2124) (h : relation a b) (j : Fin 9) :\n      7 \u2223 digits_to_num a + (b j - a j) * 10 ^ j.1 := by\n    have hs : digits_to_num (fun k => if k = j then b k else a k) =\n        digits_to_num a + (b j - a j) * 10 ^ j.1 := by\n      rw [hdigits_to_num]\n      calc\n        \u2211 k, (if k = j then b k else a k) * 10 ^ k.1 =\n            \u2211 k, (a k * 10 ^ k.1 + (if k = j then (b k - a k) * 10 ^ k.1 else 0)) := by\n              apply Finset.sum_congr rfl\n              intro k _\n              split\n              \u00b7 subst k\n                simp only [sub_mul]\n                abel\n              \u00b7 simp only [add_zero]\n        _ = \u2211 k, a k * 10 ^ k.1 + (b j - a j) * 10 ^ j.1 := by\n          rw [Finset.sum_add_distrib]\n          simp only [Finset.sum_ite_eq', Finset.mem_univ, if_pos]\n    rw [\u2190 hs]\n    exact ((hrelation a b).mp h).2 j\n  have hd := hrep d e hde\n  have he := hrep e f hef\n  have hs : 7 \u2223 digits_to_num d + digits_to_num e := by\n    have h := Finset.dvd_sum (s := Finset.univ) (fun j _ => hd j)\n    have heq : \u2211 j : Fin 9, (digits_to_num d + (e j - d j) * 10 ^ j.1) =\n        digits_to_num d + digits_to_num e + 7 * digits_to_num d := by\n      rw [hdigits_to_num, Finset.sum_add_distrib]\n      simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]\n      simp_rw [sub_mul]\n      rw [Finset.sum_sub_distrib]\n      ring\n    rw [heq] at h\n    simpa only [add_sub_cancel_right] using\n      dvd_sub h (dvd_mul_right 7 (digits_to_num d))\n  have hp : 7 \u2223 (f i - d i) * 10 ^ i.1 := by\n    convert dvd_sub (dvd_add (hd i) (he i)) hs using 1; ring\n  rw [\u2190 neg_sub]\n  exact dvd_neg.mpr <|\n    (show IsCoprime (7 : \u2124) 10 by norm_num).pow_right.dvd_of_dvd_mul_right hp"
+}

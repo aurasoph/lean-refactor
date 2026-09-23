@@ -1,0 +1,125 @@
+{
+  "timestamp": "20260907T193548Z",
+  "name": "Cslib.CCS.bisimilarity_congr_choice",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T193548Z-Cslib_CCS_bisimilarity_congr_choice",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a07d5e-a210-7432-bf3a-340b9f791dcc",
+    "exit_code": 0,
+    "wall_seconds": 685.6,
+    "usage": {
+      "input_tokens": 1186607,
+      "cached_input_tokens": 1144704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 10169,
+      "reasoning_output_tokens": 4906,
+      "num_turns": 19
+    }
+  },
+  "before": {
+    "length": 251,
+    "heartbeats": 4002,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.CCS.bisimilarity_congr_choice",
+    "compiled": true,
+    "length": 99,
+    "reference_length": 251,
+    "length_reduction_pct": 60.56,
+    "heartbeats": 312,
+    "reference_heartbeats": 4002,
+    "heartbeat_reduction_pct": 92.2,
+    "objective_sum_pct": 152.76,
+    "survival_pct": 100.0,
+    "combined_pct": 84.25,
+    "eligible": true,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 312,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 316,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 316,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 3858
+  },
+  "agent_final": {
+    "name": "Cslib.CCS.bisimilarity_congr_choice",
+    "compiled": true,
+    "length": 99,
+    "reference_length": 251,
+    "length_reduction_pct": 60.56,
+    "heartbeats": 312,
+    "reference_heartbeats": 4002,
+    "heartbeat_reduction_pct": 92.2,
+    "objective_sum_pct": 152.76,
+    "survival_pct": 100.0,
+    "combined_pct": 84.25,
+    "eligible": true,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 312,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 316,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 316,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 3858
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem bisimilarity_congr_choice :\n    (p ~[lts (defs := defs)] q) \u2192 (choice p r) ~[lts (defs := defs)] (choice q r) := by\n  intro h\n  rw [HomBisimilarity.symm_simulation]\n  refine \u27e8@ChoiceBisim _ _ defs, .choice h, \u27e8?_\u27e9, ?_\u27e9\n  \u00b7 rintro _ _ (h | h) <;> constructor <;> exact h.symm\n  \u00b7 rintro _ _ (h | h) \u03bc u ht\n    case' choice => cases ht\n    case choiceR ht => exact \u27e8u, .choiceR ht, .bisim (.refl _)\u27e9\n    all_goals\n      obtain \u27e8v, ht, h\u27e9 := h.follow_fst \u2039_\u203a\n      exact \u27e8v, by\n        try apply Tr.choiceL\n        assumption, .bisim h\u27e9"
+}

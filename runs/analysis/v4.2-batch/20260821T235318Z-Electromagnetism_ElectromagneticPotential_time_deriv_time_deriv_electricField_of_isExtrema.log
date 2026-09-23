@@ -1,0 +1,27 @@
+{
+  "name": "Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema",
+  "compiled": true,
+  "length": 883,
+  "reference_length": 1372,
+  "length_reduction_pct": 35.64,
+  "heartbeats": 20908,
+  "reference_heartbeats": 27841,
+  "heartbeat_reduction_pct": 24.9,
+  "objective_sum_pct": 60.54,
+  "survival_pct": 100.0,
+  "combined_pct": 53.51,
+  "compat": {
+    "v4.32.0": true
+  },
+  "statement_ok": true,
+  "per_version": [
+    {
+      "version": "v4.32.0",
+      "ok": true,
+      "heartbeats": 20908,
+      "errors": [],
+      "note": ""
+    }
+  ],
+  "published_heartbeats": 26970
+}

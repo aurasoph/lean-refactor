@@ -1,0 +1,44 @@
+# Superseded early prototype (pre-dates the current competition/ harness),
+# includes its own nested git checkouts.
+arena/
+
+# Regenerable Lake / Lean build artifacts (many GB per toolchain). The small
+# pinning files (lakefile.toml, lake-manifest.json, lean-toolchain) that
+# document exactly which corpus commit each environment uses are NOT
+# excluded — those are what makes the toolchains reproducible.
+**/.lake/
+**/lake-packages/
+*.olean
+*.ilean
+*.c
+*.o
+
+# Per-episode work files: overwritten on every `arena.py prepare`/`check`
+# run, not meaningful source.
+competition/projects/*/Arena/
+# verify.run_one temp files (swept by `arena.py list`)
+competition/projects/*/arena_*.lean
+
+# Downloaded upstream corpus source cache (mathlib/cslib/physlib/arklib
+# clones) — pure dependency cache, tens of GB, nothing project-specific.
+competition/.corpus_cache/
+
+# Python virtual environments (MCP server tooling).
+**/venv/
+**/octo_venv/
+**/.venv/
+
+# Local machine / editor state, not project source.
+.mcp/
+competition/.agents/
+competition/.codex/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Build/run logs — transient, regenerable.
+competition/build-logs/
+competition/*.log
+
+# Space submission keys (one-time, owner-only)
+.secrets/

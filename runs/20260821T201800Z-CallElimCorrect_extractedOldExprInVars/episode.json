@@ -1,0 +1,44 @@
+{
+  "timestamp": "20260821T201800Z",
+  "name": "CallElimCorrect.extractedOldExprInVars",
+  "wrapper": "v2-tight-loop",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T201800Z-CallElimCorrect_extractedOldExprInVars",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v2-tight-loop",
+    "thread_id": "01a025f9-268b-7e01-badb-87db412f8f57",
+    "exit_code": 0,
+    "wall_seconds": 338.5
+  },
+  "before": {
+    "length": 222,
+    "heartbeats": 2708,
+    "compiled": true
+  },
+  "after": {
+    "name": "CallElimCorrect.extractedOldExprInVars",
+    "compiled": true,
+    "length": 183,
+    "reference_length": 222,
+    "length_reduction_pct": 17.57,
+    "heartbeats": 681,
+    "reference_heartbeats": 2708,
+    "heartbeat_reduction_pct": 74.85,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 681,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 2696
+  },
+  "candidate": "open OldExpressions in\ntheorem extractedOldExprInVars :\n  NormalizedOldExpr post \u2192\n  (extractOldExprVars post).Subset\n  (Imperative.HasVarsPure.getVars post) := by\n  intro h\n  have app {a b c d : List Expression.Ident} (h\u2081 : a.Subset c) (h\u2082 : b.Subset d) :\n      (a ++ b).Subset (c ++ d) := by\n    intro x hx\n    simp only [List.mem_append] at hx \u22a2\n    exact hx.elim (fun ha => Or.inl (h\u2081 ha)) (fun hb => Or.inr (h\u2082 hb))\n  induction h with\n  | const | op | bvar | fvar =>\n    simp [extractOldExprVars, Imperative.HasVarsPure.getVars,\n      Lambda.LExpr.LExpr.getVars]\n  | abs _ ih => exact ih\n  | quant _ _ ihtr ihe => exact app ihtr ihe\n  | app _ _ hn ihfn ihe =>\n    unfold extractOldExprVars\n    split\n    . simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars]\n      intros x hx\n      exact hx\n    . next hne =>\n      exfalso\n      specialize hn ?_\n      constructor\n      cases hn\n      apply hne\n      rfl\n    . exact app ihfn ihe\n  | ite _ _ _ ihc iht ihe => exact app (app ihc iht) ihe\n  | eq _ _ ih1 ih2 => exact app ih1 ih2"
+}

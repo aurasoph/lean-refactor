@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#SBATCH --job-name=lra-overfit10
+#SBATCH --account=gpu-rtx6k-amath
+#SBATCH --partition=gpu-rtx6k
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=48G
+#SBATCH --time=01:00:00
+#SBATCH --output=/gscratch/amath/aurasoph/lean-refactor-training/logs/%x-%j.out
+
+set -euo pipefail
+ROOT=/gscratch/amath/aurasoph/lean-refactor-training
+
+export HF_HOME=/gscratch/amath/aurasoph/hf_cache
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+
+source "$ROOT/venv/bin/activate"
+cd "$ROOT"
+
+python3 train_sft.py --data data/sft_promptfinal.jsonl --model Qwen/Qwen2.5-Coder-1.5B-Instruct \
+    --chat-template none --epochs 40 --lr 2e-4 --max-len 4096 --grad-accum 2 --lora-r 16 \
+    --target-modules q_proj k_proj v_proj o_proj gate_proj up_proj down_proj --out checkpoints/overfit10
+echo "=== training done, evaluating ==="
+python3 eval_overfit.py --adapter checkpoints/overfit10

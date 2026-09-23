@@ -1,0 +1,75 @@
+{
+  "timestamp": "20260821T235318Z",
+  "name": "CallElimCorrect.substOldPostSubset",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T235318Z-CallElimCorrect_substOldPostSubset",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a026be-478c-7821-b5fb-e70c2ff41752",
+    "exit_code": 0,
+    "wall_seconds": 829.2
+  },
+  "before": {
+    "length": 313,
+    "heartbeats": 5184,
+    "compiled": true
+  },
+  "after": {
+    "name": "CallElimCorrect.substOldPostSubset",
+    "compiled": true,
+    "length": 188,
+    "reference_length": 313,
+    "length_reduction_pct": 39.94,
+    "heartbeats": 1429,
+    "reference_heartbeats": 5184,
+    "heartbeat_reduction_pct": 72.43,
+    "objective_sum_pct": 112.37,
+    "survival_pct": 100.0,
+    "combined_pct": 70.79,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 1429,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 5175
+  },
+  "agent_final": {
+    "name": "CallElimCorrect.substOldPostSubset",
+    "compiled": true,
+    "length": 188,
+    "reference_length": 313,
+    "length_reduction_pct": 39.94,
+    "heartbeats": 1429,
+    "reference_heartbeats": 5184,
+    "heartbeat_reduction_pct": 72.43,
+    "objective_sum_pct": 112.37,
+    "survival_pct": 100.0,
+    "combined_pct": 70.79,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 1429,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 5175
+  },
+  "checkpoint_promotions": [],
+  "candidate": "open OldExpressions in\ntheorem substOldPostSubset:\n  (Imperative.HasVarsPure.getVars (P:=Expression)\n    (substOld h2 (Lambda.LExpr.fvar m h1 ty) post)).Subset\n    (Imperative.HasVarsPure.getVars (P:=Expression) post ++ [h1]) := by\n  suffices \u2200 S, Lambda.LExpr.LExpr.getVars post \u2286 S \u2192 h1 \u2208 S \u2192\n      Lambda.LExpr.LExpr.getVars\n        (substOld h2 (Lambda.LExpr.fvar m h1 ty) post) \u2286 S by\n    exact this _ (List.subset_append_left _ _) (by simp)\n  induction post\n  all_goals simp only [substOld, Lambda.LExpr.LExpr.getVars]\n  case const | op | bvar | fvar => exact fun _ hs _ => hs\n  case abs ih => exact ih\n  case quant ih\u2081 ih\u2082 | eq ih\u2081 ih\u2082 =>\n    intro S hs hh\n    exact List.append_subset.mpr\n      \u27e8ih\u2081 S (List.append_subset.mp hs).1 hh,\n        ih\u2082 S (List.append_subset.mp hs).2 hh\u27e9\n  case ite ih\u2081 ih\u2082 ih\u2083 =>\n    intro S hs hh\n    simp only [List.append_subset] at hs \u22a2\n    exact \u27e8\u27e8ih\u2081 S hs.1.1 hh, ih\u2082 S hs.1.2 hh\u27e9, ih\u2083 S hs.2 hh\u27e9\n  case app ih\u2081 ih\u2082 =>\n    intro S hs hh\n    split\n    \u00b7 split\n      \u00b7 simpa [Lambda.LExpr.LExpr.getVars] using hh\n      \u00b7 exact hs\n    \u00b7 exact List.append_subset.mpr\n        \u27e8ih\u2081 S (List.append_subset.mp hs).1 hh,\n          ih\u2082 S (List.append_subset.mp hs).2 hh\u27e9"
+}

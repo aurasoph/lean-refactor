@@ -1,0 +1,125 @@
+{
+  "timestamp": "20260907T181528Z",
+  "name": "interleaved_affine_gaps_imply_tensor_gaps",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T181528Z-interleaved_affine_gaps_imply_tensor_gaps",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a07d15-1630-7593-acea-6c4b8a33d274",
+    "exit_code": 0,
+    "wall_seconds": 1605.7,
+    "usage": {
+      "input_tokens": 6044925,
+      "cached_input_tokens": 5966208,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 17407,
+      "reasoning_output_tokens": 7793,
+      "num_turns": 55
+    }
+  },
+  "before": {
+    "length": 1353,
+    "heartbeats": 10119,
+    "compiled": true
+  },
+  "after": {
+    "name": "interleaved_affine_gaps_imply_tensor_gaps",
+    "compiled": true,
+    "length": 173,
+    "reference_length": 1353,
+    "length_reduction_pct": 87.21,
+    "heartbeats": 2499,
+    "reference_heartbeats": 10119,
+    "heartbeat_reduction_pct": 75.3,
+    "objective_sum_pct": 162.51,
+    "survival_pct": 100.0,
+    "combined_pct": 87.5,
+    "eligible": true,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": true,
+      "v4.29.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 2499,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 2512,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.29.0",
+        "ok": true,
+        "heartbeats": 2858,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 9198
+  },
+  "agent_final": {
+    "name": "interleaved_affine_gaps_imply_tensor_gaps",
+    "compiled": true,
+    "length": 173,
+    "reference_length": 1353,
+    "length_reduction_pct": 87.21,
+    "heartbeats": 2499,
+    "reference_heartbeats": 10119,
+    "heartbeat_reduction_pct": 75.3,
+    "objective_sum_pct": 162.51,
+    "survival_pct": 100.0,
+    "combined_pct": 87.5,
+    "eligible": true,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": true,
+      "v4.29.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 2499,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 2512,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.29.0",
+        "ok": true,
+        "heartbeats": 2858,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 9198
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem interleaved_affine_gaps_imply_tensor_gaps\n    (hC_proximityGapAffineLines : e_\u03b5_correlatedAgreementAffineLinesNat\n      (F := F) (A := A) (\u03b9 := \u03b9) (C := MC) (e := e) (\u03b5 := \u03b5))\n    (h_interleaved_gaps : \u2200 m : \u2115, m \u2265 1 \u2192\n      e_\u03b5_correlatedAgreementAffineLinesNat (F := F)\n        (A := InterleavedSymbol A (Fin m)) (\u03b9 := \u03b9) (C := MC ^\u22c8 (Fin m)) e \u03b5) :\n    \u2200 (\u03d1 : \u2115), (h\u03d1_gt_0 : \u03d1 > 0) \u2192 \u03b4_\u03b5_multilinearCorrelatedAgreement_Nat (F := F) (A := A)\n      (\u03b9 := \u03b9) (C := MC) (\u03d1 := \u03d1) (e := e) (\u03b5 := \u03b5) := by\n  intro n hn\n  induction n, hn using Nat.le_induction with\n  | base =>\n    intro u hp\n    simp only [multilinearCombine\u2081_eq_affineLineEvaluation,\n      prob_uniform_singleton_finFun_eq (P := fun r =>\n        \u0394\u2080(affineLineEvaluation (u 0) (u 1) r, MC) \u2264 e),\n      Nat.cast_one, ENNReal.coe_one, one_mul] at hp\n    have h := hC_proximityGapAffineLines (u 0) (u 1) hp\n    have hu : finMapTwoWords (u 0) (u 1) = u :=\n      funext (Fin.forall_fin_two.mpr \u27e8rfl, rfl\u27e9)\n    exact hu \u25b8 h\n  | succ n hn ih =>\n    intro u hp\n    simp_rw [multilinearCombine_recursive_form u] at hp\n    erw [prob_split_last_uniform_sampling_of_finFun\n      (P := multilinearCombine_affineComb_split_last_close MC u e)] at hp\n    have hr := prob_R_star_gt_threshold MC u e hp\n    apply CA_split_rowwise_implies_CA (u := u) (e := e)\n    apply h_interleaved_gaps (2 ^ n) Nat.one_le_two_pow\n    apply lt_of_lt_of_le hr\n    apply Pr_le_Pr_of_implies\n    intro r hr\n    exact correlatedAgreement_of_mem_R_star_tensor MC ih u \u27e8r, hr\u27e9"
+}

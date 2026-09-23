@@ -1,0 +1,43 @@
+{
+  "name": "interleaved_affine_gaps_imply_tensor_gaps",
+  "compiled": true,
+  "length": 500,
+  "reference_length": 1353,
+  "length_reduction_pct": 63.05,
+  "heartbeats": 4150,
+  "reference_heartbeats": 10119,
+  "heartbeat_reduction_pct": 58.99,
+  "objective_sum_pct": 122.04,
+  "survival_pct": 100.0,
+  "combined_pct": 74.01,
+  "compat": {
+    "v4.31.0": true,
+    "v4.30.0": true,
+    "v4.29.0": true
+  },
+  "statement_ok": true,
+  "per_version": [
+    {
+      "version": "v4.31.0",
+      "ok": true,
+      "heartbeats": 4150,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "version": "v4.30.0",
+      "ok": true,
+      "heartbeats": 4252,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "version": "v4.29.0",
+      "ok": true,
+      "heartbeats": 4751,
+      "errors": [],
+      "note": ""
+    }
+  ],
+  "published_heartbeats": 9198
+}

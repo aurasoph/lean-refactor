@@ -1,0 +1,17 @@
+name = "lean_refactor_v4_30"
+version = "0.1.0"
+
+[[require]]
+name = "Arklib"
+git = "https://github.com/Verified-zkEVM/ArkLib"
+rev = "e6d77b18ca1334a91faf4d1ccf9f96d854d58ba4"
+
+[[require]]
+name = "cslib"
+git = "https://github.com/leanprover/cslib"
+rev = "c7944a9fb44c3298f1a960a5e574ab23a6ab8ed5"
+
+[[require]]
+name = "Physlib"
+git = "https://github.com/leanprover-community/physlib"
+rev = "f5242c99d796b59a390d26cd7d1a8057e04c46b5"

@@ -1,0 +1,12 @@
+name = "lean_refactor_v4_25"
+version = "0.1.0"
+
+[[require]]
+name = "Strata"
+git = "https://github.com/strata-org/Strata"
+rev = "5ce8f20740f10b2eeadb203a4b2b21cecba43d28"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.25.0"

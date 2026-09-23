@@ -1,0 +1,123 @@
+{
+  "timestamp": "20260907T041737Z",
+  "name": "Cslib.CCS.bisimilarity_congr_choice",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T041737Z-Cslib_CCS_bisimilarity_congr_choice",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 16,
+    "stop_reason": "no_tool_calls",
+    "exit_code": 0,
+    "wall_seconds": 262.3,
+    "usage": {
+      "prompt_tokens": 190170,
+      "completion_tokens": 6761,
+      "total_tokens": 196931,
+      "cost_usd": 0.736894,
+      "num_turns": 16
+    }
+  },
+  "before": {
+    "length": 251,
+    "heartbeats": 4002,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.CCS.bisimilarity_congr_choice",
+    "compiled": true,
+    "length": 150,
+    "reference_length": 251,
+    "length_reduction_pct": 40.24,
+    "heartbeats": 585,
+    "reference_heartbeats": 4002,
+    "heartbeat_reduction_pct": 85.38,
+    "objective_sum_pct": 125.62,
+    "survival_pct": 100.0,
+    "combined_pct": 75.21,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 585,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 586,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 586,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 3858
+  },
+  "agent_final": {
+    "name": "Cslib.CCS.bisimilarity_congr_choice",
+    "compiled": true,
+    "length": 150,
+    "reference_length": 251,
+    "length_reduction_pct": 40.24,
+    "heartbeats": 585,
+    "reference_heartbeats": 4002,
+    "heartbeat_reduction_pct": 85.38,
+    "objective_sum_pct": 125.62,
+    "survival_pct": 100.0,
+    "combined_pct": 75.21,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 585,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 586,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 586,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 3858
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem bisimilarity_congr_choice :\n    (p ~[lts (defs := defs)] q) \u2192 (choice p r) ~[lts (defs := defs)] (choice q r) := by\n  intro h\n  refine \u27e8@ChoiceBisim _ _ defs, .choice h, ?_\u27e9\n  intro s t h \u03bc\n  constructor <;> intro s' ht <;> cases h with\n  | choice h =>\n    cases ht with\n    | choiceL ht =>\n      first\n      | exact (h.follow_fst ht).imp fun _ \u27e8ht', h'\u27e9 => \u27e8.choiceL ht', .bisim h'\u27e9\n      | exact (h.follow_snd ht).imp fun _ \u27e8ht', h'\u27e9 => \u27e8.choiceL ht', .bisim h'\u27e9\n    | choiceR ht => exact \u27e8s', .choiceR ht, .bisim (.refl _)\u27e9\n  | bisim h =>\n    first\n    | exact (h.follow_fst ht).imp fun _ \u27e8ht', h'\u27e9 => \u27e8ht', .bisim h'\u27e9\n    | exact (h.follow_snd ht).imp fun _ \u27e8ht', h'\u27e9 => \u27e8ht', .bisim h'\u27e9"
+}

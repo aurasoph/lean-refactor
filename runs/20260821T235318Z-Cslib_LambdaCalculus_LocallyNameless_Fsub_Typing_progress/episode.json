@@ -1,0 +1,107 @@
+{
+  "timestamp": "20260821T235318Z",
+  "name": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T235318Z-Cslib_LambdaCalculus_LocallyNameless_Fsub_Typing_progress",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a026be-4982-7b80-a64c-ce8894e5c1b2",
+    "exit_code": 0,
+    "wall_seconds": 983.5
+  },
+  "before": {
+    "length": 408,
+    "heartbeats": 60266,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+    "compiled": true,
+    "length": 344,
+    "reference_length": 408,
+    "length_reduction_pct": 15.69,
+    "heartbeats": 6096,
+    "reference_heartbeats": 60266,
+    "heartbeat_reduction_pct": 89.88,
+    "objective_sum_pct": 105.57,
+    "survival_pct": 100.0,
+    "combined_pct": 68.52,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 6096,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 9120,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 9118,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 59830
+  },
+  "agent_final": {
+    "name": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+    "compiled": true,
+    "length": 344,
+    "reference_length": 408,
+    "length_reduction_pct": 15.69,
+    "heartbeats": 6096,
+    "reference_heartbeats": 60266,
+    "heartbeat_reduction_pct": 89.88,
+    "objective_sum_pct": 105.57,
+    "survival_pct": 100.0,
+    "combined_pct": 68.52,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 6096,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 9120,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 9118,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 59830
+  },
+  "checkpoint_promotions": [],
+  "candidate": "lemma Typing.progress (der : Typing [] t \u03c4) : t.Value \u2228 \u2203 t', t \u2b62\u03b2\u1d5b t' := by\n  generalize eq : [] = \u0393 at der\n  induction der <;> subst eq\n  case abs L h _ => exact .inl (.abs (Typing.abs L h).wf.2.1)\n  case tabs L h _ => exact .inl (.tabs (Typing.tabs L h).wf.2.1)\n  case app t\u2081 _ _ t\u2082 l r il ir =>\n    right\n    rcases il rfl with vl | \u27e8_, hl\u27e9\n    \u00b7 rcases ir rfl with vr | \u27e8_, hr\u27e9\n      \u00b7 obtain \u27e8_, b, rfl\u27e9 := l.canonical_form_abs vl\n        exact \u27e8_, .abs l.wf.2.1 vr\u27e9\n      \u00b7 exact \u27e8_, .app\u1d63 vl hr\u27e9\n    \u00b7 exact \u27e8_, .app\u2097 r.wf.2.1 hl\u27e9\n  case tapp \u03c3' der sub ih =>\n    right\n    rcases ih rfl with v | \u27e8_, h\u27e9\n    \u00b7 obtain \u27e8_, b, rfl\u27e9 := der.canonical_form_tabs v\n      exact \u27e8_, .tabs der.wf.2.1 sub.wf.2.1.lc\u27e9\n    \u00b7 exact \u27e8_, .tapp sub.wf.2.1.lc h\u27e9\n  case let' t\u2081 \u03c3 t\u2082 \u03c4 L der h ih _ =>\n    have \u27e8_, body\u27e9 := Term.body_let.mp (Typing.let' L der h).wf.2.1\n    right\n    rcases ih rfl with v | \u27e8_, r\u27e9\n    \u00b7 exact \u27e8_, .let_body v body\u27e9\n    \u00b7 exact \u27e8_, .let_bind r body\u27e9\n  case case t\u2081 \u03c3 \u03c4 t\u2082 \u03b4 t\u2083 L der h\u2082 h\u2083 ih _ _ =>\n    have \u27e8_, body\u2082, body\u2083\u27e9 := Term.body_case.mp (Typing.case L der h\u2082 h\u2083).wf.2.1\n    right\n    rcases ih rfl with v | \u27e8_, r\u27e9\n    \u00b7 obtain \u27e8u, rfl | rfl\u27e9 := der.canonical_form_sum v\n      \u00b7 cases v with | inl v => exact \u27e8_, .case_inl v body\u2082 body\u2083\u27e9\n      \u00b7 cases v with | inr v => exact \u27e8_, .case_inr v body\u2082 body\u2083\u27e9\n    \u00b7 exact \u27e8_, .case r body\u2082 body\u2083\u27e9\n  all_goals\n    aesop (add safe [Term.Value.inl, Term.Value.inr, Term.Red.inl, Term.Red.inr])"
+}

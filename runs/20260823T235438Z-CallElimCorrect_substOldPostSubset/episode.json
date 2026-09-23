@@ -1,0 +1,65 @@
+{
+  "timestamp": "20260823T235438Z",
+  "name": "CallElimCorrect.substOldPostSubset",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/competition/runs/20260823T235438Z-CallElimCorrect_substOldPostSubset",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "stealth/ox-alpha",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 20,
+    "stop_reason": "request_error",
+    "exit_code": 0,
+    "wall_seconds": 918.2
+  },
+  "before": {
+    "length": 313,
+    "heartbeats": 5184,
+    "compiled": true
+  },
+  "after": {
+    "name": "CallElimCorrect.substOldPostSubset",
+    "compiled": true,
+    "statement_ok": true,
+    "objective_sum_pct": 0.0,
+    "survival_pct": 100.0,
+    "length_reduction_pct": 0.0,
+    "heartbeat_reduction_pct": 0.0,
+    "seed": "reference"
+  },
+  "agent_final": {
+    "name": "CallElimCorrect.substOldPostSubset",
+    "compiled": false,
+    "length": 74,
+    "reference_length": 313,
+    "length_reduction_pct": 76.36,
+    "heartbeats": 1767,
+    "reference_heartbeats": 5184,
+    "heartbeat_reduction_pct": 65.91,
+    "objective_sum_pct": 142.27,
+    "survival_pct": 0.0,
+    "combined_pct": 47.42,
+    "compat": {
+      "v4.26.0": false
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": false,
+        "heartbeats": 1767,
+        "errors": [
+          "failed to synthesize",
+          "failed to synthesize",
+          "unsolved goals"
+        ],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 5175
+  },
+  "checkpoint_promotions": [],
+  "candidate": "open OldExpressions in\ntheorem substOldPostSubset:\n  (Imperative.HasVarsPure.getVars (P:=Expression)\n    (substOld h2 (Lambda.LExpr.fvar m h1 ty) post)).Subset\n    (Imperative.HasVarsPure.getVars (P:=Expression) post ++ [h1]) := by\n  induction post <;> simp [substOld]\n  case fvar =>\n    intros x Hin\n    rename_i m name ty2\n    simp at m\n    simp at name\n    simp at ty2\n\n    simp_all\n  case op =>\n    intros x Hin\n    rename_i m name ty2\n    simp at m\n    simp at name\n    simp at ty2\n    simp_all\n  case const =>\n    intros x Hin\n    rename_i m name\n    simp at m\n    simp_all\n  case bvar =>\n    intros x Hin\n    rename_i m d\n    simp at m\n    simp_all\n  case abs ih =>\n    exact ih\n  case ite cih tih eih =>\n    simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at *\n    apply List.Subset.app\n    . apply List.Subset.trans\n      apply cih <;> assumption\n      intros x Hin\n      simp_all\n      cases Hin <;> simp_all\n    apply List.Subset.app\n    . apply List.Subset.trans\n      apply tih <;> assumption\n      intros x Hin\n      simp_all\n      cases Hin <;> simp_all\n    . apply List.Subset.trans\n      apply eih <;> assumption\n      intros x Hin\n      simp_all\n  case app ih1 ih2 =>\n    split\n    . split\n      . simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at *\n        intros x Hin\n        simp_all\n      . simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at *\n        intros x Hin\n        simp_all\n    . simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at *\n      apply List.Subset.app\n      . apply List.Subset.trans\n        apply ih1 <;> assumption\n        intros x Hin\n        simp_all\n        cases Hin <;> simp_all\n      . apply List.Subset.trans\n        apply ih2 <;> assumption\n        intros x Hin\n        simp_all\n  case quant trih eih =>\n    simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at *\n    apply List.Subset.app\n    . apply List.Subset.trans\n      apply trih <;> assumption\n      intros x Hin\n      rename_i m1 k1 ty1 trigger1 e1\n      have assoc := List.append_assoc (Lambda.LExpr.LExpr.getVars trigger1) (Lambda.LExpr.LExpr.getVars e1) [h1]\n      simp_all\n      cases Hin <;> simp_all\n    . apply List.Subset.trans\n      apply eih <;> assumption\n      intros x Hin\n      simp_all\n  case eq ih1 ih2 =>\n    simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at *\n    apply List.Subset.app\n    . apply List.Subset.trans\n      apply ih1 <;> assumption\n      intros x Hin\n      simp_all\n      cases Hin <;> simp_all\n    . apply List.Subset.trans\n      apply ih2 <;> assumption\n      intros x Hin\n      simp_all"
+}

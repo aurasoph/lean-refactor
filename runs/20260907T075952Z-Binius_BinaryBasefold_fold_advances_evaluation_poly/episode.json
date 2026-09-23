@@ -1,0 +1,123 @@
+{
+  "timestamp": "20260907T075952Z",
+  "name": "Binius.BinaryBasefold.fold_advances_evaluation_poly",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T075952Z-Binius_BinaryBasefold_fold_advances_evaluation_poly",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 19,
+    "stop_reason": "no_tool_calls",
+    "exit_code": 0,
+    "wall_seconds": 981.8,
+    "usage": {
+      "prompt_tokens": 449795,
+      "completion_tokens": 17223,
+      "total_tokens": 467018,
+      "cost_usd": 1.7504359999999997,
+      "num_turns": 19
+    }
+  },
+  "before": {
+    "length": 1906,
+    "heartbeats": 49451,
+    "compiled": true
+  },
+  "after": {
+    "name": "Binius.BinaryBasefold.fold_advances_evaluation_poly",
+    "compiled": true,
+    "length": 388,
+    "reference_length": 1906,
+    "length_reduction_pct": 79.64,
+    "heartbeats": 9053,
+    "reference_heartbeats": 49451,
+    "heartbeat_reduction_pct": 81.69,
+    "objective_sum_pct": 161.33,
+    "survival_pct": 100.0,
+    "combined_pct": 87.11,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": true,
+      "v4.29.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 9053,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 9294,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.29.0",
+        "ok": true,
+        "heartbeats": 12757,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 45273
+  },
+  "agent_final": {
+    "name": "Binius.BinaryBasefold.fold_advances_evaluation_poly",
+    "compiled": true,
+    "length": 388,
+    "reference_length": 1906,
+    "length_reduction_pct": 79.64,
+    "heartbeats": 9053,
+    "reference_heartbeats": 49451,
+    "heartbeat_reduction_pct": 81.69,
+    "objective_sum_pct": 161.33,
+    "survival_pct": 100.0,
+    "combined_pct": 87.11,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": true,
+      "v4.29.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 9053,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 9294,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.29.0",
+        "ok": true,
+        "heartbeats": 12757,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 45273
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem fold_advances_evaluation_poly\n  (i : Fin (\u2113)) (h_i_succ_lt : i + 1 < \u2113 + \ud835\udce1)\n  (coeffs : Fin (2 ^ (\u2113 - \u2191i)) \u2192 L) (r_chal : L) :\n  let P_i : L[X] := intermediateEvaluationPoly \ud835\udd3dq \u03b2 h_\u2113_add_R_rate (i := \u27e8i, by\n    exact Nat.lt_trans (n := i) (k := \u2113+1) (m := \u2113) (h\u2081 := i.isLt) (by exact Nat.lt_add_one \u2113)\n  \u27e9) coeffs\n  let f_i := fun (x : (sDomain \ud835\udd3dq \u03b2 h_\u2113_add_R_rate)\n      \u27e8i, by exact Nat.lt_trans (n := i) (k := r) (m := \u2113) (h\u2081 := by omega) (by omega)\u27e9) =>\n    P_i.eval (x.val : L)\n  let f_i_plus_1 := fold (i := \u27e8i, by omega\u27e9) (h_i := by omega) (f := f_i) (r_chal := r_chal)\n  let new_coeffs := fun j : Fin (2^(\u2113 - (i + 1))) =>\n    (1 - r_chal) * (coeffs \u27e8j.val * 2, by\n      rw [\u2190Nat.add_zero (j.val * 2)]\n      apply mul_two_add_bit_lt_two_pow (c := \u2113 - i) (a := j) (b := \u2113 - (\u2191i + 1))\n        (i := 0) (by omega) (by omega)\n    \u27e9) +\n    r_chal * (coeffs \u27e8j.val * 2 + 1, by\n      apply mul_two_add_bit_lt_two_pow (c := \u2113 - i) (a := j) (b := \u2113 - (\u2191i + 1))\n        (i := 1) (by omega) (by omega)\n    \u27e9)\n  let P_i_plus_1 :=\n    intermediateEvaluationPoly \ud835\udd3dq \u03b2 h_\u2113_add_R_rate (i := \u27e8i+1, by omega\u27e9) new_coeffs\n  \u2200 (y : (sDomain \ud835\udd3dq \u03b2 h_\u2113_add_R_rate)\n    \u27e8i+1, by omega\u27e9), f_i_plus_1 y = P_i_plus_1.eval y.val := by\n  simp only\n  intro y\n  let fiberMap := qMap_total_fiber \ud835\udd3dq \u03b2 (i := \u27e8i, by omega\u27e9) (steps := 1)\n    (h_i_add_steps := h_i_succ_lt) y\n  let P := intermediateEvaluationPoly \ud835\udd3dq \u03b2 h_\u2113_add_R_rate (i := \u27e8i, by omega\u27e9) coeffs\n  let P\u2080 := evenRefinement \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i coeffs\n  let P\u2081 := oddRefinement \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i coeffs\n  have hq (k : Fin 2) :\n      (AdditiveNTT.qMap \ud835\udd3dq \u03b2 \u27e8i, by omega\u27e9).eval (fiberMap k).val = y := by\n    have h := generates_quotient_point_if_is_fiber_of_y \ud835\udd3dq \u03b2 i 1 (by omega)\n      (fiberMap k) y \u27e8k, rfl\u27e9\n    rw [iteratedQuotientMap_k_eq_1_is_qMap] at h\n    exact congrArg Subtype.val h.symm\n  have hd : (fiberMap 1).val - (fiberMap 0).val = 1 := by\n    dsimp only [fiberMap]\n    rw [qMap_total_fiber_one_level_eq \ud835\udd3dq \u03b2 i (by omega) y 1,\n      qMap_total_fiber_one_level_eq \ud835\udd3dq \u03b2 i (by omega) y 0]\n    simp [Fin2ToF2, get_sDomain_basis, normalizedW\u1d62_eval_\u03b2\u1d62_eq_1]\n  have hp (k : Fin 2) :\n      P.eval (fiberMap k).val = P\u2080.eval y.val + (fiberMap k).val * P\u2081.eval y.val := by\n    simp only [P, evaluation_poly_split_identity \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i coeffs,\n      Polynomial.eval_add, eval_comp, Polynomial.eval_mul, Polynomial.eval_X, hq, P\u2080, P\u2081]\n  change P.eval (fiberMap 0).val * ((1 - r_chal) * (fiberMap 1).val - r_chal) +\n    P.eval (fiberMap 1).val * (r_chal - (1 - r_chal) * (fiberMap 0).val) = _\n  rw [hp, hp]\n  calc\n    _ = (P\u2080.eval y.val * (1 - r_chal) + P\u2081.eval y.val * r_chal) *\n        ((fiberMap 1).val - (fiberMap 0).val) := by ring\n    _ = P\u2080.eval y.val * (1 - r_chal) + P\u2081.eval y.val * r_chal := by rw [hd, mul_one]\n    _ = _ := by\n      simp only [P\u2080, P\u2081, evenRefinement, oddRefinement, intermediateEvaluationPoly,\n        Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,\n        Finset.sum_mul, \u2190 Finset.sum_add_distrib]\n      apply Finset.sum_congr rfl\n      intro j _\n      ring"
+}

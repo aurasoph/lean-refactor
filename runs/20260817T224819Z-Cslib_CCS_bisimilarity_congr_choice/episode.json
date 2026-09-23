@@ -1,0 +1,58 @@
+{
+  "timestamp": "20260817T224819Z",
+  "name": "Cslib.CCS.bisimilarity_congr_choice",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260817T224819Z-Cslib_CCS_bisimilarity_congr_choice",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "low",
+    "thread_id": "01a011e9-586b-7e02-8748-120272c522f3",
+    "exit_code": 0,
+    "wall_seconds": 106.1
+  },
+  "before": {
+    "length": 251,
+    "heartbeats": 4002,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.CCS.bisimilarity_congr_choice",
+    "compiled": true,
+    "length": 182,
+    "reference_length": 251,
+    "length_reduction_pct": 27.49,
+    "heartbeats": 415,
+    "reference_heartbeats": 4002,
+    "heartbeat_reduction_pct": 89.63,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 415,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 417,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 417,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 3858
+  },
+  "candidate": "theorem bisimilarity_congr_choice :\n    (p ~[lts (defs := defs)] q) \u2192 (choice p r) ~[lts (defs := defs)] (choice q r) := by\n  intro h\n  refine \u27e8@ChoiceBisim _ _ defs, .choice h, ?_\u27e9\n  intro s1 s2 hr \u03bc\n  constructor\n  \u00b7 intro s1' htr\n    cases hr with\n    | choice hbisim =>\n      cases htr with\n      | choiceL htr =>\n        obtain \u27e8s2', htr2, hr2\u27e9 := hbisim.follow_fst htr\n        exact \u27e8s2', Tr.choiceL htr2, .bisim hr2\u27e9\n      | choiceR htr =>\n        exact \u27e8s1', Tr.choiceR htr, .bisim (HomBisimilarity.refl _)\u27e9\n    | bisim hbisim =>\n      obtain \u27e8s2', htr2, hr2\u27e9 := hbisim.follow_fst htr\n      exact \u27e8s2', htr2, .bisim hr2\u27e9\n  \u00b7 intro s2' htr\n    cases hr with\n    | choice hbisim =>\n      cases htr with\n      | choiceL htr =>\n        obtain \u27e8s1', htr1, hr1\u27e9 := hbisim.follow_snd htr\n        exact \u27e8s1', Tr.choiceL htr1, .bisim hr1\u27e9\n      | choiceR htr =>\n        exact \u27e8s2', Tr.choiceR htr, .bisim (HomBisimilarity.refl _)\u27e9\n    | bisim hbisim =>\n      obtain \u27e8s1', htr1, hr1\u27e9 := hbisim.follow_snd htr\n      exact \u27e8s1', htr1, .bisim hr1\u27e9"
+}

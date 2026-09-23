@@ -1,0 +1,97 @@
+{
+  "timestamp": "20260907T172833Z",
+  "name": "Cslib.SKI.parallelReduction_diamond",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T172833Z-Cslib_SKI_parallelReduction_diamond",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 1,
+    "stop_reason": "request_error",
+    "exit_code": 0,
+    "wall_seconds": 857.4,
+    "usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "cost_usd": 0.0,
+      "num_turns": 1
+    }
+  },
+  "before": {
+    "length": 407,
+    "heartbeats": 1629,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.SKI.parallelReduction_diamond",
+    "compiled": true,
+    "statement_ok": true,
+    "objective_sum_pct": 0.0,
+    "survival_pct": 100.0,
+    "length_reduction_pct": 0.0,
+    "heartbeat_reduction_pct": 0.0,
+    "seed": "reference"
+  },
+  "agent_final": {
+    "name": "Cslib.SKI.parallelReduction_diamond",
+    "compiled": true,
+    "length": 407,
+    "reference_length": 407,
+    "length_reduction_pct": 0.0,
+    "heartbeats": 1629,
+    "reference_heartbeats": 1629,
+    "heartbeat_reduction_pct": 0.0,
+    "objective_sum_pct": 0.0,
+    "survival_pct": 100.0,
+    "combined_pct": 33.33,
+    "eligible": true,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true,
+      "v4.30.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 1629,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 1630,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 1630,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 1627,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 1383
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem parallelReduction_diamond : Diamond ParallelReduction := by\n  intro a a\u2081 a\u2082 h\u2081 h\u2082\n  cases h\u2081\n  case refl => exact \u27e8a\u2082, h\u2082, .refl a\u2082\u27e9\n  case par a a' b b' ha' hb' =>\n    cases h\u2082\n    case refl =>\n      use a' \u2b1d b'\n      exact \u27e8.refl (a' \u2b1d b'), .par ha' hb'\u27e9\n    case par a'' b'' ha'' hb'' =>\n      let \u27e8a\u2083, ha\u27e9 := parallelReduction_diamond ha' ha''\n      let \u27e8b\u2083, hb\u27e9 := parallelReduction_diamond hb' hb''\n      use a\u2083 \u2b1d b\u2083\n      constructor\n      \u00b7 exact .par ha.1 hb.1\n      \u00b7 exact .par ha.2 hb.2\n    case red_I =>\n      rw [I_irreducible a' ha']\n      use b', .red_I b'\n    case red_K =>\n      let \u27e8a\u2082', ha\u2082'\u27e9 := Ka_irreducible a\u2082 a' ha'\n      rw [ha\u2082'.2]\n      use a\u2082'\n      exact \u27e8.red_K a\u2082' b', ha\u2082'.1\u27e9\n    case red_S a c =>\n      let \u27e8a'', c', h\u27e9 := Sab_irreducible a c a' ha'\n      rw [h.2.2]\n      use a'' \u2b1d b' \u2b1d (c' \u2b1d b'), .red_S a'' c' b'\n      apply ParallelReduction.par <;>\n        apply ParallelReduction.par <;>\n        grind\n  case red_I =>\n    cases h\u2082\n    case refl => use a\u2081; exact \u27e8.refl a\u2081, .red_I a\u2081\u27e9\n    case par c a\u2081' hc ha =>\n      rw [I_irreducible c hc]\n      use a\u2081'\n      exact \u27e8ha, .red_I a\u2081'\u27e9\n    case red_I => use a\u2081; exact \u27e8.refl a\u2081, .refl a\u2081\u27e9\n  case red_K c =>\n    cases h\u2082\n    case refl => use a\u2081; exact \u27e8.refl a\u2081, .red_K a\u2081 c\u27e9\n    case par a' c' ha hc =>\n      let \u27e8a\u2081', h'\u27e9 := Ka_irreducible a\u2081 a' ha\n      rw [h'.2]\n      use a\u2081'\n      exact \u27e8h'.1, .red_K a\u2081' c'\u27e9\n    case red_K =>\n      use a\u2081; exact \u27e8.refl a\u2081, .refl a\u2081\u27e9\n  case red_S a b c =>\n    cases h\u2082\n    case refl =>\n      use a \u2b1d c \u2b1d (b \u2b1d c)\n      exact \u27e8.refl _, .red_S ..\u27e9\n    case par d c' hd hc =>\n      let \u27e8a', b', h\u27e9 := Sab_irreducible a b d hd\n      rw [h.2.2]\n      use a' \u2b1d c' \u2b1d (b' \u2b1d c')\n      constructor\n      \u00b7 apply ParallelReduction.par\n        \u00b7 exact .par h.left hc\n        \u00b7 exact .par h.2.1 hc\n      \u00b7 exact .red_S ..\n    case red_S => exact \u27e8a \u2b1d c \u2b1d (b \u2b1d c), .refl _, .refl _,\u27e9"
+}

@@ -1,0 +1,114 @@
+{
+  "timestamp": "20260907T063834Z",
+  "name": "putnam_1964_b2",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T063834Z-putnam_1964_b2",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 21,
+    "stop_reason": "max_turns",
+    "exit_code": 0,
+    "wall_seconds": 2941.8,
+    "usage": {
+      "prompt_tokens": 246918,
+      "completion_tokens": 11721,
+      "total_tokens": 258639,
+      "cost_usd": 1.0452575000000002,
+      "num_turns": 21
+    }
+  },
+  "before": {
+    "length": 1754,
+    "heartbeats": 134501,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1964_b2",
+    "compiled": true,
+    "length": 241,
+    "reference_length": 1754,
+    "length_reduction_pct": 86.26,
+    "heartbeats": 1498,
+    "reference_heartbeats": 134501,
+    "heartbeat_reduction_pct": 98.89,
+    "objective_sum_pct": 185.15,
+    "survival_pct": 100.0,
+    "combined_pct": 95.05,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 1840,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 1498,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 134499
+  },
+  "agent_final": {
+    "name": "putnam_1964_b2",
+    "compiled": true,
+    "length": 244,
+    "reference_length": 1754,
+    "length_reduction_pct": 86.09,
+    "heartbeats": 1510,
+    "reference_heartbeats": 134501,
+    "heartbeat_reduction_pct": 98.88,
+    "objective_sum_pct": 184.97,
+    "survival_pct": 100.0,
+    "combined_pct": 94.99,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 1854,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 1510,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 134499
+  },
+  "checkpoint_promotions": [
+    {
+      "hash": "18e2a825b28b",
+      "claimed_sum": 185.15,
+      "confirmed_sum": 185.15,
+      "survival_pct": 100.0,
+      "accepted": true,
+      "reused": false
+    }
+  ],
+  "candidate": "theorem putnam_1964_b2\n(S : Type*) [Fintype S] [Nonempty S]\n(P : Finset (Set S))\n(hPP : \u2200 T \u2208 P, \u2200 U \u2208 P, T \u2229 U \u2260 \u2205)\n(hPS : \u00ac\u2203 T : Set S, T \u2209 P \u2227 (\u2200 U \u2208 P, T \u2229 U \u2260 \u2205))\n: (P.card = 2 ^ (Fintype.card S - 1)) := by\n  classical\n  have maximal (A : Set S) (h : \u2200 U \u2208 P, A \u2229 U \u2260 \u2205) : A \u2208 P := by\n    by_contra hn\n    exact hPS \u27e8A, hn, h\u27e9\n  have hc (A : Set S) : A\u1d9c \u2208 P \u2194 A \u2209 P := by\n    constructor\n    \u00b7 intro hAc hA\n      exact hPP A hA A\u1d9c hAc (Set.inter_compl_self A)\n    \u00b7 intro hn\n      apply maximal\n      intro U hU hAU\n      have hUA : U \u2286 A :=\n        disjoint_compl_left_iff.mp (Set.disjoint_iff_inter_eq_empty.mpr hAU)\n      apply hn\n      apply maximal\n      intro V hV hAV\n      exact hPP U hU V hV\n        ((Set.disjoint_iff_inter_eq_empty.mpr hAV).mono_left hUA).eq_bot\n  have hcard : P.card = P\u1d9c.card := by\n    apply Finset.card_bij' (fun A _ => A\u1d9c) (fun A _ => A\u1d9c)\n    \u00b7 intros\n      exact compl_compl _\n    \u00b7 intros\n      exact compl_compl _\n    \u00b7 intro A hA\n      simpa only [Finset.mem_compl, hc, not_not] using hA\n    \u00b7 intro A hA\n      exact (hc A).2 (Finset.mem_compl.mp hA)\n  have hsum := Finset.card_add_card_compl P\n  rw [\u2190 hcard, Fintype.card_set] at hsum\n  have hn : Fintype.card S - 1 + 1 = Fintype.card S :=\n    Nat.sub_add_cancel (Fintype.card_pos_iff.mpr inferInstance)\n  have hp : 2 ^ (Fintype.card S - 1) * 2 = 2 ^ Fintype.card S := by\n    rw [\u2190 pow_succ, hn]\n  omega"
+}

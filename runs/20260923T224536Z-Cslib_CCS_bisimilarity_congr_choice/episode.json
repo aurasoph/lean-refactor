@@ -1,0 +1,127 @@
+{
+  "timestamp": "20260923T224536Z",
+  "name": "Cslib.CCS.bisimilarity_congr_choice",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260923T224536Z-Cslib_CCS_bisimilarity_congr_choice",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "low",
+    "wrapper": "v4.2-minimal",
+    "toolset": "student-v1",
+    "tool_log": "/home/auras/Projects/Lean_Refactor/runs/20260923T224536Z-Cslib_CCS_bisimilarity_congr_choice/tools.jsonl",
+    "thread_id": "01a0d072-2b47-7ea0-9a9e-b23ba84c6f4b",
+    "exit_code": 0,
+    "wall_seconds": 411.7,
+    "usage": {
+      "input_tokens": 439379,
+      "cached_input_tokens": 407808,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 4535,
+      "reasoning_output_tokens": 1193,
+      "num_turns": 5
+    }
+  },
+  "before": {
+    "length": 251,
+    "heartbeats": 4002,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.CCS.bisimilarity_congr_choice",
+    "compiled": true,
+    "length": 182,
+    "reference_length": 251,
+    "length_reduction_pct": 27.49,
+    "heartbeats": 420,
+    "reference_heartbeats": 4002,
+    "heartbeat_reduction_pct": 89.51,
+    "objective_sum_pct": 117.0,
+    "survival_pct": 100.0,
+    "combined_pct": 72.33,
+    "eligible": true,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 420,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 422,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 422,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 3858
+  },
+  "agent_final": {
+    "name": "Cslib.CCS.bisimilarity_congr_choice",
+    "compiled": true,
+    "length": 182,
+    "reference_length": 251,
+    "length_reduction_pct": 27.49,
+    "heartbeats": 420,
+    "reference_heartbeats": 4002,
+    "heartbeat_reduction_pct": 89.51,
+    "objective_sum_pct": 117.0,
+    "survival_pct": 100.0,
+    "combined_pct": 72.33,
+    "eligible": true,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 420,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 422,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 422,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 3858
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem bisimilarity_congr_choice :\n    (p ~[lts (defs := defs)] q) \u2192 (choice p r) ~[lts (defs := defs)] (choice q r) := by\n  intro h\n  refine \u27e8@ChoiceBisim _ _ defs, .choice h, ?_\u27e9\n  intro s\u2081 s\u2082 hr \u03bc\n  constructor\n  \u00b7 intro s\u2081' ht\n    cases hr with\n    | choice hb =>\n      cases ht with\n      | choiceL ht =>\n        obtain \u27e8s\u2082', ht, hr\u27e9 := hb.follow_fst ht\n        exact \u27e8s\u2082', .choiceL ht, .bisim hr\u27e9\n      | choiceR ht => exact \u27e8s\u2081', .choiceR ht, .bisim (.refl _)\u27e9\n    | bisim hb =>\n      obtain \u27e8s\u2082', ht, hr\u27e9 := hb.follow_fst ht\n      exact \u27e8s\u2082', ht, .bisim hr\u27e9\n  \u00b7 intro s\u2082' ht\n    cases hr with\n    | choice hb =>\n      cases ht with\n      | choiceL ht =>\n        obtain \u27e8s\u2081', ht, hr\u27e9 := hb.follow_snd ht\n        exact \u27e8s\u2081', .choiceL ht, .bisim hr\u27e9\n      | choiceR ht => exact \u27e8s\u2082', .choiceR ht, .bisim (.refl _)\u27e9\n    | bisim hb =>\n      obtain \u27e8s\u2081', ht, hr\u27e9 := hb.follow_snd ht\n      exact \u27e8s\u2081', ht, .bisim hr\u27e9"
+}

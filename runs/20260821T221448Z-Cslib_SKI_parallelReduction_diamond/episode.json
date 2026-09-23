@@ -1,0 +1,71 @@
+{
+  "timestamp": "20260821T221448Z",
+  "name": "Cslib.SKI.parallelReduction_diamond",
+  "wrapper": "v3-official-objective",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T221448Z-Cslib_SKI_parallelReduction_diamond",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v3-official-objective",
+    "thread_id": "01a02664-1b64-74b1-af6d-532144b32f8b",
+    "exit_code": 0,
+    "wall_seconds": 216.5
+  },
+  "before": {
+    "length": 407,
+    "heartbeats": 1629,
+    "compiled": true
+  },
+  "after": {
+    "name": "Cslib.SKI.parallelReduction_diamond",
+    "compiled": true,
+    "length": 369,
+    "reference_length": 407,
+    "length_reduction_pct": 9.34,
+    "heartbeats": 789,
+    "reference_heartbeats": 1629,
+    "heartbeat_reduction_pct": 51.57,
+    "objective_sum_pct": 60.91,
+    "survival_pct": 100.0,
+    "combined_pct": 53.64,
+    "compat": {
+      "v4.33.0-rc2": true,
+      "v4.32.0": true,
+      "v4.31.0": true,
+      "v4.30.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.33.0-rc2",
+        "ok": true,
+        "heartbeats": 789,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 790,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 789,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.30.0",
+        "ok": true,
+        "heartbeats": 786,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 1383
+  },
+  "candidate": "theorem parallelReduction_diamond : Diamond ParallelReduction := by\n  intro a a\u2081 a\u2082 h\u2081 h\u2082\n  cases h\u2081\n  case refl => exact \u27e8_, h\u2082, .refl _\u27e9\n  case par a a' b b' ha' hb' =>\n    cases h\u2082\n    case refl => exact \u27e8_, .refl _, .par ha' hb'\u27e9\n    case par a'' b'' ha'' hb'' =>\n      obtain \u27e8a\u2083, ha\u2081, ha\u2082\u27e9 := parallelReduction_diamond ha' ha''\n      obtain \u27e8b\u2083, hb\u2081, hb\u2082\u27e9 := parallelReduction_diamond hb' hb''\n      exact \u27e8_, .par ha\u2081 hb\u2081, .par ha\u2082 hb\u2082\u27e9\n    case red_I =>\n      cases I_irreducible a' ha'\n      exact \u27e8_, .red_I _, hb'\u27e9\n    case red_K =>\n      let \u27e8a\u2082', ha\u2082'\u27e9 := Ka_irreducible a\u2082 a' ha'\n      rw [ha\u2082'.2]\n      exact \u27e8_, .red_K _ _, ha\u2082'.1\u27e9\n    case red_S a c =>\n      obtain \u27e8a'', c', ha, hc, rfl\u27e9 := Sab_irreducible a c a' ha'\n      exact \u27e8_, .red_S .., .par (.par ha hb') (.par hc hb')\u27e9\n  case red_I =>\n    cases h\u2082\n    case refl => exact \u27e8_, .refl _, .red_I _\u27e9\n    case par c a\u2081' hc ha =>\n      cases I_irreducible c hc\n      exact \u27e8_, ha, .red_I _\u27e9\n    case red_I => exact \u27e8_, .refl _, .refl _\u27e9\n  case red_K c =>\n    cases h\u2082\n    case refl => exact \u27e8_, .refl _, .red_K _ _\u27e9\n    case par a' c' ha hc =>\n      let \u27e8a\u2081', h'\u27e9 := Ka_irreducible a\u2081 a' ha\n      rw [h'.2]\n      exact \u27e8_, h'.1, .red_K _ _\u27e9\n    case red_K => exact \u27e8_, .refl _, .refl _\u27e9\n  case red_S a b c =>\n    cases h\u2082\n    case refl => exact \u27e8_, .refl _, .red_S ..\u27e9\n    case par d c' hd hc =>\n      obtain \u27e8a', b', ha, hb, rfl\u27e9 := Sab_irreducible a b d hd\n      exact \u27e8_, .par (.par ha hc) (.par hb hc), .red_S ..\u27e9\n    case red_S => exact \u27e8_, .refl _, .refl _\u27e9"
+}

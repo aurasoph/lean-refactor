@@ -1,0 +1,7 @@
+name = "lean_refactor_v4_28"
+version = "0.1.0"
+
+[[require]]
+name = "Arklib"
+git = "https://github.com/Verified-zkEVM/ArkLib"
+rev = "673fa440714eb1949b8b50a28f2a4f52b1837e9b"

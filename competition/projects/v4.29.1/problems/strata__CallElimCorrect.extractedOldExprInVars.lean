@@ -1,0 +1,88 @@
+-- Competition problem: CallElimCorrect.extractedOldExprInVars
+-- Source: strata
+-- Source file: Strata/Transform/CallElimCorrect.lean
+-- Lean version commit: 384e22374e0872095ad9c6f74c5998c09cfd93a9
+-- Original benchmark statement and proof follow.
+
+open OldExpressions in
+theorem extractedOldExprInVars :
+  NormalizedOldExpr post →
+  (extractOldExprVars post).Subset
+  (Imperative.HasVarsPure.getVars post) := by
+  intros Hnorm
+  induction post <;>
+    simp [Imperative.HasVarsPure.getVars, extractOldExprVars,
+          Lambda.LExpr.LExpr.getVars] at * <;>
+    try simp_all
+  case app fn e fn_ih e_ih =>
+    unfold extractOldExprVars
+    split
+    . simp [Lambda.LExpr.LExpr.getVars]
+      intros x Hin
+      exact Hin
+    . next Hfalse =>
+      cases Hnorm with
+      | app H1 H2 Hn =>
+      exfalso
+      specialize Hn ?_
+      constructor
+      cases Hn
+      apply Hfalse
+      rfl
+    . cases Hnorm with
+      | app H1 H2 Hn =>
+      apply List.Subset.app
+      . apply List.Subset.trans
+        apply fn_ih
+        exact H1
+        intros x Hin
+        simp_all
+      . apply List.Subset.trans
+        apply e_ih
+        exact H2
+        intros x Hin
+        simp_all
+  case abs ih =>
+    cases Hnorm
+    apply ih <;> assumption
+  case quant trih eih =>
+    cases Hnorm
+    rename_i e_normalized
+    rename_i tr_normalized
+    rename_i tr e ty k
+    apply List.Subset.app
+    . apply List.Subset.trans
+      apply trih <;> assumption
+      intros x Hin
+      simp_all
+    . apply List.Subset.trans
+      apply eih <;> assumption
+      intros x Hin
+      simp_all
+  case ite cih tih eih =>
+    cases Hnorm
+    apply List.Subset.app
+    . apply List.Subset.trans
+      apply cih <;> assumption
+      intros x Hin
+      simp_all
+    apply List.Subset.app
+    . apply List.Subset.trans
+      apply tih <;> assumption
+      intros x Hin
+      simp_all
+    . apply List.Subset.trans
+      apply eih <;> assumption
+      intros x Hin
+      simp_all
+  case eq ih1 ih2 =>
+    cases Hnorm
+    apply List.Subset.app
+    . apply List.Subset.trans
+      apply ih1 <;> assumption
+      intros x Hin
+      simp_all
+    . apply List.Subset.trans
+      apply ih2 <;> assumption
+      intros x Hin
+      simp_all

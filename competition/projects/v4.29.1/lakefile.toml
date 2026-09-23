@@ -1,0 +1,7 @@
+name = "lean_refactor_v4_29_1"
+version = "0.1.0"
+
+[[require]]
+name = "Strata"
+git = "https://github.com/strata-org/Strata"
+rev = "384e22374e0872095ad9c6f74c5998c09cfd93a9"

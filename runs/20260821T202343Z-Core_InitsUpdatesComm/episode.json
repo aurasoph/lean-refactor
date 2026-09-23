@@ -1,0 +1,60 @@
+{
+  "timestamp": "20260821T202343Z",
+  "name": "Core.InitsUpdatesComm",
+  "wrapper": "v2-tight-loop",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T202343Z-Core_InitsUpdatesComm",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v2-tight-loop",
+    "thread_id": "01a025fe-62fa-76d3-8403-c8ce843d0579",
+    "exit_code": 0,
+    "wall_seconds": 159.4
+  },
+  "before": {
+    "length": 224,
+    "heartbeats": 4547,
+    "compiled": true
+  },
+  "after": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "length": 91,
+    "reference_length": 224,
+    "length_reduction_pct": 59.38,
+    "heartbeats": 375,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": 91.75,
+    "compat": {
+      "v4.29.1": true,
+      "v4.27.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": true,
+        "heartbeats": 375,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 231,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 172,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "candidate": "theorem InitsUpdatesComm\n  {P : PureExpr} {\u03c3 \u03c3' \u03c3'' : SemanticStore P}\n  {ks ks' : List P.Ident} {vs vs' : List P.Expr} :\n  UpdateStates \u03c3 ks vs \u03c3' \u2192\n  InitStates \u03c3' ks' vs' \u03c3'' \u2192\n  \u2203 \u03c3\u2081,\n    \u03c3\u2081 = (updatedStates \u03c3 ks' vs') \u2227\n    InitStates \u03c3 ks' vs' \u03c3\u2081 \u2227\n    UpdateStates \u03c3\u2081 ks vs \u03c3'' := by\n  intro Hup Hinit\n  have Hndef := UpdateStatesNotDefMonotone' (InitStatesNotDefined Hinit) Hup\n  have Hdef := UpdateStatesDefined' Hup\n  refine \u27e8_, rfl, updatedStatesInit (InitStatesLength Hinit) Hndef (InitStatesNodup Hinit), ?_\u27e9\n  rw [InitStatesUpdated Hinit, UpdateStatesUpdated Hup]\n  unfold updatedStates\n  rw [updatedStatesComm]\n  \u00b7 exact updatedStatesUpdate (UpdateStatesLength Hup)\n      (updatedStatesDefMonotone Hdef)\n  \u00b7 rw [List.unzip_zip (UpdateStatesLength Hup),\n      List.unzip_zip (InitStatesLength Hinit)]\n    intro k hk hk'\n    simpa [Hndef k hk'] using Hdef k hk"
+}

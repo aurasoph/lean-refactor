@@ -1,0 +1,63 @@
+{
+  "timestamp": "20260821T221954Z",
+  "name": "Core.InitsUpdatesComm",
+  "wrapper": "v3-official-objective",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T221954Z-Core_InitsUpdatesComm",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v3-official-objective",
+    "thread_id": "01a02668-c178-7072-a729-c78a7986e15f",
+    "exit_code": 0,
+    "wall_seconds": 387.0
+  },
+  "before": {
+    "length": 224,
+    "heartbeats": 4547,
+    "compiled": true
+  },
+  "after": {
+    "name": "Core.InitsUpdatesComm",
+    "compiled": true,
+    "length": 136,
+    "reference_length": 224,
+    "length_reduction_pct": 39.29,
+    "heartbeats": 428,
+    "reference_heartbeats": 4547,
+    "heartbeat_reduction_pct": 90.59,
+    "objective_sum_pct": 129.88,
+    "survival_pct": 100.0,
+    "combined_pct": 76.63,
+    "compat": {
+      "v4.29.1": true,
+      "v4.27.0": true,
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.29.1",
+        "ok": true,
+        "heartbeats": 428,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 332,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 286,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 4251
+  },
+  "candidate": "theorem InitsUpdatesComm\n  {P : PureExpr} {\u03c3 \u03c3' \u03c3'' : SemanticStore P}\n  {ks ks' : List P.Ident} {vs vs' : List P.Expr} :\n  UpdateStates \u03c3 ks vs \u03c3' \u2192\n  InitStates \u03c3' ks' vs' \u03c3'' \u2192\n  \u2203 \u03c3\u2081,\n    \u03c3\u2081 = (updatedStates \u03c3 ks' vs') \u2227\n    InitStates \u03c3 ks' vs' \u03c3\u2081 \u2227\n    UpdateStates \u03c3\u2081 ks vs \u03c3'' := by\n  intros Hup Hinit\n  refine \u27e8_, rfl, updatedStatesInit (InitStatesLength Hinit) ?_\n    (InitStatesNodup Hinit), ?_\u27e9\n  \u00b7 exact UpdateStatesNotDefMonotone' (InitStatesNotDefined Hinit) Hup\n  have Hdisj : ks.Disjoint ks' := by\n    simp [List.Disjoint]\n    intro k hk hk'\n    have hd := UpdateStatesDefined Hup k hk\n    have hn := InitStatesNotDefined Hinit k hk'\n    simp [Option.isSome, hn] at hd\n  have Hcomm : updatedStates (updatedStates \u03c3 ks' vs') ks vs =\n      updatedStates (updatedStates \u03c3 ks vs) ks' vs' := by\n    unfold updatedStates\n    apply updatedStatesComm\n    rw [List.unzip_zip (InitStatesLength Hinit),\n      List.unzip_zip (UpdateStatesLength Hup)]\n    exact Hdisj.symm\n  rw [InitStatesUpdated Hinit, UpdateStatesUpdated Hup, \u2190 Hcomm]\n  exact updatedStatesUpdate (UpdateStatesLength Hup)\n    (updatedStatesDefMonotone (UpdateStatesDefined' Hup))"
+}

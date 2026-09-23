@@ -1,0 +1,7 @@
+name = "lean_refactor_v4_33"
+version = "0.1.0"
+
+[[require]]
+name = "cslib"
+git = "https://github.com/leanprover/cslib"
+rev = "3aa9d4416c185e0b9faeb72bbd65abe85b95dbcc"

@@ -1,0 +1,75 @@
+{
+  "timestamp": "20260822T000713Z",
+  "name": "CallElimCorrect.extractedOldExprInVars",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260822T000713Z-CallElimCorrect_extractedOldExprInVars",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a026cb-0101-71d0-af7d-c866cd978310",
+    "exit_code": 0,
+    "wall_seconds": 750.0
+  },
+  "before": {
+    "length": 222,
+    "heartbeats": 2708,
+    "compiled": true
+  },
+  "after": {
+    "name": "CallElimCorrect.extractedOldExprInVars",
+    "compiled": true,
+    "length": 128,
+    "reference_length": 222,
+    "length_reduction_pct": 42.34,
+    "heartbeats": 433,
+    "reference_heartbeats": 2708,
+    "heartbeat_reduction_pct": 84.01,
+    "objective_sum_pct": 126.35,
+    "survival_pct": 100.0,
+    "combined_pct": 75.45,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 433,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 2696
+  },
+  "agent_final": {
+    "name": "CallElimCorrect.extractedOldExprInVars",
+    "compiled": true,
+    "length": 128,
+    "reference_length": 222,
+    "length_reduction_pct": 42.34,
+    "heartbeats": 433,
+    "reference_heartbeats": 2708,
+    "heartbeat_reduction_pct": 84.01,
+    "objective_sum_pct": 126.35,
+    "survival_pct": 100.0,
+    "combined_pct": 75.45,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 433,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 2696
+  },
+  "checkpoint_promotions": [],
+  "candidate": "open OldExpressions in\ntheorem extractedOldExprInVars :\n  NormalizedOldExpr post \u2192\n  (extractOldExprVars post).Subset\n  (Imperative.HasVarsPure.getVars post) := by\n  have ap {a b c d : List CoreIdent} (h : a \u2286 c) (h' : b \u2286 d) :=\n    List.append_subset.mpr \u27e8List.subset_append_of_subset_left _ h,\n      List.subset_append_of_subset_right _ h'\u27e9\n  intro h\n  induction h with\n  | const | op | bvar | fvar => exact List.Subset.empty\n  | abs _ ih => exact ih\n  | quant _ _ ih\u2081 ih\u2082\n  | eq _ _ ih\u2081 ih\u2082 => exact ap ih\u2081 ih\u2082\n  | app _ _ hn ihfn ihe =>\n    unfold extractOldExprVars\n    split\n    \u00b7 exact List.Subset.refl _\n    \u00b7 next hfalse =>\n      exfalso\n      cases hn .oldPred\n      exact hfalse _ _ _ rfl\n    \u00b7 exact ap ihfn ihe\n  | ite _ _ _ ih\u2081 ih\u2082 ih\u2083 => exact ap (ap ih\u2081 ih\u2082) ih\u2083"
+}

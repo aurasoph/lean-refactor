@@ -1,0 +1,88 @@
+{
+  "timestamp": "20260824T121429Z",
+  "name": "CallElimCorrect.extractedOldExprInVars",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/competition/runs/20260824T121429Z-CallElimCorrect_extractedOldExprInVars",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "stealth/ox-alpha",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 58,
+    "stop_reason": "wall_clock",
+    "exit_code": 0,
+    "wall_seconds": 3729.9
+  },
+  "before": {
+    "length": 222,
+    "heartbeats": 2708,
+    "compiled": true
+  },
+  "after": {
+    "t": 1787575398.7277286,
+    "episode": "20260824T121429Z",
+    "name": "CallElimCorrect.extractedOldExprInVars",
+    "wrapper": "v4.2-minimal",
+    "all_versions": false,
+    "hash": "c270ad942c86",
+    "compiled": true,
+    "length": 353,
+    "length_reduction_pct": -59.01,
+    "heartbeats": 869,
+    "heartbeat_reduction_pct": 67.91,
+    "objective_sum_pct": 8.9,
+    "survival_pct": 100.0,
+    "compat": {
+      "v4.26.0": true
+    },
+    "statement_ok": true,
+    "forbidden": null,
+    "extra_toplevel_decls": null,
+    "candidate": "open OldExpressions in\ntheorem extractedOldExprInVars :\n  NormalizedOldExpr post \u2192\n  (extractOldExprVars post).Subset\n  (Imperative.HasVarsPure.getVars post) := by\n  have appSub : \u2200 (l\u2081 l\u2082 r\u2081 r\u2082 : List CoreIdent), l\u2081.Subset r\u2081 \u2192 l\u2082.Subset r\u2082 \u2192\n      (l\u2081 ++ l\u2082).Subset (r\u2081 ++ r\u2082) := fun _ _ _ _ h\u2081 h\u2082 a Ha => by\n    simp only [List.mem_append] at Ha \u22a2\n    rcases Ha with Ha|Ha\n    . exact Or.inl (h\u2081 Ha)\n    . exact Or.inr (h\u2082 Ha)\n  have key : \u2200 (e : Expression.Expr), NormalizedOldExpr e \u2192\n      (extractOldExprVars e).Subset (Lambda.LExpr.LExpr.getVars e) := by\n    intros e\n    induction e with\n    | const => intros _ a Ha; simp [extractOldExprVars] at Ha\n    | bvar => intros _ a Ha; simp [extractOldExprVars] at Ha\n    | op => intros _ a Ha; simp [extractOldExprVars] at Ha\n    | fvar => intros _ a Ha; simp [extractOldExprVars] at Ha\n    | abs _ _ _ ih =>\n      intros Hnorm\n      cases Hnorm\n      exact ih \u2039_\u203a\n    | quant _ _ _ tr e trih eih =>\n      intros Hnorm\n      cases Hnorm with | quant H1 H2\n      exact appSub _ _ _ _ (trih H1) (eih H2)\n    | app m fn e fn_ih e_ih =>\n      intros Hnorm\n      cases Hnorm with | app H1 H2 Hn\n      unfold extractOldExprVars\n      split\n      . simp [Lambda.LExpr.LExpr.getVars]\n        intros a Ha\n        exact Ha\n      . next Hfalse =>\n        exfalso\n        specialize Hn ?_\n        constructor\n        cases Hn\n        apply Hfalse\n        rfl\n      . exact appSub _ _ _ _ (fn_ih H1) (e_ih H2)\n    | ite _ c t e cih tih eih =>\n      intros Hnorm\n      cases Hnorm with | ite H1 H2 H3\n      exact appSub _ _ _ _ (appSub _ _ _ _ (cih H1) (tih H2)) (eih H3)\n    | eq _ e1 e2 ih1 ih2 =>\n      intros Hnorm\n      cases Hnorm with | eq H1 H2\n      exact appSub _ _ _ _ (ih1 H1) (ih2 H2)\n  intros Hnorm a Ha\n  exact key post Hnorm Ha"
+  },
+  "agent_final": {
+    "name": "CallElimCorrect.extractedOldExprInVars",
+    "compiled": false,
+    "length": 267,
+    "reference_length": 222,
+    "length_reduction_pct": -20.27,
+    "heartbeats": 837,
+    "reference_heartbeats": 2708,
+    "heartbeat_reduction_pct": 69.09,
+    "objective_sum_pct": 48.82,
+    "survival_pct": 0.0,
+    "combined_pct": 16.27,
+    "compat": {
+      "v4.26.0": false
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.26.0",
+        "ok": false,
+        "heartbeats": 837,
+        "errors": [
+          "Type mismatch",
+          "Function expected at",
+          "Application type mismatch: The argument",
+          "Function expected at",
+          "Application type mismatch: The argument"
+        ],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 2696
+  },
+  "checkpoint_promotions": [
+    {
+      "hash": "c270ad942c86",
+      "claimed_sum": 8.9,
+      "confirmed_sum": 8.9,
+      "survival_pct": 100.0,
+      "accepted": true,
+      "reused": true
+    }
+  ],
+  "candidate": "open OldExpressions in\ntheorem extractedOldExprInVars :\n  NormalizedOldExpr post \u2192\n  (extractOldExprVars post).Subset\n  (Imperative.HasVarsPure.getVars post) := by\n  have appSub : \u2200 (l\u2081 l\u2082 r\u2081 r\u2082 : List CoreIdent), l\u2081.Subset r\u2081 \u2192 l\u2082.Subset r\u2082 \u2192\n      (l\u2081 ++ l\u2082).Subset (r\u2081 ++ r\u2082) := fun _ _ _ _ h\u2081 h\u2082 a Ha => by\n    simp only [List.mem_append] at Ha \u22a2\n    rcases Ha with Ha|Ha\n    . exact Or.inl (h\u2081 Ha)\n    . exact Or.inr (h\u2082 Ha)\n  have key : \u2200 (e : Expression.Expr), NormalizedOldExpr e \u2192\n      (extractOldExprVars e).Subset (Lambda.LExpr.LExpr.getVars e) := by\n    intros e\n    induction e with\n    | const => intros _ a Ha; simp [extractOldExprVars] at Ha\n    | bvar => intros _ a Ha; simp [extractOldExprVars] at Ha\n    | op => intros _ a Ha; simp [extractOldExprVars] at Ha\n    | fvar => intros _ a Ha; simp [extractOldExprVars] at Ha\n    | abs _ _ _ ih =>\n      intros Hnorm\n      cases Hnorm\n      exact ih \u2039_\u203a\n    | quant _ _ _ tr e trih eih =>\n      intros Hnorm\n      cases Hnorm with | quant H1 H2\n      exact appSub _ _ _ _ (trih H1) (eih H2)\n    | app m fn e fn_ih e_ih =>\n      intros Hnorm\n      cases Hnorm with | app H1 H2 Hn\n      unfold extractOldExprVars\n      split\n      . simp [Lambda.LExpr.LExpr.getVars]\n        intros a Ha\n        exact Ha\n      . next Hfalse =>\n        exfalso\n        specialize Hn ?_\n        constructor\n        cases Hn\n        apply Hfalse\n        rfl\n      . exact appSub _ _ _ _ (fn_ih H1) (e_ih H2)\n    | ite _ c t e cih tih eih =>\n      intros Hnorm\n      cases Hnorm with | ite H1 H2 H3\n      exact appSub _ _ _ _ (appSub _ _ _ _ (cih H1) (tih H2)) (eih H3)\n    | eq _ e1 e2 ih1 ih2 =>\n      intros Hnorm\n      cases Hnorm with | eq H1 H2\n      exact appSub _ _ _ _ (ih1 H1) (ih2 H2)\n  intros Hnorm a Ha\n  exact key post Hnorm Ha"
+}

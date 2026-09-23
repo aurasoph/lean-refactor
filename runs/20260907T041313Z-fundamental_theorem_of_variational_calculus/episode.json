@@ -1,0 +1,87 @@
+{
+  "timestamp": "20260907T041313Z",
+  "name": "fundamental_theorem_of_variational_calculus'",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260907T041313Z-fundamental_theorem_of_variational_calculus",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 17,
+    "stop_reason": "no_tool_calls",
+    "exit_code": 0,
+    "wall_seconds": 242.2,
+    "usage": {
+      "prompt_tokens": 296551,
+      "completion_tokens": 7676,
+      "total_tokens": 304227,
+      "cost_usd": 1.013896,
+      "num_turns": 17
+    }
+  },
+  "before": {
+    "length": 851,
+    "heartbeats": 12033,
+    "compiled": true
+  },
+  "after": {
+    "name": "fundamental_theorem_of_variational_calculus'",
+    "compiled": true,
+    "length": 210,
+    "reference_length": 851,
+    "length_reduction_pct": 75.32,
+    "heartbeats": 1901,
+    "reference_heartbeats": 12033,
+    "heartbeat_reduction_pct": 84.2,
+    "objective_sum_pct": 159.52,
+    "survival_pct": 100.0,
+    "combined_pct": 86.51,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 1901,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 11947
+  },
+  "agent_final": {
+    "name": "fundamental_theorem_of_variational_calculus'",
+    "compiled": true,
+    "length": 210,
+    "reference_length": 851,
+    "length_reduction_pct": 75.32,
+    "heartbeats": 1901,
+    "reference_heartbeats": 12033,
+    "heartbeat_reduction_pct": 84.2,
+    "objective_sum_pct": 159.52,
+    "survival_pct": 100.0,
+    "combined_pct": 86.51,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 1901,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 11947
+  },
+  "checkpoint_promotions": [],
+  "candidate": "lemma fundamental_theorem_of_variational_calculus' {f : Y \u2192 V}\n    (\u03bc : Measure Y) [IsFiniteMeasureOnCompacts \u03bc] [\u03bc.IsOpenPosMeasure]\n    [OpensMeasurableSpace Y]\n    (hf : Continuous f) (hg : \u2200 g, IsTestFunction g \u2192 \u222b x, \u27eaf x, g x\u27eb_\u211d \u2202\u03bc = 0) :\n    f = 0 := by\n  funext x\n  by_contra hx\n  have hc : Continuous (fun y => \u27eaf y, f x\u27eb_\u211d) :=\n    Continuous.inner' _ _ hf continuous_const\n  have hp : 0 < \u27eaf x, f x\u27eb_\u211d :=\n    lt_of_le_of_ne real_inner_self_nonneg' (Ne.symm (mt inner_self_eq_zero'.mp hx))\n  obtain \u27e8r, hr, h\u27e9 := Metric.eventually_nhds_iff.mp\n    (hc.continuousAt.eventually_const_lt hp)\n  letI : HasContDiffBump Y := hasContDiffBump_of_innerProductSpace Y\n  let \u03c6 : ContDiffBump x := \u27e8r / 2, r, half_pos hr, half_lt_self hr\u27e9\n  have hn : \u2200 y, 0 \u2264 \u03c6 y * \u27eaf y, f x\u27eb_\u211d := by\n    intro y\n    by_cases hy : \u03c6 y = 0\n    \u00b7 rw [hy, zero_mul]\n    \u00b7 exact mul_nonneg \u03c6.nonneg (h ((\u03c6.support_eq \u25b8 hy) : y \u2208 Metric.ball x r)).le\n  have hi := (\u03c6.continuous.mul hc).integral_pos_of_hasCompactSupport_nonneg_nonzero\n    (\u03bc := \u03bc) \u03c6.hasCompactSupport.mul_right hn\n    (mul_pos (\u03c6.pos_of_mem_ball (Metric.mem_ball_self hr)) hp).ne'\n  have hz := hg (fun y => \u03c6 y \u2022 f x)\n    (IsTestFunction.smul_right \u27e8\u03c6.contDiff, \u03c6.hasCompactSupport\u27e9 contDiff_const)\n  simp only [inner_smul_right'] at hz\n  exact hi.ne' hz"
+}

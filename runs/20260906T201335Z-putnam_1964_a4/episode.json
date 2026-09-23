@@ -1,0 +1,123 @@
+{
+  "timestamp": "20260906T201335Z",
+  "name": "putnam_1964_a4",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260906T201335Z-putnam_1964_a4",
+  "backend": "openrouter",
+  "codex": {
+    "backend": "openrouter",
+    "model": "openai/gpt-6-astra",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "turns": 21,
+    "stop_reason": "max_turns",
+    "exit_code": 0,
+    "wall_seconds": 3144.6,
+    "usage": {
+      "prompt_tokens": 284948,
+      "completion_tokens": 14319,
+      "total_tokens": 299267,
+      "cost_usd": 1.2789904999999997,
+      "num_turns": 21
+    }
+  },
+  "before": {
+    "length": 1769,
+    "heartbeats": 111479,
+    "compiled": true
+  },
+  "after": {
+    "name": "putnam_1964_a4",
+    "compiled": true,
+    "length": 497,
+    "reference_length": 1769,
+    "length_reduction_pct": 71.91,
+    "heartbeats": 3350,
+    "reference_heartbeats": 111479,
+    "heartbeat_reduction_pct": 96.99,
+    "objective_sum_pct": 168.9,
+    "survival_pct": 100.0,
+    "combined_pct": 89.63,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 4283,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 3431,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 3350,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 111476
+  },
+  "agent_final": {
+    "name": "putnam_1964_a4",
+    "compiled": true,
+    "length": 497,
+    "reference_length": 1769,
+    "length_reduction_pct": 71.91,
+    "heartbeats": 3350,
+    "reference_heartbeats": 111479,
+    "heartbeat_reduction_pct": 96.99,
+    "objective_sum_pct": 168.9,
+    "survival_pct": 100.0,
+    "combined_pct": 89.63,
+    "compat": {
+      "v4.25.0": true,
+      "v4.26.0": true,
+      "v4.27.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.25.0",
+        "ok": true,
+        "heartbeats": 4283,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.26.0",
+        "ok": true,
+        "heartbeats": 3431,
+        "errors": [],
+        "note": "",
+        "tested": true
+      },
+      {
+        "version": "v4.27.0",
+        "ok": true,
+        "heartbeats": 3350,
+        "errors": [],
+        "note": "",
+        "tested": true
+      }
+    ],
+    "published_heartbeats": 111476
+  },
+  "checkpoint_promotions": [],
+  "candidate": "theorem putnam_1964_a4\n(u : \u2115 \u2192 \u2124)\n(boundedu : \u2203 B T : \u2124, \u2200 n : \u2115, B \u2264 u n \u2227 u n \u2264 T)\n(hu : \u2200 n \u2265 4, u n = ((u (n - 1) + u (n - 2) + u (n - 3) * u (n - 4)) : \u211d) / (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) \u2227 (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) \u2260 0)\n: (\u2203 N c : \u2115, c > 0 \u2227 \u2200 n \u2265 N, u (n + c) = u n) := by\n  let f := fun n => (u n, u (n + 1), u (n + 2), u (n + 3))\n  obtain \u27e8B, T, hB\u27e9 := boundedu\n  obtain \u27e8i, j, hij, he\u27e9 :=\n    (Set.finite_Icc (B, B, B, B) (T, T, T, T)).exists_lt_map_eq_of_forall_mem\n      (f := f) (fun n => show f n \u2208 Set.Icc (B, B, B, B) (T, T, T, T) from\n        \u27e8\u27e8(hB n).1, (hB (n+1)).1, (hB (n+2)).1, (hB (n+3)).1\u27e9,\n         \u27e8(hB n).2, (hB (n+1)).2, (hB (n+2)).2, (hB (n+3)).2\u27e9\u27e9)\n  have hrec := fun a : \u2115 => (hu (a + 4) (by omega)).1\n  simp only [show \u2200 a : \u2115, a + 4 - 1 = a + 3 from fun a => by omega,\n    show \u2200 a : \u2115, a + 4 - 2 = a + 2 from fun a => by omega,\n    show \u2200 a : \u2115, a + 4 - 3 = a + 1 from fun a => by omega,\n    Nat.add_sub_cancel] at hrec\n  have step (a b : \u2115) (h : f a = f b) : f (a + 1) = f (b + 1) := by\n    simp only [f, Prod.mk.injEq] at h\n    have hn : u (a + 4) = u (b + 4) := by\n      apply Int.cast_injective (\u03b1 := \u211d)\n      rw [hrec a, hrec b, h.1, h.2.1, h.2.2.1, h.2.2.2]\n    simpa only [f, Nat.add_assoc, Nat.reduceAdd, Prod.mk.injEq] using\n      And.intro h.2.1 (And.intro h.2.2.1 (And.intro h.2.2.2 hn))\n  have hall (k : \u2115) : f (i + k) = f (j + k) := by\n    induction k with\n    | zero => exact he\n    | succ k ih => exact step (i+k) (j+k) ih\n  refine \u27e8i, j - i, Nat.sub_pos_of_lt hij, ?_\u27e9\n  intro n hn\n  have h := congrArg Prod.fst (hall (n-i))\n  change u (i + (n-i)) = u (j + (n-i)) at h\n  convert h.symm using 1 <;> congr 1 <;> omega"
+}

@@ -1,0 +1,75 @@
+{
+  "timestamp": "20260821T235318Z",
+  "name": "fundamental_theorem_of_variational_calculus'",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T235318Z-fundamental_theorem_of_variational_calculus",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a026be-4a82-7bc0-9021-2fe3ec392457",
+    "exit_code": 0,
+    "wall_seconds": 1369.7
+  },
+  "before": {
+    "length": 851,
+    "heartbeats": 12033,
+    "compiled": true
+  },
+  "after": {
+    "name": "fundamental_theorem_of_variational_calculus'",
+    "compiled": true,
+    "length": 171,
+    "reference_length": 851,
+    "length_reduction_pct": 79.91,
+    "heartbeats": 2033,
+    "reference_heartbeats": 12033,
+    "heartbeat_reduction_pct": 83.1,
+    "objective_sum_pct": 163.01,
+    "survival_pct": 100.0,
+    "combined_pct": 87.67,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 2033,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 11947
+  },
+  "agent_final": {
+    "name": "fundamental_theorem_of_variational_calculus'",
+    "compiled": true,
+    "length": 171,
+    "reference_length": 851,
+    "length_reduction_pct": 79.91,
+    "heartbeats": 2033,
+    "reference_heartbeats": 12033,
+    "heartbeat_reduction_pct": 83.1,
+    "objective_sum_pct": 163.01,
+    "survival_pct": 100.0,
+    "combined_pct": 87.67,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 2033,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 11947
+  },
+  "checkpoint_promotions": [],
+  "candidate": "lemma fundamental_theorem_of_variational_calculus' {f : Y \u2192 V}\n    (\u03bc : Measure Y) [IsFiniteMeasureOnCompacts \u03bc] [\u03bc.IsOpenPosMeasure]\n    [OpensMeasurableSpace Y]\n    (hf : Continuous f) (hg : \u2200 g, IsTestFunction g \u2192 \u222b x, \u27eaf x, g x\u27eb_\u211d \u2202\u03bc = 0) :\n    f = 0 := by\n  by_contra h\n  obtain \u27e8x\u2080, hx\u2080\u27e9 := Function.ne_iff.mp h\n  have hc := Continuous.inner' (\ud835\udd5c := \u211d) f (fun _ \u21a6 f x\u2080) hf continuous_const\n  obtain \u27e8\u03b4, h\u03b4, hpos\u27e9 :=\n    Metric.isOpen_iff.mp (isOpen_lt continuous_const hc) x\u2080\n      (lt_of_le_of_ne real_inner_self_nonneg'\n        (Ne.symm (inner_self_eq_zero'.not.mpr hx\u2080)))\n  letI := hasContDiffBump_of_innerProductSpace Y\n  let \u03c6 : ContDiffBump x\u2080 := \u27e8\u03b4 / 2, \u03b4, half_pos h\u03b4, half_lt_self h\u03b4\u27e9\n  apply ((\u03c6.continuous.mul hc).integral_pos_of_hasCompactSupport_nonneg_nonzero (\u03bc := \u03bc)\n    \u03c6.hasCompactSupport.mul_right (fun x \u21a6 by\n      by_cases hx : x \u2208 Function.support \u03c6\n      \u00b7 exact mul_nonneg \u03c6.nonneg (hpos (\u03c6.support_eq \u25b8 hx)).le\n      \u00b7 simp [Function.notMem_support.mp hx])\n    (mul_ne_zero (\u03c6.pos_of_mem_ball (Metric.mem_ball_self \u03c6.rOut_pos)).ne'\n      (inner_self_eq_zero'.not.mpr hx\u2080))).ne'\n  simpa only [Pi.mul_apply, inner_smul_right'] using hg (fun x \u21a6 \u03c6 x \u2022 f x\u2080)\n    (IsTestFunction.smul_right \u27e8\u03c6.contDiff, \u03c6.hasCompactSupport\u27e9 contDiff_const)"
+}

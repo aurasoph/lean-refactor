@@ -1,0 +1,8 @@
+# torch needs its own install command (CUDA build varies by hardware) — see
+# setup_env.sh, which uses:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu121
+# Install that first, then this file for the rest.
+transformers
+peft
+accelerate
+datasets

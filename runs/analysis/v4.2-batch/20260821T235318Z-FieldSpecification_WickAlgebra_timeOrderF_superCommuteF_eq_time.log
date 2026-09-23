@@ -1,0 +1,27 @@
+{
+  "name": "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time",
+  "compiled": true,
+  "length": 705,
+  "reference_length": 1217,
+  "length_reduction_pct": 42.07,
+  "heartbeats": 18954,
+  "reference_heartbeats": 42401,
+  "heartbeat_reduction_pct": 55.3,
+  "objective_sum_pct": 97.37,
+  "survival_pct": 100.0,
+  "combined_pct": 65.79,
+  "compat": {
+    "v4.32.0": true
+  },
+  "statement_ok": true,
+  "per_version": [
+    {
+      "version": "v4.32.0",
+      "ok": true,
+      "heartbeats": 18954,
+      "errors": [],
+      "note": ""
+    }
+  ],
+  "published_heartbeats": 42225
+}

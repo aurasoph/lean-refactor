@@ -1,0 +1,77 @@
+{
+  "timestamp": "20260828T054121Z",
+  "name": "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260828T054121Z-FieldSpecification_WickAlgebra_timeOrderF_superCommuteF_eq_time",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a046e3-19c3-78d0-a170-b2268b257099",
+    "exit_code": 0,
+    "wall_seconds": 1575.9
+  },
+  "before": {
+    "length": 1217,
+    "heartbeats": 42401,
+    "compiled": true
+  },
+  "after": {
+    "name": "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time",
+    "compiled": true,
+    "length": 828,
+    "reference_length": 1217,
+    "length_reduction_pct": 31.96,
+    "heartbeats": 18235,
+    "reference_heartbeats": 42401,
+    "heartbeat_reduction_pct": 56.99,
+    "objective_sum_pct": 88.95,
+    "survival_pct": 100.0,
+    "combined_pct": 62.98,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 18235,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 42225
+  },
+  "agent_final": {
+    "name": "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time",
+    "compiled": true,
+    "length": 828,
+    "reference_length": 1217,
+    "length_reduction_pct": 31.96,
+    "heartbeats": 18235,
+    "reference_heartbeats": 42401,
+    "heartbeat_reduction_pct": 56.99,
+    "objective_sum_pct": 88.95,
+    "survival_pct": 100.0,
+    "combined_pct": 62.98,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 18235,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 42225
+  },
+  "checkpoint_promotions": [],
+  "candidate": "lemma \u03b9_timeOrderF_superCommuteF_eq_time {\u03c6 \u03c8 : \ud835\udcd5.CrAnFieldOp}\n    (h\u03c6\u03c8 : crAnTimeOrderRel \u03c6 \u03c8) (h\u03c8\u03c6 : crAnTimeOrderRel \u03c8 \u03c6) (a b : \ud835\udcd5.FieldOpFreeAlgebra) :\n    \u03b9 \ud835\udce3\u1da0(a * [ofCrAnOpF \u03c6, ofCrAnOpF \u03c8]\u209bF * b) =\n    \u03b9 ([ofCrAnOpF \u03c6, ofCrAnOpF \u03c8]\u209bF * \ud835\udce3\u1da0(a * b)) := by\n  let C := superCommuteF (ofCrAnOpF \u03c6) (ofCrAnOpF \u03c8)\n  change (\u03b9.toLinearMap \u2218\u2097 timeOrderF \u2218\u2097 mulLinearMap (a * C)) b =\n    (\u03b9.toLinearMap \u2218\u2097 mulLinearMap C \u2218\u2097 timeOrderF \u2218\u2097 mulLinearMap a) b\n  refine LinearMap.congr_fun (ofCrAnListFBasis.ext fun \u03c6s \u21a6 ?_) b\n  simp only [ofListBasis_eq_ofList, LinearMap.coe_comp, Function.comp_apply, mulLinearMap_apply,\n    AlgHom.toLinearMap_apply]\n  rw [mul_assoc]\n  change (\u03b9.toLinearMap \u2218\u2097 timeOrderF \u2218\u2097 mulLinearMap.flip (C * ofCrAnListF \u03c6s)) a =\n    (\u03b9.toLinearMap \u2218\u2097 mulLinearMap C \u2218\u2097 timeOrderF \u2218\u2097\n      mulLinearMap.flip (ofCrAnListF \u03c6s)) a\n  refine LinearMap.congr_fun (ofCrAnListFBasis.ext fun \u03c6s' \u21a6 ?_) a\n  simp only [ofListBasis_eq_ofList, LinearMap.coe_comp, Function.comp_apply, mulLinearMap_apply,\n    LinearMap.flip_apply, AlgHom.toLinearMap_apply, C]\n  rw [\u2190 mul_assoc]\n  let l := List.insertionSort crAnTimeOrderRel (\u03c6s' ++ \u03c6s)\n  let p := List.takeWhile (fun c => \u00ac crAnTimeOrderRel \u03c6 c) l\n  let q := List.filter (fun c => crAnTimeOrderRel \u03c6 c \u2227 crAnTimeOrderRel c \u03c6) \u03c6s'\n  let r := List.filter (fun c => crAnTimeOrderRel \u03c6 c \u2227 crAnTimeOrderRel c \u03c6) \u03c6s\n  let s := List.filter (fun c => crAnTimeOrderRel \u03c6 c \u2227 \u00ac crAnTimeOrderRel c \u03c6) l\n  let u := \u03c6s' ++ \u03c6 :: \u03c8 :: \u03c6s\n  let v := \u03c6s' ++ \u03c8 :: \u03c6 :: \u03c6s\n  let w := \u03c6s' ++ [\u03c6, \u03c8] ++ \u03c6s\n  let x := \u03b9 (ofCrAnListF p)\n  let y := \u03b9 (ofCrAnListF q)\n  let z := \u03b9 (ofCrAnListF r)\n  let t := \u03b9 (ofCrAnListF s)\n  let d := \ud835\udce2(\ud835\udcd5.crAnStatistics \u03c6, \ud835\udcd5.crAnStatistics \u03c8)\n  calc \u03b9\n        /- Split the commutator. -/\n        _ = crAnTimeOrderSign u \u2022 \u03b9 (ofCrAnListF (crAnTimeOrderList u)) -\n            crAnTimeOrderSign v \u2022\n          d \u2022\n            \u03b9 (ofCrAnListF (crAnTimeOrderList v)) := by\n          conv_lhs =>\n            rw [\u2190 ofCrAnListF_singleton, \u2190 ofCrAnListF_singleton,\n              superCommuteF_ofCrAnListF_ofCrAnListF]\n            simp [mul_sub, sub_mul, \u2190 ofCrAnListF_append]\n            rw [timeOrderF_ofCrAnListF, timeOrderF_ofCrAnListF]\n          simp only [map_smul]\n          simp [u, v, d, smul_smul, mul_comm]\n        /- Simplify the signs. -/\n        _ = crAnTimeOrderSign u \u2022\n          (\u03b9 (ofCrAnListF (crAnTimeOrderList u)) -\n          d \u2022\n            \u03b9 (ofCrAnListF (crAnTimeOrderList v))) := by\n          dsimp only [u, v]\n          rw [crAnTimeOrderSign_swap_eq_time h\u03c6\u03c8 h\u03c8\u03c6]\n          rw [smul_sub]\n        /- Splitting the time-ordered lists. -/\n        _ = crAnTimeOrderSign w \u2022\n          (x * y *\n              \u03b9 (ofCrAnListF [\u03c6, \u03c8]) *\n              z * t -\n          d \u2022\n          x * y *\n              \u03b9 (ofCrAnListF [\u03c8, \u03c6]) *\n              z * t) := by\n          have h1 := insertionSort_of_eq_list \ud835\udcd5.crAnTimeOrderRel \u03c6 \u03c6s' [\u03c6, \u03c8] \u03c6s\n            (by simp [h\u03c6\u03c8, h\u03c8\u03c6])\n          rw [crAnTimeOrderList, show u = w by simp [u, w], h1]\n          have h2 := insertionSort_of_eq_list \ud835\udcd5.crAnTimeOrderRel \u03c6 \u03c6s' [\u03c8, \u03c6] \u03c6s\n            (by simp [h\u03c6\u03c8, h\u03c8\u03c6])\n          rw [crAnTimeOrderList, show v = \u03c6s' ++ [\u03c8, \u03c6] ++ \u03c6s by simp [v], h2]\n          repeat rw [ofCrAnListF_append]\n          simp only [l, p, q, r, s, x, y, z, t, decide_not, Bool.decide_and, map_mul,\n            Algebra.smul_mul_assoc]\n        _ = crAnTimeOrderSign w \u2022\n            (x * y *\n              (\u03b9 (ofCrAnListF [\u03c6, \u03c8]) - d \u2022\n                \u03b9 (ofCrAnListF [\u03c8, \u03c6])) *\n              z * t) := by\n            simp only [mul_sub, sub_mul, Algebra.mul_smul_comm, Algebra.smul_mul_assoc]\n        _ = crAnTimeOrderSign w \u2022\n            (x * y *\n              \u03b9 [ofCrAnOpF \u03c6, ofCrAnOpF \u03c8]\u209bF *\n              z * t) := by\n            congr\n            rw [superCommuteF_ofCrAnOpF_ofCrAnOpF, \u2190 ofCrAnListF_singleton,\n              \u2190 ofCrAnListF_singleton]\n            simp [d, \u2190 ofCrAnListF_append]\n  rw [Subalgebra.mem_center_iff.mp (\u03b9_superCommuteF_ofCrAnOpF_ofCrAnOpF_mem_center \u03c6 \u03c8)]\n  repeat rw [mul_assoc]\n  rw [\u2190 map_mul, \u2190 map_mul, \u2190 map_mul, \u2190 ofCrAnListF_append, \u2190 ofCrAnListF_append,\n    \u2190 ofCrAnListF_append]\n  have h1 := insertionSort_of_takeWhile_filter \ud835\udcd5.crAnTimeOrderRel \u03c6 \u03c6s' \u03c6s\n  dsimp only [l, p, q, r, s, w, x, y, z, t] at h1 \u22a2\n  simp only [decide_not, Bool.decide_and, List.append_assoc, List.cons_append,\n    List.nil_append, map_mul] at h1 \u22a2\n  rw [\u2190 h1, \u2190 crAnTimeOrderList]\n  by_cases hq : (\ud835\udcd5 |>\u209b \u03c6) \u2260 (\ud835\udcd5 |>\u209b \u03c8)\n  \u00b7 simp [\u03b9_superCommuteF_of_diff_statistic hq]\n  \u00b7 rw [crAnTimeOrderSign, Wick.koszulSign_eq_rel_eq_stat _ _ h\u03c6\u03c8 h\u03c8\u03c6\n      (not_ne_iff.mp hq).symm,\n      \u2190 crAnTimeOrderSign, \u2190 ofCrAnListF_append, timeOrderF_ofCrAnListF]\n    simp only [map_smul, Algebra.mul_smul_comm]"
+}

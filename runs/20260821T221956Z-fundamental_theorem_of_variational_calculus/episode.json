@@ -1,0 +1,47 @@
+{
+  "timestamp": "20260821T221956Z",
+  "name": "fundamental_theorem_of_variational_calculus'",
+  "wrapper": "v3-official-objective",
+  "run_dir": "/Users/evanwang/Lean_Refactor/competition/runs/20260821T221956Z-fundamental_theorem_of_variational_calculus",
+  "codex": {
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v3-official-objective",
+    "thread_id": "01a02668-c7f7-7562-b71f-764504176881",
+    "exit_code": 0,
+    "wall_seconds": 401.3
+  },
+  "before": {
+    "length": 851,
+    "heartbeats": 12033,
+    "compiled": true
+  },
+  "after": {
+    "name": "fundamental_theorem_of_variational_calculus'",
+    "compiled": true,
+    "length": 294,
+    "reference_length": 851,
+    "length_reduction_pct": 65.45,
+    "heartbeats": 2932,
+    "reference_heartbeats": 12033,
+    "heartbeat_reduction_pct": 75.63,
+    "objective_sum_pct": 141.08,
+    "survival_pct": 100.0,
+    "combined_pct": 80.36,
+    "compat": {
+      "v4.32.0": true
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.32.0",
+        "ok": true,
+        "heartbeats": 2932,
+        "errors": [],
+        "note": ""
+      }
+    ],
+    "published_heartbeats": 11947
+  },
+  "candidate": "lemma fundamental_theorem_of_variational_calculus' {f : Y \u2192 V}\n    (\u03bc : Measure Y) [IsFiniteMeasureOnCompacts \u03bc] [\u03bc.IsOpenPosMeasure]\n    [OpensMeasurableSpace Y]\n    (hf : Continuous f) (hg : \u2200 g, IsTestFunction g \u2192 \u222b x, \u27eaf x, g x\u27eb_\u211d \u2202\u03bc = 0) :\n    f = 0 := by\n  funext x\u2080\n  by_contra hx\u2080\n  have hi : Continuous (fun x => \u27eaf x, f x\u2080\u27eb_\u211d) :=\n    Continuous.inner' f (fun _ => f x\u2080) hf continuous_const\n  have hi\u2080 : 0 < \u27eaf x\u2080, f x\u2080\u27eb_\u211d :=\n    real_inner_self_nonneg'.lt_of_ne (Ne.symm (inner_self_eq_zero'.not.mpr hx\u2080))\n  obtain \u27e8r, hr, hi_pos\u27e9 := Metric.eventually_nhds_iff_ball.mp\n    (continuousAt_const.eventually_lt hi.continuousAt hi\u2080)\n  let \u03c6 : ContDiffBump x\u2080 := \u27e8r / 2, r, by positivity, by linarith\u27e9\n  have h\u03c6 : IsTestFunction \u03c6 := \u27e8\u03c6.contDiff, \u03c6.hasCompactSupport\u27e9\n  have hsupport : Function.support (fun x => \u03c6 x * \u27eaf x, f x\u2080\u27eb_\u211d) =\n      Metric.ball x\u2080 r := by\n    rw [Function.support_mul, \u03c6.support_eq, Set.inter_eq_left]\n    exact fun x hx => (hi_pos x hx).ne'\n  have hnonneg : \u2200 x, 0 \u2264 \u03c6 x * \u27eaf x, f x\u2080\u27eb_\u211d := by\n    intro x\n    by_cases hx : x \u2208 Function.support \u03c6\n    \u00b7 exact mul_nonneg \u03c6.nonneg (hi_pos x (\u03c6.support_eq \u25b8 hx)).le\n    \u00b7 simp [Function.notMem_support.mp hx]\n  have hint : Integrable (fun x => \u03c6 x * \u27eaf x, f x\u2080\u27eb_\u211d) \u03bc :=\n    (h\u03c6.smooth.continuous.mul hi).integrable_of_hasCompactSupport\n      h\u03c6.supp.mul_right\n  have hpos : 0 < \u222b x, \u03c6 x * \u27eaf x, f x\u2080\u27eb_\u211d \u2202\u03bc :=\n    (integral_pos_iff_support_of_nonneg hnonneg hint).2 (by\n      rw [hsupport]\n      exact Metric.isOpen_ball.measure_pos \u03bc (Metric.nonempty_ball.mpr hr))\n  have := hg (fun x => \u03c6 x \u2022 f x\u2080) (IsTestFunction.smul_right h\u03c6 contDiff_const)\n  simp only [inner_smul_right'] at this\n  exact hpos.ne' this"
+}

@@ -1,0 +1,93 @@
+{
+  "timestamp": "20260828T031733Z",
+  "name": "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+  "wrapper": "v4.2-minimal",
+  "run_dir": "/home/auras/Projects/Lean_Refactor/runs/20260828T031733Z-Binius_BinaryBasefold_fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+  "backend": "codex",
+  "codex": {
+    "backend": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "high",
+    "wrapper": "v4.2-minimal",
+    "thread_id": "01a0465f-7127-7343-a15e-ee3d92b84f62",
+    "exit_code": 0,
+    "wall_seconds": 1103.2
+  },
+  "before": {
+    "length": 1463,
+    "heartbeats": 17440,
+    "compiled": true
+  },
+  "after": {
+    "name": "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+    "compiled": true,
+    "statement_ok": true,
+    "objective_sum_pct": 0.0,
+    "survival_pct": 100.0,
+    "length_reduction_pct": 0.0,
+    "heartbeat_reduction_pct": 0.0,
+    "seed": "reference"
+  },
+  "agent_final": {
+    "name": "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+    "compiled": true,
+    "length": 857,
+    "reference_length": 1463,
+    "length_reduction_pct": 41.42,
+    "heartbeats": 11773,
+    "reference_heartbeats": 17440,
+    "heartbeat_reduction_pct": 32.49,
+    "objective_sum_pct": 73.91,
+    "survival_pct": 25.0,
+    "combined_pct": 32.97,
+    "compat": {
+      "v4.31.0": true,
+      "v4.30.0": false,
+      "v4.29.0": false,
+      "v4.28.0": false
+    },
+    "statement_ok": true,
+    "per_version": [
+      {
+        "version": "v4.31.0",
+        "ok": true,
+        "heartbeats": 11773,
+        "errors": [],
+        "note": ""
+      },
+      {
+        "version": "v4.30.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [],
+        "note": "source file not found: ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude.lean"
+      },
+      {
+        "version": "v4.29.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [],
+        "note": "source file not found: ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude.lean"
+      },
+      {
+        "version": "v4.28.0",
+        "ok": false,
+        "heartbeats": null,
+        "errors": [],
+        "note": "source file not found: ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude.lean"
+      }
+    ],
+    "published_heartbeats": 15645
+  },
+  "checkpoint_promotions": [
+    {
+      "hash": "397e65f4b9f5",
+      "claimed_sum": 73.91,
+      "confirmed_sum": 73.91,
+      "survival_pct": 25.0,
+      "accepted": false,
+      "reused": false
+    }
+  ],
+  "candidate": "theorem fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius (i : Fin \u2113) (steps : \u2115)\n    [NeZero steps] (h_i_add_steps : i.val + steps \u2264 \u2113)\n    (f : OracleFunction \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate) \u27e8i, by omega\u27e9)\n  (h_fw_dist_lt : fiberwiseClose \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate)\n    (i := i) (steps := steps) (h_i_add_steps := h_i_add_steps) (f := f)) :\n  hammingClose \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate) \u27e8i, by omega\u27e9 f := by\n  unfold fiberwiseClose at h_fw_dist_lt\n  unfold hammingClose\n  -- 2 * \u0394\u2080(f, \u2191(BBF_Code \ud835\udd3dq \u03b2 \u27e8\u2191i, \u22ef\u27e9)) < \u2191(BBF_CodeDistance \u2113 \ud835\udce1 \u27e8\u2191i, \u22ef\u27e9)\n  let d_fw := fiberwiseDistance \ud835\udd3dq \u03b2 (i := i) steps h_i_add_steps f\n  let C_i := (BBF_Code \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate) \u27e8i, by omega\u27e9)\n  let d_H := Code.distFromCode f C_i\n  let d_i := BBF_CodeDistance \u2113 \ud835\udce1 (\u27e8i, by omega\u27e9)\n  let d_i_plus_steps := BBF_CodeDistance \u2113 \ud835\udce1 \u27e8i.val + steps, by omega\u27e9\n\n  have h_d_i_gt_0 : d_i > 0 := by\n    dsimp [d_i, BBF_CodeDistance] -- \u22a2 2 ^ (\u2113 + \ud835\udce1 - \u2191i) - 2 ^ (\u2113 - \u2191i) + 1 > 0\n    have h_exp_lt : \u2113 - i.val < \u2113 + \ud835\udce1 - i.val := by\n      exact Nat.sub_lt_sub_right (a := \u2113) (b := \u2113 + \ud835\udce1) (c := i.val) (by omega) (by\n        apply Nat.lt_add_of_pos_right; exact pos_of_neZero \ud835\udce1)\n    have h_pow_lt : 2 ^ (\u2113 - i.val) < 2 ^ (\u2113 + \ud835\udce1 - i.val) := by\n      exact Nat.pow_lt_pow_right (by norm_num) h_exp_lt\n    omega\n\n  have h_C_i_nonempty : Nonempty C_i := by\n    simp only [nonempty_subtype, C_i]\n    exact Submodule.nonempty (BBF_Code \ud835\udd3dq \u03b2 (h_\u2113_add_R_rate := h_\u2113_add_R_rate) \u27e8i.val, by omega\u27e9)\n\n  -- 1. Relate Hamming distance `d_H` to fiber-wise distance `d_fw`.\n  obtain \u27e8g', h_g'_mem, h_g'_min_card\u27e9 : \u2203 g' \u2208 C_i, d_fw\n    = (fiberwiseDisagreementSet \ud835\udd3dq \u03b2 i steps h_i_add_steps f g').ncard := by\n    -- Let `S` be the set of all possible fiber-wise disagreement sizes.\n    let S := (fun (g : C_i) => (fiberwiseDisagreementSet \ud835\udd3dq \u03b2 i steps h_i_add_steps\n      f g).ncard) '' Set.univ\n    -- The code `C_i` (a submodule) is non-empty, so `S` is also non-empty.\n    have hS_nonempty : S.Nonempty := by\n      refine Set.image_nonempty.mpr ?_\n\n      exact Set.univ_nonempty\n    -- For a non-empty set of natural numbers, `sInf` is an element of the set.\n    have h_sInf_mem : sInf S \u2208 S := Nat.sInf_mem hS_nonempty\n    -- By definition, `d_fw = sInf S`.\n    unfold d_fw at h_sInf_mem\n    -- Since `sInf S` is in the image set `S`, there must be an element `g_subtype` in the domain\n    -- (`C_i`) that maps to it. This `g_subtype` is the codeword we're looking for.\n    rw [Set.mem_image] at h_sInf_mem\n    rcases h_sInf_mem with \u27e8g_subtype, _, h_eq\u27e9\n    -- Extract the codeword and its membership proof.\n    exact \u27e8g_subtype.val, g_subtype.property, by exact id (Eq.symm h_eq)\u27e9\n\n  -- The Hamming distance to any codeword `g'` is bounded by `d_fw * 2 ^ steps`.\n  have h_dist_le_fw_dist_times_fiber_size : (hammingDist f g' : \u2115\u221e) \u2264 d_fw * 2 ^ steps := by\n    -- This proves `dist f g' \u2264 (fiberwiseDisagreementSet ... f g').ncard * 2 ^ steps`\n    -- and lifts to \u2115\u221e. We prove the `Nat` version `hammingDist f g' \u2264 ...`,\n    -- which is equivalent.\n    change (\u0394\u2080(f, g') : \u2115\u221e) \u2264 \u2191d_fw * ((2 ^ steps : \u2115) : \u2115\u221e)\n    rw [\u2190ENat.coe_mul, ENat.coe_le_coe, h_g'_min_card]\n    -- Let \u0394H be the finset of actually bad x points where f and g' disagree.\n    set \u0394H := Finset.filter (fun x => f x \u2260 g' x) Finset.univ\n    have h_dist_eq_card : hammingDist f g' = \u0394H.card := by\n      simp only [hammingDist, ne_eq, \u0394H]\n    rw [h_dist_eq_card]\n    -- Y_bad is the set of quotient points y that THERE EXISTS a bad fiber point x\n    set Y_bad := fiberwiseDisagreementSet \ud835\udd3dq \u03b2 i steps h_i_add_steps f g'\n    simp only at * -- simplify domain indices everywhere\n\n    -- \u22a2 #\u0394H \u2264 Y_bad.ncard * 2 ^ steps\n\n    have hFinType_Y_bad : Fintype Y_bad := by exact Fintype.ofFinite \u2191Y_bad\n    -- Every point of disagreement `x` must belong to a fiber over some `y` in `Y_bad`,\n    -- BY DEFINITION of `Y_bad`. Therefore, `\u0394H` is a subset of the union of the fibers\n    -- of `Y_bad`\n    have h_\u0394H_subset_bad_fiber_points : \u0394H \u2286 Finset.biUnion Y_bad.toFinset\n        (t := fun y => ((qMap_total_fiber \ud835\udd3dq \u03b2 (i := \u27e8i, by omega\u27e9) (steps := steps)\n          (h_i_add_steps := by apply Nat.lt_add_of_pos_right_of_le; omega) (y := y)) ''\n          (Finset.univ : Finset (Fin ((2:\u2115)^steps)))).toFinset) := by\n      -- \u22a2 If any x \u2208 \u0394H, then x \u2208 Union(qMap_total_fiber(y), \u2200 y \u2208 Y_bad)\n      intro x hx_in_\u0394H; -- \u22a2 x \u2208 Union(qMap_total_fiber(y), \u2200 y \u2208 Y_bad)\n      simp only [\u0394H, Finset.mem_filter] at hx_in_\u0394H\n      -- Now we actually apply iterated qMap into x to get y_of_x,\n      -- then x \u2208 qMap_total_fiber(y_of_x) by definition\n      let y_of_x := iteratedQuotientMap \ud835\udd3dq \u03b2 h_\u2113_add_R_rate i steps h_i_add_steps x\n      apply Finset.mem_biUnion.mpr; use y_of_x\n      -- \u22a2 y_of_x \u2208 Y_bad.toFinset \u2227 x \u2208 qMap_total_fiber(y_of_x)\n      have h_elemenet_Y_bad : y_of_x \u2208 Y_bad.toFinset := by\n        -- \u22a2 y \u2208 Y_bad.toFinset\n        simp only [fiberwiseDisagreementSet, iteratedQuotientMap, ne_eq, Subtype.exists,\n          Set.toFinset_setOf, mem_filter, mem_univ, true_and, Y_bad]\n        -- one bad fiber point of y_of_x is x itself\n        let X := x.val\n        have h_X_in_source : X \u2208 sDomain \ud835\udd3dq \u03b2 h_\u2113_add_R_rate (i := \u27e8i, by omega\u27e9) := by\n          exact Submodule.coe_mem x\n        use X\n        use h_X_in_source\n        -- \u22a2 \u0174_steps\u207d\u2071\u207e(X) = y (iterated quotient map) \u2227 \u00acf \u27e8X, \u22ef\u27e9 = g' \u27e8X, \u22ef\u27e9\n        have h_forward_iterated_qmap : Polynomial.eval X\n            (intermediateNormVpoly \ud835\udd3dq \u03b2 h_\u2113_add_R_rate \u27e8\u2191i, by omega\u27e9\n              \u27e8steps, by simp only; omega\u27e9) = y_of_x := by\n          simp only [iteratedQuotientMap, X, y_of_x];\n        have h_eval_diff : f \u27e8X, by omega\u27e9 \u2260 g' \u27e8X, by omega\u27e9 := by\n          unfold X\n          simp only [Subtype.coe_eta, ne_eq, hx_in_\u0394H, not_false_eq_true]\n        simp only [h_forward_iterated_qmap, Subtype.coe_eta, h_eval_diff,\n          not_false_eq_true, and_self]\n      simp only [h_elemenet_Y_bad, true_and]\n\n      set qMapFiber := qMap_total_fiber \ud835\udd3dq \u03b2 (i := \u27e8i, by omega\u27e9) (steps := steps)\n        (h_i_add_steps := by apply Nat.lt_add_of_pos_right_of_le; omega) (y := y_of_x)\n      simp only [coe_univ, Set.image_univ, Set.toFinset_range, mem_image, mem_univ, true_and]\n      use (pointToIterateQuotientIndex (i := \u27e8i, by omega\u27e9) (steps := steps)\n        (h_i_add_steps := by omega) (x := x))\n      have h_res := is_fiber_iff_generates_quotient_point \ud835\udd3dq \u03b2 i steps (by omega)\n        (x := x) (y := y_of_x).mp (by rfl)\n      exact h_res\n    -- \u22a2 #\u0394H \u2264 Y_bad.ncard * 2 ^ steps\n    -- The cardinality of a subset is at most the cardinality of the superset.\n    apply (Finset.card_le_card h_\u0394H_subset_bad_fiber_points).trans\n    -- The cardinality of a disjoint union is the sum of cardinalities.\n    rw [Finset.card_biUnion]\n    \u00b7 -- The size of the sum is the number of bad fibers (`Y_bad.ncard`) times\n      -- the size of each fiber (`2 ^ steps`).\n      simp only [Set.toFinset_card]\n      have h_card_fiber_per_quotient_point := card_qMap_total_fiber \ud835\udd3dq \u03b2\n        (h_\u2113_add_R_rate := h_\u2113_add_R_rate) i steps h_i_add_steps\n      simp only [Set.image_univ, Fintype.card_ofFinset,\n        Subtype.forall] at h_card_fiber_per_quotient_point\n      have h_card_fiber_of_each_y : \u2200 y \u2208 Y_bad.toFinset,\n          Fintype.card ((qMap_total_fiber \ud835\udd3dq \u03b2 (i := \u27e8\u2191i, by omega\u27e9) (steps := steps)\n            (h_i_add_steps := by apply Nat.lt_add_of_pos_right_of_le; omega) (y := y)) ''\n            \u2191(Finset.univ : Finset (Fin ((2:\u2115)^steps)))) = 2 ^ steps := by\n        intro y hy_in_Y_bad\n        have hy_card_fiber_of_y := h_card_fiber_per_quotient_point (a := y) (b := by\n          exact Submodule.coe_mem y)\n        simp only [coe_univ, Set.image_univ, Fintype.card_ofFinset, hy_card_fiber_of_y]\n      rw [Finset.sum_congr rfl h_card_fiber_of_each_y]\n      -- \u22a2 \u2211 x \u2208 Y_bad.toFinset, 2 ^ steps \u2264 Y_bad.encard.toNat * 2 ^ steps\n      simp only [sum_const, Set.toFinset_card, smul_eq_mul, ofNat_pos, pow_pos,\n        _root_.mul_le_mul_right, ge_iff_le]\n      conv_rhs => rw [\u2190_root_.Nat.card_coe_set_eq] -- convert .ncard back to .card\n      -- \u22a2 Fintype.card \u2191Y_bad \u2264 Nat.card \u2191Y_bad\n      simp only [card_eq_fintype_card, le_refl]\n    \u00b7 -- Prove that the fibers for distinct quotient points y\u2081, y\u2082 are disjoint.\n      intro y\u2081 hy\u2081 y\u2082 hy\u2082 hy_ne\n      have h_disjoint := qMap_total_fiber_disjoint (i := \u27e8\u2191i, by omega\u27e9) (steps := steps)\n        (h_i_add_steps := by omega) (y\u2081 := y\u2081) (y\u2082 := y\u2082) (hy_ne := hy_ne)\n      simp only [Function.onFun, coe_univ]\n      exact h_disjoint\n\n  -- The minimum distance `d_H` is bounded by the distance to this specific `g'`.\n  have h_dist_bridge : d_H \u2264 d_fw * 2 ^ steps := by\n    -- exact h_dist_le_fw_dist_times_fiber_size\n    apply le_trans (a := d_H) (c := d_fw * 2 ^ steps) (b := hammingDist f g')\n    \u00b7 -- \u22a2 d_H \u2264 \u2191\u0394\u2080(f, g')\n      simp only [distFromCode, SetLike.mem_coe, hammingDist, ne_eq, d_H];\n      -- \u22a2 \u0394\u2080(f, C_i) \u2264 \u2191\u0394\u2080(f, g')\n      -- \u22a2 sInf {d | \u2203 v \u2208 C_i, \u2191(#{i | f i \u2260 v i}) \u2264 d} \u2264 \u2191(#{i | f i \u2260 g' i})\n      apply sInf_le\n      use g'\n    \u00b7 exact h_dist_le_fw_dist_times_fiber_size\n\n  -- 2. Use the premise : `2 * d_fw < d_{i+steps}`.\n  -- As a `Nat` inequality, this is equivalent to `2 * d_fw \u2264 d_{i+steps} - 1`.\n  have h_fw_bound : 2 * d_fw \u2264 d_i_plus_steps - 1 := by\n    -- Convert the ENat inequality to a Nat inequality using `a < b \u2194 a + 1 \u2264 b`.\n    exact Nat.le_of_lt_succ (WithTop.coe_lt_coe.1 h_fw_dist_lt)\n\n  -- 3. The Algebraic Identity.\n  -- The core of the proof is the identity : `(d_{i+steps} - 1) * 2 ^ steps = d_i - 1`.\n  have h_algebraic_identity : (d_i_plus_steps - 1) * 2 ^ steps = d_i - 1 := by\n    dsimp [d_i, d_i_plus_steps, BBF_CodeDistance]\n    rw [Nat.sub_mul, \u2190Nat.pow_add, \u2190Nat.pow_add];\n    have h1 : \u2113 + \ud835\udce1 - (\u2191i + steps) + steps = \u2113 + \ud835\udce1 - i := by\n      rw [Nat.sub_add_eq_sub_sub_rev (h1 := by omega) (h2 := by omega),\n        Nat.add_sub_cancel (n := i) (m := steps)]\n    have h2 : (\u2113 - (\u2191i + steps) + steps) = \u2113 - i := by\n      rw [Nat.sub_add_eq_sub_sub_rev (h1 := by omega) (h2 := by omega),\n        Nat.add_sub_cancel (n := i) (m := steps)]\n    rw [h1, h2]\n\n  -- 4. Conclusion : Chain the inequalities to prove `2 * d_H < d_i`.\n  -- We know `d_H` is finite, since `C_i` is nonempty.\n  have h_dH_ne_top : d_H \u2260 \u22a4 := by\n    simp only [ne_eq, d_H]\n    rw [Code.distFromCode_eq_top_iff_empty f C_i]\n    exact Set.nonempty_iff_ne_empty'.mp h_C_i_nonempty\n\n  -- We can now work with the `Nat` value of `d_H`.\n  let d_H_nat := ENat.toNat d_H\n  have h_dH_eq : d_H = d_H_nat := (ENat.coe_toNat h_dH_ne_top).symm\n\n  -- The calculation is now done entirely in `Nat`.\n  have h_final_inequality : 2 * d_H_nat \u2264 d_i - 1 := by\n    have h_bridge_nat : d_H_nat \u2264 d_fw * 2 ^ steps := by\n        rw [\u2190ENat.coe_le_coe]\n        exact le_of_eq_of_le (id (Eq.symm h_dH_eq)) h_dist_bridge\n    calc 2 * d_H_nat\n      _ \u2264 2 * (d_fw * 2 ^ steps) := by gcongr\n      _ = (2 * d_fw) * 2 ^ steps := by rw [mul_assoc]\n      _ \u2264 (d_i_plus_steps - 1) * 2 ^ steps := by gcongr;\n      _ = d_i - 1 := h_algebraic_identity\n\n  simp only [d_H, d_H_nat] at h_dH_eq\n  -- This final line is equivalent to the goal statement.\n  rw [h_dH_eq]\n  -- \u22a2 2 * \u2191\u0394\u2080(f, C_i).toNat < \u2191(BBF_CodeDistance \u2113 \ud835\udce1 \u27e8\u2191i, \u22ef\u27e9)\n  change ((2 : \u2115) : \u2115\u221e) * \u2191\u0394\u2080(f, C_i).toNat < \u2191(BBF_CodeDistance \u2113 \ud835\udce1 \u27e8\u2191i, by omega\u27e9)\n  rw [\u2190ENat.coe_mul, ENat.coe_lt_coe]\n  apply Nat.lt_of_le_pred (n := 2 * \u0394\u2080(f, C_i).toNat) (m := d_i) (h := h_d_i_gt_0)\n    (h_final_inequality)"
+}

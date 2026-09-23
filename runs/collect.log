@@ -1,0 +1,8 @@
+{"t": "2026-09-23T12:00:38", "event": "start", "name": "Core.InitsUpdatesComm", "model": "gpt-5.6-sol"}
+{"t": "2026-09-23T12:13:49", "event": "end", "name": "Core.InitsUpdatesComm", "exit": 0, "wall": 791, "objective_sum_pct": 153.17}
+{"t": "2026-09-23T15:23:56", "event": "start", "name": "Core.InitsUpdatesComm", "model": "claude:sonnet"}
+{"t": "2026-09-23T15:31:43", "event": "end", "name": "Core.InitsUpdatesComm", "model": "claude:sonnet", "exit": 0, "wall": 467, "tool_calls": 31, "usable": true, "objective_sum_pct": 5.09}
+{"t": "2026-09-23T15:45:35", "event": "start", "name": "Cslib.CCS.bisimilarity_congr_choice", "model": "gpt-5.6-sol"}
+{"t": "2026-09-23T15:53:19", "event": "end", "name": "Cslib.CCS.bisimilarity_congr_choice", "model": "gpt-5.6-sol", "exit": 0, "wall": 463, "tool_calls": 14, "usable": true, "objective_sum_pct": 117.0}
+{"t": "2026-09-23T15:53:19", "event": "start", "name": "Cslib.CCS.bisimilarity_congr_choice", "model": "claude:claude-opus-5-5"}
+{"t": "2026-09-23T15:55:34", "event": "end", "name": "Cslib.CCS.bisimilarity_congr_choice", "model": "claude:claude-opus-5-5", "exit": 0, "wall": 136, "tool_calls": 4, "usable": true, "objective_sum_pct": 103.1}
